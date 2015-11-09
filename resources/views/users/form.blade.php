@@ -1,14 +1,4 @@
-@extends('generic')
 
-@section('title')
-    Registrar nuevo usuario
-@endsection
-
-@section('content')
-    <h1>Registro de nuevo usuario</h1>
-    <hr/>
-    <form method="POST" action="/auth/register">
-        {!! csrf_field() !!}
     <!-- Begin username textfield -->
             <div class="form-group">
                 {!! Form::label('username', 'Nombre de usuario:') !!}
@@ -59,22 +49,8 @@
             </div>
     <!-- End company_id textfield -->
 
-<!--
-        <div>
-            Password
-            <input type="password" name="password">
-        </div>
-
-        <div>
-            Confirm Password
-            <input type="password" name="password_confirmation">
-        </div>
-    -->
     <!-- Begin Submit button -->
         <div class="form-group">
-                {!! Form::submit('Registrar', ['class' => 'btn btn-primary form-control']) !!}
+                {!! Form::submit($submitButtonText, ['class' => 'btn btn-primary form-control']) !!}
         </div>
     <!-- End Submit Button -->
-
-    </form>
-@endsection

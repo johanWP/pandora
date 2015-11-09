@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
-use Session;
-use Redirect;
+use App\Http\Requests\CustomUserRequest;
 use App\Http\Requests;
-use App\Http\Requests\CustomAuthRequest;
 use App\Http\Controllers\Controller;
+use App\User;
+use Redirect;
 
-class CustomAuthController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +19,8 @@ class CustomAuthController extends Controller
     public function index()
     {
         //
-        return view('auth.login2');
+        $users = User::orderBy('firstName', 'asc')->get();
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -30,7 +30,8 @@ class CustomAuthController extends Controller
      */
     public function create()
     {
-
+        //
+        return view('users.create');
     }
 
     /**
@@ -39,26 +40,27 @@ class CustomAuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CustomAuthRequest $request)
+    public function store(CustomUserRequest $request)
     {
-//        $err = ['username' => $request->username, 'password' => $request->password]; dd($err);
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'active' => 1]))
-        {
-            return Redirect::to('escritorio');
-        }
-        session()->flash('flash_message_error', 'La combinación usuario/password no coincide o el usuario está inactivo');
+
+        User::create([
+            'username' => $request['username'],
+            'firstName' => $request['firstName'],
+            'lastName' => $request['lastName'],
+            'email' => $request['email'],
+            'activity_id' => $request['activity_id'],
+            'company_id' => $request['company_id'],
+            'password' => bcrypt($request['password']),
+        ]);
+
+        session()->flash('flash_message', 'Usuario creado correctamente.');
 
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
-        session()->flash('flash_message_important', true);
+//        session()->flash('flash_message_important', true);
+        return Redirect::to('usuarios');
 
-        return Redirect::to('/login');
     }
 
-    public function logout()
-    {
-        Auth::logout();
-        return Redirect::to('/');
-    }
     /**
      * Display the specified resource.
      *

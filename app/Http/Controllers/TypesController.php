@@ -50,7 +50,8 @@ class TypesController extends Controller
 
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
 //        session()->flash('flash_message_important', true);
-        return Redirect::to('tipos');    }
+        return Redirect::to('tipos');
+    }
 
     /**
      * Display the specified resource.

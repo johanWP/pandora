@@ -1,9 +1,9 @@
 *   Poner todos los links en master.blade.php iguales URL::to('/path/to/link')
 *   (LISTO) hacer tabla en los listados que incluya botones de editar y borrar
 *   En los listados, filtrar solo items activos (@if $item->active  ... )
-*   Listado de usuarios
-*   Desactivar Usuarios
-*   No me deja registrar si estoy logueado
+*   (LISTO) Listado de usuarios
+*   Activar/Desactivar Usuarios
+*   (LISTO) No me deja registrar si estoy logueado
 *   Crear Almacenes
 *   Listar Almacenes
 *   Borrar Almacenes

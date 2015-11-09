@@ -36,11 +36,13 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 */
 
 // Registration routes...
-Route::get('registro', 'CustomAuthController@create');
-Route::post('register', 'CustomAuthController@postRegister');
+//Route::get('registro', 'CustomAuthController@create');
+//Route::post('registro', 'CustomAuthController@postRegister');
 
 Route::resource('login', 'CustomAuthController');
 Route::get('logout', 'CustomAuthController@logout');
 Route::resource('actividades', 'ActivitiesController');
 Route::resource('articulos', 'ArticlesController');
 Route::resource('empresas', 'CompaniesController');
+Route::resource('tipos' , 'TypesController');
+Route::resource('usuarios', 'UsersController');
