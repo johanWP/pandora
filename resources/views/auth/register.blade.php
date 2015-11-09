@@ -1,4 +1,4 @@
-@extends('master')
+@extends('generic')
 
 @section('title')
     Registrar nuevo usuario

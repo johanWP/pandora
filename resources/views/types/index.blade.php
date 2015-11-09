@@ -1,16 +1,16 @@
 @extends('master')
 
 @section('title')
-    Actividades Registradas
+    Tipos de Almacén
 @endsection
 
 @section('content')
 <div class="row">
   <div class="col-sm-10">
-    <h1>Actividades Registradas</h1>
+    <h1>Tipos de Almacén</h1>
   </div>
   <div class=""><br/>
-    <a class="btn btn-success" href="{{ action('ActivitiesController@create') }}"><i class="fa fa-plus fa-fw"></i> Crear Nueva</a>
+    <a class="btn btn-success" href="tipos/create"><i class="fa fa-plus fa-fw"></i> Crear Nuevo</a>
   </div>
 </div>
 
@@ -21,7 +21,7 @@
     <input type="text" placeholder="Buscador"> <input class="btn btn-default" type="submit" value="Buscar">
   </div>
 </div>
-@if($activities->count() > 0)
+@if($types->count() > 0)
 	<div class="table-responsive">
 		<table class="table table-striped">
 			<thead>
@@ -32,18 +32,16 @@
 			</tr>
 			</thead>
 			<tbody>
-			@foreach($activities as $activity)
+			@foreach($types as $type)
                 <tr>
                   <td class="col-sm-10">
-                    <p class="text-left">
-                      <a href="{{ action('ActivitiesController@edit', $activity->id) }}">{{ $activity->name }}</a>
-                    </p>
+                    <p class="text-left"><a href="{{ action('TypesController@edit', $type->id) }}">{{ $type->name }}</a></p>
                   </td>
                   <td class="text-right">
-                    <a href="{{ action('ActivitiesController@edit', $activity->id) }}" class="btn btn-default"><i class="fa fa-pencil fa-fw"></i> Editar</a>
+                    <a href="#" class="btn btn-default"><i class="fa fa-pencil fa-fw"></i> Editar</a>
                   </td>
                   <td>
-                    <a href="{{ action('ActivitiesController@edit') }}" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i> Eliminar</a>
+                    <a href="#" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i> Eliminar</a>
                   </td>
                 </tr>
 			@endforeach
@@ -51,6 +49,6 @@
 		</table>
 	</div>
 @else
-	<h2>No hay Actividades cargadas en el sistema.</h2>
+	<h2>No hay tipos de almacén cargados en el sistema.</h2>
 @endif
 @endsection
