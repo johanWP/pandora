@@ -34,19 +34,28 @@ class CustomAuthController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Verifica las credenciales de login y redirige apropiadamente
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Requests\CustomAuthRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(CustomAuthRequest $request)
     {
-//        $err = ['username' => $request->username, 'password' => $request->password]; dd($err);
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'active' => 1]))
+
+//        if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'active' => 1]))
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password]))
         {
+//  Si el usuario existe pero esta inactivo, la sesión se crea igual.  1) la destruyo 2) muestro mensaje
+            if (Auth::user()->active == 0)
+            {
+                Auth::logout();
+                return view('pages.inactive');
+            }
+
+//            Si el usuario tiene credenciales y está activo, muestro su escritorio
             return Redirect::to('escritorio');
         }
-        session()->flash('flash_message_error', 'La combinación usuario/password no coincide o el usuario está inactivo');
+        session()->flash('flash_message_error', 'La combinación usuario/password no coincide.');
 
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
         session()->flash('flash_message_important', true);

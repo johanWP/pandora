@@ -1,6 +1,5 @@
 *   Poner todos los links en master.blade.php iguales URL::to('/path/to/link')
 *   (LISTO) hacer tabla en los listados que incluya botones de editar y borrar
-*   En los listados, filtrar solo items activos (@if $item->active  ... )
 *   (LISTO) Listado de usuarios
 *   Activar/Desactivar Usuarios
 *   (LISTO) No me deja registrar si estoy logueado
@@ -10,5 +9,7 @@
 *   Crear Tipos de Almacén
 *   Listar tipos de Almacén
 *   Borrar Almacén
-*   Agregar estilo al Boton de Agregar en el listado
-
+*   (Listo) Agregar estilo al Boton de Agregar en el listado
+*   Recordarme en este equipo
+*   Olvidé mi contraseña
+*
