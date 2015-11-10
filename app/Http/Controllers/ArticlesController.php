@@ -20,7 +20,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::orderBy('name', 'asc')->get();
+        $articles = Article::orderBy('name', 'asc')->paginate(10);
         return view('articles.index', compact('articles'));
     }
 

@@ -55,7 +55,7 @@ class CustomAuthController extends Controller
 //            Si el usuario tiene credenciales y está activo, muestro su escritorio
             return Redirect::to('escritorio');
         }
-        session()->flash('flash_message_error', 'La combinación usuario/password no coincide.');
+        session()->flash('flash_message_error', 'Nombre de usuario y/o contraseña no válidos.');
 
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
         session()->flash('flash_message_important', true);

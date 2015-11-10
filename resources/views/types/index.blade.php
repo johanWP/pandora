@@ -21,6 +21,7 @@
     <input type="text" placeholder="Buscador"> <input class="btn btn-default" type="submit" value="Buscar">
   </div>
 </div>
+<div class="row">
 @if($types->count() > 0)
 	<div class="table-responsive">
 		<table class="table table-striped">
@@ -48,6 +49,9 @@
 			</tbody>
 		</table>
 	</div>
+
+</div>
+
 @else
 	<h2>No hay tipos de almacén cargados en el sistema.</h2>
 @endif

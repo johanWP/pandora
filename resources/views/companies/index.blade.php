@@ -21,6 +21,7 @@
     <input type="text" placeholder="Buscador"> <input class="btn btn-default" type="submit" value="Buscar">
   </div>
 </div>
+<div class="row">
 @if($companies->count() > 0)
 	<div class="table-responsive">
 		<table class="table table-striped">
@@ -50,6 +51,11 @@
 			</tbody>
 		</table>
 	</div>
+
+</div>
+<div class="row">
+    <div class="text-center">{!! $companies->render() !!}</div>
+</div>
 @else
 	<h2>No hay Empresas cargadas en el sistema.</h2>
 @endif

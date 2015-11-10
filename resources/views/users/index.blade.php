@@ -21,6 +21,7 @@
     <input type="text" placeholder="Buscador"> <input class="btn btn-default" type="submit" value="Buscar">
   </div>
 </div>
+<div class="row">
 @if($users->count() > 0)
 	<div class="table-responsive">
 		<table class="table table-striped">
@@ -56,6 +57,10 @@
 			</tbody>
 		</table>
 	</div>
+</div>
+<div class="row">
+    <div class="text-center">{!! $users->render() !!}</div>
+</div>
 @else
 	<h2>No hay Usuarios cargados en el sistema.</h2>
 @endif

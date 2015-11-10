@@ -22,6 +22,7 @@
   </div>
 </div>
 @if($articles->count() > 0)
+<div class="row">
 	<div class="table-responsive">
 		<table class="table table-striped">
 			<thead>
@@ -50,6 +51,12 @@
 			</tbody>
 		</table>
 	</div>
+
+</div>
+
+<div class="row">
+    <div class="text-center">{!! $articles->render() !!}</div>
+</div>
 @else
 	<h2>No hay Artículos cargados en el sistema.</h2>
 @endif
