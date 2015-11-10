@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
 
         // Indexes
-            $table->index('activity_id');
+
             $table->index('company_id');
             $table->index('email');
         });
