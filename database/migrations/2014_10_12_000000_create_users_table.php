@@ -32,6 +32,7 @@ class CreateUsersTable extends Migration
 
             $table->index('company_id');
             $table->index('email');
+            $table->index('username');
         });
     }
 
