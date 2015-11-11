@@ -52,9 +52,23 @@ class User extends Model implements AuthenticatableContract,
 
     }
 
+    /**
+     * Obtener las actividades que realiza un usuario
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function activities()
     {
 
-        return $this->belongsToMany('App\Activity');
+        return $this->belongsToMany('App\Activity')->withTimestamps();
+    }
+
+    /**
+     * Obtener un arreglo de las actividades asociadas con el usuario actual
+     * @return array
+     */
+    public function getActivityListAttribute()
+    {
+
+        return $this->activities->lists('id')->all();
     }
 }

@@ -13,16 +13,16 @@
 
     <!-- Begin checkbox serializable -->
              <div class="form-group">
-                 {!! Form::label('serializable', 'Marque si el artículo es serializable:') !!}
-                 {!! Form::checkbox('serializable',1, false, ['class' => 'form-control']) !!}
+                 {!! Form::label('serializable', 'Marque si el artículo es serializable &nbsp;') !!}
+                 {!! Form::checkbox('serializable',1, false, ['class' => '']) !!}
 
              </div>
      <!-- End serializable checkbox -->
 
     <!-- Begin checkbox activo -->
              <div class="form-group">
-                 {!! Form::label('active', 'Marque si el artículo está activo:') !!}
-                 {!! Form::checkbox('active',1, false, ['class' => 'form-control', 'foo'=>'bar']) !!}
+                 {!! Form::label('active', 'Marque si el artículo está activo &nbsp;') !!}
+                 {!! Form::checkbox('active',1, false, ['class' => '']) !!}
 
              </div>
      <!-- End activo checkbox -->

@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CustomUserRequest;
+use App\Http\Requests\CustomUpdateUserRequest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
 use Redirect;
+use App\Activity;
 
 class UsersController extends Controller
 {
@@ -30,8 +32,8 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
-        return view('users.create');
+        $activities = Activity::lists('name', 'id');
+        return view('users.create', compact('activities'));
     }
 
     /**
@@ -42,19 +44,22 @@ class UsersController extends Controller
      */
     public function store(CustomUserRequest $request)
     {
+//dd($request);
+        $user = User::create([
+                'username'  => $request['username'],
+                'firstName' => $request['firstName'],
+                'lastName'  => $request['lastName'],
+                'email'     => $request['email'],
+                'company_id'=> $request['company_id'],
+                'password'  => bcrypt($request['password']),
+                'active'    => $request['active']
+            ]);
 
-        User::create([
-            'username' => $request['username'],
-            'firstName' => $request['firstName'],
-            'lastName' => $request['lastName'],
-            'email' => $request['email'],
-            'activity_id' => $request['activity_id'],
-            'company_id' => $request['company_id'],
-            'password' => bcrypt($request['password']),
-        ]);
+//        Asociar las actividades en la tabla pivot activities_users
+        $user->activities()->attach($request->input('activityList'));
+
 
         session()->flash('flash_message', 'Usuario creado correctamente.');
-
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
 //        session()->flash('flash_message_important', true);
         return Redirect::to('usuarios');
@@ -69,7 +74,8 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('users.ver', compact('user'));
     }
 
     /**
@@ -80,7 +86,10 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $activities = Activity::lists('name', 'id');
+        return view('users.edit', compact('user', 'activities'));
     }
 
     /**
@@ -90,9 +99,28 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CustomUpdateUserRequest $request, $id)
     {
-        //
+
+        $user = User::findOrFail($id);
+        $user->update([
+            //'username' => $request['username'],
+            'firstName' => $request['firstName'],
+            'lastName' => $request['lastName'],
+            'email' => $request['email'],
+            'company_id' => $request['company_id'],
+
+        ]);
+
+//        Asociar las actividades en la tabla pivot activities_users
+
+        $user->activities()->sync($request->input('activityList'));
+
+        session()->flash('flash_message', 'Usuario actualizado correctamente.');
+//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+//        session()->flash('flash_message_important', true);
+
+        return Redirect::to('usuarios');
     }
 
     /**

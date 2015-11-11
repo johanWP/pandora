@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('lastName');
             $table->string('email');
             $table->string('password', 60);
-            $table->boolean('active')->default(1);
+            $table->boolean('active')->default(0);
             $table->integer('company_id')->unsigned();
             $table->integer('employee_id')->unsigned();
             $table->integer('securityLevel')->unsigned();

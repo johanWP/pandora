@@ -5,13 +5,11 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 
 /**
- * Este Request se usa UNICAMENTE  para la creación de usuarios nuevos.
- * Para el Update, ver CustomUpdateUsersRequest
- *
- * Class CustomUserRequest
+ * Se usa UNICAMENTE EN EL UPDATE
+ * Class CustomUpdateUserRequest
  * @package App\Http\Requests
  */
-class CustomUserRequest extends Request
+class CustomUpdateUserRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,20 +22,17 @@ class CustomUserRequest extends Request
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Aplica validaciones al update de usuarios
      *
      * @return array
      */
     public function rules()
     {
-
         return [
             //
-            'username'  => 'required|min:3|max:255|unique:users',
             'firstName'  => 'required|min:3|max:255',
             'lastName'  => 'required|min:3|max:255',
             'email' => 'required|email|max:255',
-            'password' => 'required|confirmed|min:6',
 
         ];
     }

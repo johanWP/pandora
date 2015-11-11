@@ -38,12 +38,12 @@
                 <tr>
                   <td class="col-sm-10">
                     <p class="text-left">
-                      <a href="{{ action('UsersController@edit', $user->id) }}">{{ $user->firstName . " ". $user->lastName }}</a>
+                      <a href="{{ action('UsersController@show', $user->id) }}">{{ $user->firstName . " ". $user->lastName }}</a>
                     </p>
                   </td>
                   <td>
                     <p class="text-left">
-                      <a href="{{ action('UsersController@edit', $user->id) }}">{{ $user->username }}</a>
+                      <a href="{{ action('UsersController@show', $user->id) }}">{{ $user->username }}</a>
                     </p>
                   </td>
                   <td class="text-right">

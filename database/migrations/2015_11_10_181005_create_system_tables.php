@@ -42,7 +42,7 @@ class CreateSystemTables extends Migration
             $table->string('name');
             $table->string('barcode',12)->nullable();
             $table->boolean('serializable')->default(0);
-            $table->boolean('active')->default(1);
+            $table->boolean('active')->default(0);
             $table->integer('company_id')->unsigned();
             $table->timestamps();
 
