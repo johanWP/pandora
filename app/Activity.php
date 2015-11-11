@@ -20,4 +20,13 @@ class Activity extends Model
         return $this->belongsToMany('App\Company')->withTimestamps();
     }
 
+    /**
+     * Obtener los usuarios que realizan la actividad
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany('App\User')->withTimestamps();
+    }
 }

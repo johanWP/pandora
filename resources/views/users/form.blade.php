@@ -1,4 +1,3 @@
-
     <!-- Begin username textfield -->
             <div class="form-group">
                 {!! Form::label('username', 'Nombre de usuario:') !!}
@@ -24,6 +23,7 @@
                 {!! Form::text('email', null, ['class' => 'form-control']) !!}
             </div>
     <!-- End email textfield -->
+
     <!-- Begin password textfield -->
             <div class="form-group">
                 {!! Form::label('password', 'Password:') !!}
@@ -36,12 +36,20 @@
                 {!! Form::text('password_confirmation', null, ['class' => 'form-control']) !!}
             </div>
     <!-- End password_confirmation textfield -->
-    <!-- Begin activity_id textfield -->
+
+    <!-- Begin  textfield -->
             <div class="form-group">
-                {!! Form::label('activity_id', 'Activity ID:') !!}
-                {!! Form::text('activity_id', 1, ['class' => 'form-control']) !!}
+                {!! Form::label('activityList', 'Actividades:') !!}
+                {!! Form::select('activityList[]', $activities , null, ['class' => 'form-control', 'multiple']) !!}
             </div>
-    <!-- End activity_id textfield -->
+    <!-- End  textfield -->
+    <!-- Begin checkbox active -->
+            <div class="form-group">
+                <label>
+                {!! Form::checkbox('active', 1, ['class' => 'form-control']) !!}
+                </label>
+            </div>
+    <!-- End active textfield -->
     <!-- Begin company_id textfield -->
             <div class="form-group">
                 {!! Form::label('company_id', 'Company ID:') !!}

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <h1>Registro de nuevo usuario</h1>
+    <h1>Registrar nuevo usuario</h1>
     <hr/>
     @include('errors.list')
 
