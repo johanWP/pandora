@@ -21,17 +21,18 @@ class CreateUsersTable extends Migration
             $table->string('lastName');
             $table->string('email');
             $table->string('password', 60);
-            $table->boolean('active')->default(0);
-            $table->integer('activity_id')->unsigned();
+            $table->boolean('active')->default(1);
             $table->integer('company_id')->unsigned();
             $table->integer('employee_id')->unsigned();
+            $table->integer('securityLevel')->unsigned();
             $table->rememberToken();
             $table->timestamps();
 
         // Indexes
-            $table->index('activity_id');
+
             $table->index('company_id');
             $table->index('email');
+            $table->index('username');
         });
     }
 
