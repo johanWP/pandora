@@ -45,16 +45,16 @@
     <!-- End  textfield -->
     <!-- Begin checkbox active -->
             <div class="form-group">
-                <label>
-                {!! Form::checkbox('active', 1, ['class' => 'form-control']) !!}
+                <label> Marque si el usuario está activo
+                {!! Form::checkbox('active', 1, ['class' => '']) !!}
                 </label>
             </div>
     <!-- End active textfield -->
     <!-- Begin company_id textfield -->
-            <div class="form-group">
-                {!! Form::label('company_id', 'Company ID:') !!}
-                {!! Form::text('company_id', 1, ['class' => 'form-control']) !!}
-            </div>
+            {{--<div class="form-group">--}}
+                {{--{!! Form::label('company_id', 'Company ID:') !!}--}}
+                {{--{!! Form::text('company_id', 1, ['class' => 'form-control']) !!}--}}
+            {{--</div>--}}
     <!-- End company_id textfield -->
 
     <!-- Begin Submit button -->

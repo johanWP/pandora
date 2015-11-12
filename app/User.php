@@ -4,6 +4,7 @@ namespace App;
 
 
 use Illuminate\Auth\Authenticatable;
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -46,6 +47,10 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token'];
 
+    public function setCompanyIdAttribute()
+    {
+        $this->attributes['company_id'] = Auth::user()->company_id;
+    }
     public function company()
     {
         return $this->belongsTo('App\Company');
