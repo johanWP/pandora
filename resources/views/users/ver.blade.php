@@ -14,6 +14,16 @@
       <caption>Datos del perfil</caption>
       <tbody>
          <tr>
+            <th>Activo</th>
+            <td>
+            @if ($user->active == 0)
+                No
+            @else
+                Si
+            @endif
+            </td>
+         </tr>
+         <tr>
             <th>Usuario</th>
             <td>{{ $user->username }}</td>
          </tr>

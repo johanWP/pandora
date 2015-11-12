@@ -9,16 +9,9 @@
 
    <p>Aquí va el detalle de cada empresa</p>
 
-    @unless($company->activities->isEmpty())
-
-       <p class="h2">Actividades:</p>
-        <ul>
-        @foreach($company->activities as $activity)
-            <li>{{$activity->name}}</li>
-       @endforeach
-       </ul>
-    @endunless
-
+@if ($company->parent == 1)
+    <h3>Empresa Parent</h3>
+@endif
 <!-- Begin Submit button -->
     <div class="form-group">
             <a class="btn btn-primary" href="{{  $company->id . '/edit' }}">Editar</a>

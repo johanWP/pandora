@@ -49,9 +49,7 @@ class CompaniesController extends Controller
     {
 
         $company = Company::create($request->all());
-//        Pido los activities seleccionados en el formulario
-//        Actualizo la tabla pivot con ATTACH
-        $company->activities()->attach($request->input('activities'));
+
         return Redirect::to('empresas');
     }
 
@@ -67,10 +65,6 @@ class CompaniesController extends Controller
         $company = Company::findOrFail($id);
         $company->update($request->all());
 
-//        Pido los activities seleccionados en el formulario
-//        $activities_list = $request->input('activities_list');
-//        Actualizo la tabla pivot con SYNC porque estoy actualizando
-        $company->activities()->sync($activities_list);
         return Redirect::to('empresas');
     }
 }

@@ -44,7 +44,13 @@ class UsersController extends Controller
      */
     public function store(CustomUserRequest $request)
     {
-//dd($request);
+//        dd($request['active']);
+        if (is_null($request['active']))
+        {
+            $act = 0;
+        } else {
+            $act = $request['active'];
+        }
         $user = User::create([
                 'username'  => $request['username'],
                 'firstName' => $request['firstName'],
@@ -52,7 +58,7 @@ class UsersController extends Controller
                 'email'     => $request['email'],
                 'company_id'=> $request['company_id'],
                 'password'  => bcrypt($request['password']),
-                'active'    => $request['active']
+                'active'    => $act
             ]);
 
 //        Asociar las actividades en la tabla pivot activities_users
@@ -101,20 +107,32 @@ class UsersController extends Controller
      */
     public function update(CustomUpdateUserRequest $request, $id)
     {
-
+//dd($request->all());
         $user = User::findOrFail($id);
-        $user->update([
-            //'username' => $request['username'],
-            'firstName' => $request['firstName'],
-            'lastName' => $request['lastName'],
-            'email' => $request['email'],
-            'company_id' => $request['company_id'],
+        if (is_null($request['active']))
+        {
+            $act = 0;
+        } else {
+            $act = $request['active'];
+        }
 
+        $user->update([
+            'firstName'     => $request['firstName'],
+            'lastName'      => $request['lastName'],
+            'email'         => $request['email'],
+            'company_id'    => $request['company_id'],
+            'active'        => $act
         ]);
 
 //        Asociar las actividades en la tabla pivot activities_users
+        if ($request->input('activityList') != null)
+        {
+            $user->activities()->sync($request->input('activityList'));
+        } else
+        {
+            $user->activities()->detach();
+        }
 
-        $user->activities()->sync($request->input('activityList'));
 
         session()->flash('flash_message', 'Usuario actualizado correctamente.');
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre

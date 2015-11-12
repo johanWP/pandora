@@ -29,6 +29,7 @@
 			<tr>
 			  <th><h3>Nombre</h3></th>
 			  <th><h3>Usuario</h3></th>
+			  <th><h3>Estatus</h3></th>
 			  <th class="text-center" colspan="2"><h3>Acciones</h3></th>
 
 			</tr>
@@ -36,7 +37,7 @@
 			<tbody>
 			@foreach($users as $user)
                 <tr>
-                  <td class="col-sm-10">
+                  <td class="col-sm-9">
                     <p class="text-left">
                       <a href="{{ action('UsersController@show', $user->id) }}">{{ $user->firstName . " ". $user->lastName }}</a>
                     </p>
@@ -44,6 +45,15 @@
                   <td>
                     <p class="text-left">
                       <a href="{{ action('UsersController@show', $user->id) }}">{{ $user->username }}</a>
+                    </p>
+                  </td>
+                  <td>
+                    <p class="text-left">
+                      @if ($user->active == 0)
+                          Inactivo
+                      @else
+                          Activo
+                      @endif
                     </p>
                   </td>
                   <td class="text-right">

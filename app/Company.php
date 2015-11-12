@@ -32,24 +32,7 @@ class Company extends Model
         return $this->hasMany('App\User');
     }
 
-    /**
-     * Devuelve las actividades que realiza una empresa
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function activities()
-    {
-        return $this->belongsToMany('App\Activity')->withTimestamps();
-    }
 
-    /**
-     * Devuelve una lista de los IDs de las actividades que realiza esta empresa
-     * @return array
-     */
-    public function getActivityListAttribute()
-    {
-
-        return $this->activities()->lists('id');
-    }
 
 }
 
