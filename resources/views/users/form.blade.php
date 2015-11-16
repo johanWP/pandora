@@ -40,7 +40,7 @@
     <!-- Begin  textfield -->
             <div class="form-group">
                 {!! Form::label('activityList', 'Actividades:') !!}
-                {!! Form::select('activityList[]', $activities , null, ['class' => 'form-control', 'multiple']) !!}
+                {!! Form::select('activityList[]', $activities , null, ['class' => 'form-control', 'multiple', 'id'=>'activityList']) !!}
             </div>
     <!-- End  textfield -->
     <!-- Begin checkbox active -->
@@ -62,3 +62,13 @@
                 {!! Form::submit($submitButtonText, ['class' => 'btn btn-primary form-control']) !!}
         </div>
     <!-- End Submit Button -->
+
+@section('scripts')
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1-rc.1/css/select2.min.css" rel="stylesheet" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1-rc.1/js/select2.min.js"></script>
+    <script>
+      $('#activityList').select2({
+        'placeholder'   :   'Clic para seleccionar una actividad'
+      });
+    </script>
+@endsection

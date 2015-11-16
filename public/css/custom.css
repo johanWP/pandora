@@ -1,0 +1,10 @@
+
+.rcorners {
+
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 15px 0;
+    border:2px solid rgb(0, 193,215);
+    padding: 10px;
+}
+

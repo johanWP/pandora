@@ -36,7 +36,7 @@
 			@foreach($types as $type)
                 <tr>
                   <td class="col-sm-10">
-                    <p class="text-left"><a href="{{ action('TypesController@edit', $type->id) }}">{{ $type->name }}</a></p>
+                    <p class="text-left"><a href="{{ action('TypesController@show', $type->id) }}">{{ $type->name }}</a></p>
                   </td>
                   <td class="text-right">
                     <a href="#" class="btn btn-default"><i class="fa fa-pencil fa-fw"></i> Editar</a>

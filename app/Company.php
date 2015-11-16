@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends Model
 {
+    use SoftDeletes;
     //
     protected $fillable=[
         'name',
@@ -32,6 +34,15 @@ class Company extends Model
         return $this->hasMany('App\User');
     }
 
+    /**
+     * Establece la relación "una compañía tiene varios warehouses"
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function warehouses()
+    {
+
+        return $this->hasMany('App\Warehouse');
+    }
 
 
 }

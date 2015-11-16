@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="/css/metisMenu.min.css">
     <link rel="stylesheet" href="/css/sb-admin-2.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+
     <style>
 
         .logo  {background-image: url('/images/pandora-icon-32.png');
@@ -34,12 +36,17 @@
         @include('partials.nav')
         </nav>
 
-        <div id="page-wrapper"><p>&nbsp;</p>
+        <div id="page-wrapper">
+           <div class="container-fluid">
             @include('partials.flash')
             @yield('content')
+
+            </div>
         </div>
 
+
     </div>
+
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/metisMenu.min.js"></script>
@@ -50,7 +57,7 @@
             $('div.alert').not('alert-important').delay(2000).slideUp(250);
         }); // Fin del document.ready()
     </script>
-
+    @yield('scripts')
 </body>
 
 </html>

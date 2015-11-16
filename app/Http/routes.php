@@ -46,3 +46,4 @@ Route::resource('articulos', 'ArticlesController');
 Route::resource('empresas', 'CompaniesController');
 Route::resource('tipos' , 'TypesController');
 Route::resource('usuarios', 'UsersController');
+Route::resource('almacenes', 'WarehousesController');

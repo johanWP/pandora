@@ -78,10 +78,10 @@
                 <a href="#"><i class="fa fa-archive fa-fw"></i> Almacenes<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#"><i class='fa fa-plus fa-fw'></i> Agregar</a>
+                        <a href="{!!URL::to('/almacenes/create')!!}"><i class='fa fa-plus fa-fw'></i> Agregar</a>
                     </li>
                     <li>
-                        <a href="#"><i class='fa fa-list-ol fa-fw'></i> Ver Listado</a>
+                        <a href="{!!URL::to('/almacenes')!!}"><i class='fa fa-list-ol fa-fw'></i> Ver Listado</a>
                     </li>
                 </ul>
             </li>

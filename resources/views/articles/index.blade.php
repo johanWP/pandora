@@ -37,7 +37,7 @@
                 <tr>
                   <td class="col-sm-10">
                     <p class="text-left">
-                      <a href="{{ action('ArticlesController@edit', $article->id) }}">{{ $article->name }}</a>
+                      <a href="{{ action('ArticlesController@show', $article->id) }}">{{ $article->name }}</a>
                     </p>
                   </td>
                   <td class="text-right">
