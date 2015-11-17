@@ -102,6 +102,13 @@ class ArticlesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $article = Article::findOrFail($id);
+        $article->delete();
+        session()->flash('flash_message_danger', 'Artículo borrado correctamente.');
+
+//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+//        session()->flash('flash_message_important', true);
+        return redirect('articulos');
+
     }
 }

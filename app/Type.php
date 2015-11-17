@@ -13,6 +13,7 @@ class Type extends Model
         'name'
     ];
 
+    protected $dates = ['deleted_at'];
     /**
      * Establece la relación "un tipo puede tener varios almacenes"
      *

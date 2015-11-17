@@ -149,6 +149,12 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        session()->flash('flash_message_danger', 'Usuario borrado correctamente.');
+
+//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+//        session()->flash('flash_message_important', true);
+        return Redirect::to('usuarios');
     }
 }

@@ -41,10 +41,13 @@
             @include('partials.flash')
             @yield('content')
 
-            </div>
+
+           </div>
+
+
         </div>
 
-
+        @yield('modal')
     </div>
 
     <script src="/js/jquery.min.js"></script>

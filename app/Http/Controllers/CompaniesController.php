@@ -67,4 +67,17 @@ class CompaniesController extends Controller
 
         return Redirect::to('empresas');
     }
+
+    public function destroy($id)
+    {
+        $company = Company::findOrFail($id);
+        $company->delete();
+        session()->flash('flash_message_danger', 'Empresa borrada correctamente.');
+
+//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+//        session()->flash('flash_message_important', true);
+        return redirect('empresas');
+
+    }
+
 }

@@ -43,14 +43,30 @@
                     <a href="{{ action('ActivitiesController@edit', $activity->id) }}" class="btn btn-default"><i class="fa fa-pencil fa-fw"></i> Editar</a>
                   </td>
                   <td>
-                    <a href="{{ action('ActivitiesController@edit') }}" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i> Eliminar</a>
+                    <a href="#modalConfirm" id="btnDelete" class="btn btn-danger" data-toggle="modal" data-name="{{ $activity->name }}" data-deleteMe="{{ $activity->id }}">
+                      <i class="fa fa-trash fa-fw"></i> Eliminar
+                    </a>
                   </td>
                 </tr>
 			@endforeach
 			</tbody>
 		</table>
 	</div>
+
+
+
+
+
+
+
+
 @else
 	<h2>No hay Actividades cargadas en el sistema.</h2>
 @endif
+@endsection
+
+@section('scripts')
+
+  @include('partials.modalConfirm')
+
 @endsection

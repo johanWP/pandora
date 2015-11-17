@@ -1,11 +1,11 @@
 @extends('master')
 
 @section('title')
-    Crear Nuevo Tipo de Almacén
+    Editar Tipo de Almacén
 @endsection
 
 @section('content')
-    <h1>Crear Nuevo Tipo de Almacén</h1>
+    <h1>Editar Tipo de Almacén</h1>
     <hr/>
     <!--  Incluir el parcial que lista los errores -->
 

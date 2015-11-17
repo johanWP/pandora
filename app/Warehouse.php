@@ -21,7 +21,7 @@ class Warehouse extends Model
         'company_id'
     ];
 
-
+    protected $dates = ['deleted_at'];
     /**
      * Retorna la compañía a la que pertenece el almacen
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

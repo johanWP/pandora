@@ -12,6 +12,7 @@ class Activity extends Model
             'name'
     ];
 
+    protected $dates = ['deleted_at'];
     /**
      * Devuelve las empresas que realizan una actividad
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

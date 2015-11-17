@@ -88,9 +88,12 @@ class WarehousesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateWarehouseRequest $request, $id)
     {
-        //
+        $warehouse = Warehouse::findOrFail($id);
+        $warehouse->update($request->all());
+
+        return Redirect::to('almacenes');
     }
 
     /**
@@ -101,7 +104,13 @@ class WarehousesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $warehouse = Warehouse::findOrFail($id);
+        $warehouse->delete();
+        session()->flash('flash_message_danger', 'Almacén borrado correctamente.');
+
+//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+//        session()->flash('flash_message_important', true);
+        return Redirect::to('almacenes');
     }
 
 }

@@ -60,7 +60,9 @@
                     <a href="{{ action('UsersController@edit', $user->id) }}" class="btn btn-default"><i class="fa fa-pencil fa-fw"></i> Editar</a>
                   </td>
                   <td>
-                    <a href="{{ action('UsersController@edit') }}" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i> Eliminar</a>
+                    <a href="#modalConfirm" id="btnDelete" class="btn btn-danger" data-toggle="modal" data-name="{{ $user->firstName . " ".$user->lastName}}" data-deleteMe="{{ $user->id }}">
+                      <i class="fa fa-trash fa-fw"></i> Eliminar
+                    </a>
                   </td>
                 </tr>
 			@endforeach
@@ -74,4 +76,10 @@
 @else
 	<h2>No hay Usuarios cargados en el sistema.</h2>
 @endif
+@endsection
+
+@section('scripts')
+
+  @include('partials.modalConfirm')
+
 @endsection

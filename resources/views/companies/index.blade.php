@@ -44,7 +44,9 @@
                     <a href="{{ action('CompaniesController@edit', $company->id) }}" class="btn btn-default"><i class="fa fa-pencil fa-fw"></i> Editar</a>
                   </td>
                   <td>
-                    <a href="{{ action('CompaniesController@edit') }}" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i> Eliminar</a>
+                    <a href="#modalConfirm" id="btnDelete" class="btn btn-danger" data-toggle="modal" data-name="{{ $company->name }}" data-deleteMe="{{ $company->id }}">
+                      <i class="fa fa-trash fa-fw"></i> Eliminar
+                    </a>
                   </td>
                 </tr>
 			@endforeach
@@ -59,4 +61,10 @@
 @else
 	<h2>No hay Empresas cargadas en el sistema.</h2>
 @endif
+@endsection
+
+@section('scripts')
+
+  @include('partials.modalConfirm')
+
 @endsection

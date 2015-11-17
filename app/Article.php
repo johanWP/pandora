@@ -16,6 +16,7 @@ class Article extends Model
         'company_id'
     ];
 
+    protected $dates = ['deleted_at'];
     /**
      * Un Articulo pertenece a una (y solo una) empresa
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

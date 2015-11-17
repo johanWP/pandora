@@ -72,7 +72,8 @@ class TypesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $type = Type::findOrFail($id);
+        return view('types.edit', compact('type'));
     }
 
     /**
@@ -82,9 +83,12 @@ class TypesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TypeRequest $request, $id)
     {
-        //
+        $type = Type::findOrFail($id);
+        $type->update($request->all());
+
+        return Redirect::to('tipos');
     }
 
     /**
@@ -95,6 +99,12 @@ class TypesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $type = Type::findOrFail($id);
+        $type->delete();
+        session()->flash('flash_message_danger', 'Empresa borrada correctamente.');
+
+//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+//        session()->flash('flash_message_important', true);
+        return redirect('tipos');
     }
 }

@@ -14,6 +14,7 @@ class Company extends Model
         'parent'
     ];
 
+    protected $dates = ['deleted_at'];
     /**
      * Devuelve los articulos creados por usuarios de esta empresa
      *

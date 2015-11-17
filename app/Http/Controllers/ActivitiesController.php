@@ -45,6 +45,9 @@ class ActivitiesController extends Controller
     public function store(ActivityRequest $request)
     {
         Activity::create($request->all());
+        session()->flash('flash_message', 'Actividad creada correctamente.');
+//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+//        session()->flash('flash_message_important', true);
         return Redirect::to('actividades');
     }
 
@@ -82,6 +85,10 @@ class ActivitiesController extends Controller
     {
         $activity = Activity::findOrFail($id);
         $activity->update($request->all());
+        session()->flash('flash_message', 'Actividad actualizada correctamente.');
+//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+//        session()->flash('flash_message_important', true);
+
         return Redirect::to('actividades');
     }
 
@@ -93,6 +100,13 @@ class ActivitiesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $activity = Activity::findOrFail($id);
+        $activity->delete();
+        session()->flash('flash_message_danger', 'Actividad borrada correctamente.');
+//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+//        session()->flash('flash_message_important', true);
+
+        return Redirect::to('actividades');
     }
+
 }

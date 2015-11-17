@@ -41,6 +41,7 @@ class User extends Model implements AuthenticatableContract,
                             'active'
                             ];
 
+    protected $dates = ['deleted_at'];
     /**
      * The attributes excluded from the model's JSON form.
      *
