@@ -58,10 +58,17 @@
     <!-- End company_id textfield -->
 
     <!-- Begin Submit button -->
+<!-- Begin security_level textfield -->
+        <div class="form-group">
+            {!! Form::label('securityLevel', 'Nivel de Seguridad:') !!}
+            {!! Form::number('securityLevel', null, ['class' => 'form-control']); !!}
+        </div>
+<!-- End security_level textfield -->
         <div class="form-group">
                 {!! Form::submit($submitButtonText, ['class' => 'btn btn-primary form-control']) !!}
         </div>
     <!-- End Submit Button -->
+
 
 @section('scripts')
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1-rc.1/css/select2.min.css" rel="stylesheet" />

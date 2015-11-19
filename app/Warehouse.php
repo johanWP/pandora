@@ -22,6 +22,21 @@ class Warehouse extends Model
     ];
 
     protected $dates = ['deleted_at'];
+/*    public function getWarehouseListAttribute()
+    {
+        $warehouseList = Array();
+        $warehouses = Auth::user()->warehousesList;
+//        Tomo solo los valores que necesito de la Collection y los pongo en
+//        un array para poblar el combobox en la vista
+        foreach ($warehouses as $warehouse)
+        {
+            $warehouseList[$warehouse->id] = $warehouse->name;
+        }
+
+        return $warehouseList;
+    }*/
+
+
     /**
      * Retorna la compañía a la que pertenece el almacen
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -48,5 +63,6 @@ class Warehouse extends Model
     {
         return $this->belongsTo('App\Activity');
     }
+
 
 }

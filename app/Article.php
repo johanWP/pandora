@@ -25,4 +25,9 @@ class Article extends Model
     {
         return $this->belongsTo('App\Company');
     }
+
+    public function movements()
+    {
+        return $this->hasMany('App\Movement');
+    }
 }

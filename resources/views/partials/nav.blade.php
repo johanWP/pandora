@@ -89,10 +89,10 @@
                 <a href="#"><i class="fa fa-exchange fa-fw"></i> Movimientos<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="#"><i class='fa fa-plus fa-fw'></i> Agregar</a>
+                        <a href="{!!URL::to('/movimientos/create')!!}"><i class='fa fa-plus fa-fw'></i> Agregar</a>
                     </li>
                     <li>
-                        <a href="#"><i class='fa fa-list-ol fa-fw'></i> Ver Últimos Movimientos</a>
+                        <a href="{!!URL::to('/movimientos')!!}"><i class='fa fa-list-ol fa-fw'></i> Ver Últimos Movimientos</a>
                     </li>
                 </ul>
             </li>

@@ -56,7 +56,9 @@ class UsersController extends Controller
                 'firstName' => $request['firstName'],
                 'lastName'  => $request['lastName'],
                 'email'     => $request['email'],
-                'company_id'=> $request['company_id'],
+                'securityLevel'         => $request['securityLevel'],
+                'company_id'=> ' ',
+//                'company_id'=> $request['company_id'],
                 'password'  => bcrypt($request['password']),
                 'active'    => $act
             ]);
@@ -107,7 +109,6 @@ class UsersController extends Controller
      */
     public function update(CustomUpdateUserRequest $request, $id)
     {
-//dd($request->all());
         $user = User::findOrFail($id);
         if (is_null($request['active']))
         {
@@ -120,7 +121,9 @@ class UsersController extends Controller
             'firstName'     => $request['firstName'],
             'lastName'      => $request['lastName'],
             'email'         => $request['email'],
-            'company_id'    => $request['company_id'],
+            'securityLevel'         => $request['securityLevel'],
+            'company_id'    => ' ',
+//            'company_id'    => $request['company_id'],
             'active'        => $act
         ]);
 

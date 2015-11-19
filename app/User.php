@@ -5,6 +5,9 @@ namespace App;
 
 use Illuminate\Auth\Authenticatable;
 use Auth;
+use DB;
+use App\Warehouse;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -38,6 +41,8 @@ class User extends Model implements AuthenticatableContract,
                             'email',
                             'password',
                             'employee_id',
+                            'company_id',
+                            'securityLevel',
                             'active'
                             ];
 
@@ -51,10 +56,46 @@ class User extends Model implements AuthenticatableContract,
 
     /**
      *  Setea el atributo company_id igual al que tiene el usuario logueado en ese momento
+     * sin importar lo que traiga desde el frontend
      */
     public function setCompanyIdAttribute()
     {
         $this->attributes['company_id'] = Auth::user()->company_id;
+    }
+
+    /**
+     * Obtener un arreglo de las actividades asociadas con el usuario actual
+     * @return array
+     */
+    public function getActivityListAttribute()
+    {
+        return $this->activities->lists('id')->all();
+    }
+
+    /**
+     * Obtiene los almacenes sobre los que el usuario logueado puede hacer operaciones
+     * basado en las actividades y la compañía a la que ambos pertenecen
+     * @return Collection
+     */
+    public function getWarehouseListAttribute()
+    {
+
+        $activities = $this->activities()->lists('id')->toArray();
+        $warehouses = DB::table('warehouses')
+            ->whereIn('activity_id', $activities)
+            ->where('active', '=', '1')
+            ->where('company_id', '=', $this->company_id)
+            ->get();
+
+        return $warehouses;
+
+
+
+    }
+
+    public function movements()
+    {
+        return $this->hasMany('App\Movement')->withTimestamps();
     }
 
     /**
@@ -77,13 +118,5 @@ class User extends Model implements AuthenticatableContract,
         return $this->belongsToMany('App\Activity')->withTimestamps();
     }
 
-    /**
-     * Obtener un arreglo de las actividades asociadas con el usuario actual
-     * @return array
-     */
-    public function getActivityListAttribute()
-    {
 
-        return $this->activities->lists('id')->all();
-    }
 }

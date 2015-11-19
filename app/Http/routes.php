@@ -13,7 +13,8 @@
 Route::get('/', 'PagesController@home');
 
 Route::get('escritorio', 'DefaultController@dashboard');
-
+Route::get('api/warehousesList', 'jsonController@warehousesList');
+Route::get('api/articlesList/{warehouse_id}', 'jsonController@articlesAvailable');
 /*
 Route::get('empresas', 'CompaniesController@index');
 Route::get('empresas/create', 'CompaniesController@create');
@@ -47,3 +48,4 @@ Route::resource('empresas', 'CompaniesController');
 Route::resource('tipos' , 'TypesController');
 Route::resource('usuarios', 'UsersController');
 Route::resource('almacenes', 'WarehousesController');
+Route::resource('movimientos', 'MovementsController');
