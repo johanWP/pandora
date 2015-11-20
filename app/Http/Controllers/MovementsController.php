@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\CreateMovementRequest;
 use Auth;
-use App\Warehouse;
+use App\Movement;
+use Redirect;
 use App\Http\Controllers\Controller;
 use PhpParser\Node\Expr\Cast\Array_;
 
@@ -20,7 +21,8 @@ class MovementsController extends Controller
      */
     public function index()
     {
-        //
+        $movements = Movement::orderBy('id', 'desc')->paginate(10);
+        return view('movements.index', compact('movements'));
     }
 
     /**
@@ -56,7 +58,7 @@ class MovementsController extends Controller
         session()->flash('flash_message', 'Movimiento creado correctamente.');
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
 //        session()->flash('flash_message_important', true);
-        return Redirect::to('usuarios');
+        return Redirect::to('movimientos');
 
     }
 
@@ -68,7 +70,8 @@ class MovementsController extends Controller
      */
     public function show($id)
     {
-        //
+        $movement = Movement::findOrFail($id);
+        return view('movements.ver', compact('movement'));
     }
 
     /**

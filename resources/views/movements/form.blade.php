@@ -39,6 +39,13 @@
         </div>
 <!-- End origin_id select -->
 
+<!-- Begin status_id textfield -->
+
+            {!! Form::hidden('status_id', 2) !!}
+            {!! Form::hidden('user_id', Auth::user()->id) !!}
+
+<!-- End status_id textfield -->
+
 <!-- Begin Submit button -->
     <div class="form-group">
             {!! Form::submit($submitButtonText, ['class' => 'btn btn-primary form-control']) !!}
