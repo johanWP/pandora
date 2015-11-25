@@ -11,6 +11,13 @@
              </div>
      <!-- End Barcode textfield -->
 
+<!-- Begin product_code textfield -->
+        <div class="form-group">
+            {!! Form::label('product_code', 'Código del Producto:') !!}
+            {!! Form::text('product_code', null, ['class' => 'form-control']) !!}
+        </div>
+<!-- End product_code textfield -->
+
     <!-- Begin checkbox serializable -->
              <div class="form-group">
                  {!! Form::label('serializable', 'Marque si el artículo es serializable &nbsp;') !!}

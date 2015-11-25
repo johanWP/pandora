@@ -25,6 +25,7 @@ Nuevo Movimiento
     <script>
         $( document ).ready(function()
         {
+            var inventario;
             $('#origin_id').change(function()
             {
                 var $warehouse_id = $(this).val()
@@ -40,8 +41,10 @@ Nuevo Movimiento
                                     .text('Seleccione al artículo...')
                                     .attr('value', ''));
                     for(var k in result) {
+                        inventario = result;
+                        //console.log (Object.keys(result[k])[0]);
                         $('#article_id').append($('<option>')
-                                        .text(result[k])
+                                        .text(Object.keys(result[k])[0])
                                         .attr('value', k));
                     }
                 });
@@ -50,6 +53,12 @@ Nuevo Movimiento
                   alert( "Request failed: " + textStatus );
                 });
 
+            });
+
+            $('#article_id').change(function (){
+
+                var cant = inventario[this.value][$("#article_id option:selected").text()];
+                $('#maxQ').html(cant);
             });
         });  // Fin del document.ready()
 

@@ -53,8 +53,30 @@ class MovementsController extends Controller
      */
     public function store(CreateMovementRequest $request)
     {
+        if(Auth::user()->securityLevel>=20)
+        {
+            $status_id = 1;     // Aprobado
+        } else
+        {
+            $status_id = 2;     // Por Aprobar
+        }
+//        $mov =Movement::create($request->all());
+/*        $mov = Movement::create([
+            'remito'        => $request['remito'],
+            'article_id'    => $request['article_id'],
+            'origin_id'     => $request['origin_id'],
+            'serial'        => $request['serial'],
+            'destination_id'=> $request['destination_id'],
+            'user_id'       => Auth::user()->id,
+            'status_id'     => $status_id,
+            'quantity'      => $request['quantity'],
 
-        Movement::create($request->all());
+        ]);
+*/
+        $mov = new Movement($request->all());
+        $mov->user_id = Auth::user()->id;
+        Movement::create($mov->toArray());
+
         session()->flash('flash_message', 'Movimiento creado correctamente.');
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
 //        session()->flash('flash_message_important', true);
@@ -94,7 +116,19 @@ class MovementsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if(Auth::user()->securityLevel >= 20) {
+            $mov = Movement::findOrFail($id);
+            $x =$mov->update([
+                'approved_by'       => Auth::user()->id,
+                'status_id'     => 1,
+            ]);
+
+            session()->flash('flash_message', 'Movimiento actualizado correctamente.');
+        }
+//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+//        session()->flash('flash_message_important', true);
+        return Redirect::to('movimientos');
+
     }
 
     /**
@@ -105,7 +139,20 @@ class MovementsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $mov = Movement::findOrFail($id);
+        if(Auth::user()->securityLevel >= 20) {
+            $mov = Movement::findOrFail($id);
+            $mov->update([
+                'deleted_by'       => Auth::user()->id,
+                'status_id'     => 3,
+            ]);
+            $mov->delete();
+        }
+        session()->flash('flash_message', 'Movimiento borrado correctamente.');
+
+//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+//        session()->flash('flash_message_important', true);
+        return Redirect::to('movimientos');
     }
 
 

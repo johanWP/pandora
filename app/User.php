@@ -55,15 +55,6 @@ class User extends Model implements AuthenticatableContract,
     protected $hidden = ['password', 'remember_token'];
 
     /**
-     *  Setea el atributo company_id igual al que tiene el usuario logueado en ese momento
-     * sin importar lo que traiga desde el frontend
-     */
-    public function setCompanyIdAttribute()
-    {
-        $this->attributes['company_id'] = Auth::user()->company_id;
-    }
-
-    /**
      * Obtener un arreglo de las actividades asociadas con el usuario actual
      * @return array
      */

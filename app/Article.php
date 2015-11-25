@@ -13,7 +13,8 @@ class Article extends Model
         'serializable',
         'barcode',
         'active',
-        'company_id'
+        'company_id',
+        'product_code'
     ];
 
     protected $dates = ['deleted_at'];

@@ -51,14 +51,24 @@ class UsersController extends Controller
         } else {
             $act = $request['active'];
         }
+
+//        Si el que hace el insert es un superusuario, puede setear la empresa del usuario creado
+//    a través de la interface
+        if (Auth::user()->securityLevel == 100)
+        {
+            $company_id = $request['company_id'];
+        } else
+        {
+            $company_id = Auth::user()->company_id;
+        }
+
         $user = User::create([
                 'username'  => $request['username'],
                 'firstName' => $request['firstName'],
                 'lastName'  => $request['lastName'],
                 'email'     => $request['email'],
-                'securityLevel'         => $request['securityLevel'],
-                'company_id'=> ' ',
-//                'company_id'=> $request['company_id'],
+                'securityLevel'  => $request['securityLevel'],
+                'company_id'=> $company_id,
                 'password'  => bcrypt($request['password']),
                 'active'    => $act
             ]);
@@ -116,14 +126,22 @@ class UsersController extends Controller
         } else {
             $act = $request['active'];
         }
+//        Si el que hace el update es un superusuario, puede setear la empresa del usuario creado
+//    a través de la interface
+        if (Auth::user()->securityLevel == 100)
+        {
+            $company_id = $request['company_id'];
+        } else
+        {
+            $company_id = Auth::user()->company_id;
+        }
 
         $user->update([
             'firstName'     => $request['firstName'],
             'lastName'      => $request['lastName'],
             'email'         => $request['email'],
             'securityLevel'         => $request['securityLevel'],
-            'company_id'    => ' ',
-//            'company_id'    => $request['company_id'],
+            'company_id'    => $company_id,
             'active'        => $act
         ]);
 

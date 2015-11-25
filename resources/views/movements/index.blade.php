@@ -27,10 +27,11 @@
 		<table class="table table-striped">
 			<thead>
 			<tr>
+			  <th>Status</th>
 			  <th>Cant.</th>
 			  <th>Artículo</th>
 			  <th><h3>Desde</h3></th>
-			  <th><b> >>>> </b></th>
+			  <th><b> &nbsp;</b></th>
 			  <th><h3>Hacia</h3></th>
 			  <th class="text-center" colspan="2"><h3>Acciones</h3></th>
 
@@ -41,12 +42,28 @@
                 <tr>
                   <td class="col-sm-1">
                     <p class="text-left">
-                      <a href="{{ action('MovementsController@show', $movement->id) }}">{{ $movement->quantity}}</a>
+{{--
+                    Status 1: Aprobado
+                    Status 2: Por Aprobar
+                    Status 3: Eliminado
+--}}
+                      @if ($movement->status_id ==1)
+                        <p><b>OK</b></p>
+                      @elseif ($movement->status_id ==2)
+                        <p style="color:red">P</p>
+                      @else
+                        <p>D</p>
+                      @endif
+
+                  </td>
+                  <td class="col-sm-1">
+                    <p class="text-left">
+                      {{ $movement->quantity}}
                     </p>
                   </td>
                   <td class="col-sm-4">
                     <p class="text-left">
-                      <a href="{{ action('MovementsController@show', $movement->id) }}">{{ $movement->article->name}}</a>
+                      {{ $movement->article->name}}
                     </p>
                   </td>
                   <td class="col-sm-2">
@@ -65,7 +82,11 @@
                     </p>
                   </td>
                   <td class="text-right">
-                    <a href="{{ action('MovementsController@edit', $movement->id) }}" class="btn btn-default"><i class="fa fa-pencil fa-fw"></i> Editar</a>
+                  @if(Auth::user()->securityLevel >= 20)
+                    <a href="#modalApprove" id="btnApprove" class="btn btn-default" data-toggle="modal" data-name="este movimiento" data-approveMe="{{ $movement->id }}">
+                      <i class="fa fa-check fa-fw"></i> Aprobar
+                    </a>
+                  @endif
                   </td>
                   <td>
                   @if(Auth::user()->securityLevel >= 20)
@@ -92,5 +113,9 @@
 @section('scripts')
 
   @include('partials.modalConfirm')
+
+  @if(Auth::user()->securityLevel > 20)
+    @include('partials.modalApprove')
+  @endif
 
 @endsection

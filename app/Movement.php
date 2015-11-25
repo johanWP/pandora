@@ -18,9 +18,11 @@ class Movement extends Model
         'origin_id',
         'serial',
         'destination_id',
-        'user_id',
-        'status_id',
+        'ticket',
         'quantity',
+        'approved_by',
+        'deleted_by',
+        'status_id'
     ];
 
     protected $dates = ['deleted_at'];
@@ -47,7 +49,7 @@ class Movement extends Model
      * Obligo a poner el movimiento en estatus "por Aprobar" si el usuario tiene
      * securityLevel
      */
-    public function setStatusIdAttribute()
+/*    public function setStatusIdAttribute()
     {
         if(Auth::user()->securityLevel>=20)
         {
@@ -57,16 +59,16 @@ class Movement extends Model
             $status_id = 2;     // Por Aprobar
         }
          $this->attributes['status_id'] = $status_id;
-    }
+    }*/
 
     /**
      * Obligo a que el valor de user_id se registre con el id del usuario logueado sin importar lo que venga
      * del formlario
      */
-    public function setUserIdAttribute()
+/*    public function setUserIdAttribute()
     {
         $this->attributes['user_id'] = Auth::user()->id;
-    }
+    }*/
 
     /**
      * Devuelve el Warehouse de origen del movimiento con todos sus atributos
