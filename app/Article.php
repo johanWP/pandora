@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 class Article extends Model
 {
     use SoftDeletes;
@@ -27,8 +28,13 @@ class Article extends Model
         return $this->belongsTo('App\Company');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function movements()
     {
         return $this->hasMany('App\Movement');
     }
+
+
 }

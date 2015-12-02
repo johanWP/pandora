@@ -101,7 +101,7 @@ class TypesController extends Controller
     {
         $type = Type::findOrFail($id);
         $type->delete();
-        session()->flash('flash_message_danger', 'Empresa borrada correctamente.');
+        session()->flash('flash_message_danger', 'Tipo de almacén borrada correctamente.');
 
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
 //        session()->flash('flash_message_important', true);

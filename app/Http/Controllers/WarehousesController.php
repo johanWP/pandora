@@ -7,6 +7,7 @@ use App\Warehouse;
 use App\Type;
 use App\Http\Requests;
 use App\Activity;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CreateWarehouseRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
@@ -48,7 +49,10 @@ class WarehousesController extends Controller
     public function store(CreateWarehouseRequest $request)
     {
 //        dd($request->input());
-        Warehouse::create($request->all());
+        $w = new Warehouse($request->all());
+        $w->company_id = Auth::user()->company_id;
+        Warehouse::create($w->toArray());
+        session()->flash('flash_message', 'Almacén creado correctamente.');
         return Redirect::to('almacenes');
     }
 
@@ -92,7 +96,9 @@ class WarehousesController extends Controller
     {
         $warehouse = Warehouse::findOrFail($id);
         $warehouse->update($request->all());
-
+        session()->flash('flash_message', 'Almacén Actualizado correctamente.');
+//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+//        session()->flash('flash_message_important', true);
         return Redirect::to('almacenes');
     }
 

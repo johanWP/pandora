@@ -76,6 +76,7 @@ class User extends Model implements AuthenticatableContract,
             ->whereIn('activity_id', $activities)
             ->where('active', '=', '1')
             ->where('company_id', '=', $this->company_id)
+            ->orderBy('name')
             ->get();
 
         return $warehouses;

@@ -23,6 +23,7 @@ Nuevo Movimiento
     <script src="external/jquery/jquery.js"></script>
     <script src="jquery-ui.min.js"></script>--}}
     <script>
+
         $( document ).ready(function()
         {
             var inventario;
@@ -30,7 +31,7 @@ Nuevo Movimiento
             {
                 var $warehouse_id = $(this).val()
                 var request = $.ajax({
-                  url: "/api/articlesList/" + $warehouse_id,
+                  url: "/api/inventory/" + $warehouse_id,
                   method: "GET",
                   dataType: "json"
                 });
@@ -38,14 +39,14 @@ Nuevo Movimiento
                 request.done(function( result ) {
                     $('#article_id').empty()
                                     .append($('<option>')
-                                    .text('Seleccione al artículo...')
+                                    .text('Seleccione el artículo...')
                                     .attr('value', ''));
                     for(var k in result) {
                         inventario = result;
-                        //console.log (Object.keys(result[k])[0]);
+
                         $('#article_id').append($('<option>')
-                                        .text(Object.keys(result[k])[0])
-                                        .attr('value', k));
+                                        .text(result[k].name)
+                                        .attr('value', result[k].id));
                     }
                 });
 
@@ -57,10 +58,12 @@ Nuevo Movimiento
 
             $('#article_id').change(function (){
 
-                var cant = inventario[this.value][$("#article_id option:selected").text()];
+                var cant = inventario[this.value].cantidad;
+
                 $('#maxQ').html(cant);
             });
         });  // Fin del document.ready()
 
+        function validate() {}
     </script>
 @endsection

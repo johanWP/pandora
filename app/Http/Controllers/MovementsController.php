@@ -9,6 +9,8 @@ use App\Http\Requests\CreateMovementRequest;
 use Auth;
 use App\Movement;
 use Redirect;
+use Session;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use PhpParser\Node\Expr\Cast\Array_;
 
@@ -60,27 +62,28 @@ class MovementsController extends Controller
         {
             $status_id = 2;     // Por Aprobar
         }
-//        $mov =Movement::create($request->all());
-/*        $mov = Movement::create([
-            'remito'        => $request['remito'],
-            'article_id'    => $request['article_id'],
-            'origin_id'     => $request['origin_id'],
-            'serial'        => $request['serial'],
-            'destination_id'=> $request['destination_id'],
-            'user_id'       => Auth::user()->id,
-            'status_id'     => $status_id,
-            'quantity'      => $request['quantity'],
-
-        ]);
-*/
         $mov = new Movement($request->all());
         $mov->user_id = Auth::user()->id;
-        Movement::create($mov->toArray());
+        $mov->status_id = $status_id;
 
-        session()->flash('flash_message', 'Movimiento creado correctamente.');
+//        dd(count($this->validateMov($mov)));
+        $valid = $this->validateMov($mov);
+        //dd($valid);
+        if ($valid != '')
+        {
+            session()->flash('flash_message_danger', 'Movimiento no ha sido creado.' . $valid);
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
-//        session()->flash('flash_message_important', true);
-        return Redirect::to('movimientos');
+            session()->flash('flash_message_important', true);
+            return Redirect::to('movimientos/create')->withInput();
+        } else
+        {
+            Movement::create($mov->toArray());
+            session()->flash('flash_message', 'Movimiento creado correctamente.');
+//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+//            session()->flash('flash_message_important', true);
+            return Redirect::to('movimientos');
+        }
+
 
     }
 
@@ -155,5 +158,82 @@ class MovementsController extends Controller
         return Redirect::to('movimientos');
     }
 
+    /** Valida el movimiento antes de insertarlo, devuelve un array vacío si no hay errores
+     * @param Movement $m
+     * @return array
+     */
+    private function validateMov(Movement $m)
+    {
+        $msg = '';
+        if($m->origin == $m->destination)
+        {
+            $msg .= '<li>Los almacenes de origen y destinos son iguales</li>';
+        }
 
+        if(($m->origin->type_id == 2) AND ($m->destination->type_id == 2))
+        {
+            $msg .= '<li>No se puede realizar un movimiento entre dos almacenes móviles</li>';
+        }
+
+        if ($m->origin->activity_id != $m->destination->activity_id)
+        {
+            $msg .= '<li>Los almacenes de origen y destino son de líneas de negocios diferentes</li>';
+        }
+        if (($m->origin->type_id == 1) && ($m->destination->type_id == 1))
+        {
+            $msg .= '<li>Los almacenes de origen y destino son de tipo "Sistema"</li>';
+        }
+
+        if ($m->origin->active != 1)
+        {
+            $msg .= '<li>El almacén de origen no se encuentra activo.</li>';
+        }
+        if ($m->destination->active != 1)
+        {
+            $msg .= '<li>El almacén de destino no se encuentra activo.</li>';
+        }
+
+        if(($m->article->serializable == 1) && ($m->serial == ''))
+        {
+            $msg .= '<li>Debe incluir el serial del artículo</li>';
+        }
+
+        if(($m->article->serializable==1) AND ($m->serial!='') AND ($m->origin->type_id != 1))
+        {
+            $lastMovement = $this->lastMovement($m->serial);
+            //dd($lastMovement);
+            if($lastMovement->destination_id != $m->origin_id)
+            {
+                $msg .= '<li>El artículo no se encuentra en el almacén '. $m->origin->name .'.
+                         Verifique el serial del equipo.</li>';
+            }
+        }
+
+        if ($msg != '')
+        {
+            $msg = '<ul>' . $msg . '</ul>';
+        }
+        return $msg;
+    }
+
+    /**
+     * Devuelve el ultimo movimiento APROBADO del articulo con el serial indicado
+     * retorna un movimiento vacío si no se encuentran movimientos del artículo
+     * @param $serial
+     * @return Movement
+     */
+    private function lastMovement($serial)
+    {
+
+        $mov = Movement::where('serial','=', $serial)
+            ->where('status_id', '=', 1)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if(is_null($mov))
+        {
+            $mov = new Movement;
+        }
+        return $mov;
+    }
 }

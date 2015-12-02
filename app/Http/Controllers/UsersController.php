@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Redirect;
 use App\Activity;
+use Auth;
 
 class UsersController extends Controller
 {
@@ -54,12 +55,10 @@ class UsersController extends Controller
 
 //        Si el que hace el insert es un superusuario, puede setear la empresa del usuario creado
 //    a través de la interface
+        $company_id = Auth::user()->company_id;
         if (Auth::user()->securityLevel == 100)
         {
             $company_id = $request['company_id'];
-        } else
-        {
-            $company_id = Auth::user()->company_id;
         }
 
         $user = User::create([

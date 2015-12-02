@@ -57,7 +57,7 @@
 
     <script>
         $( document ).ready(function() {
-            $('div.alert').not('alert-important').delay(2000).slideUp(250);
+            $('div.alert').not('.alert-important').delay(2000).slideUp(250);
         }); // Fin del document.ready()
     </script>
     @yield('scripts')

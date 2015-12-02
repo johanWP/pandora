@@ -33,25 +33,7 @@ class jsonController extends Controller
 
     public function articlesAvailable($warehouse_id)
     {
-        $articlesAvailable = '';
-        $warehouse = Warehouse::find($warehouse_id);
-//        Si el almacen es de sistema no verifico que haya existecia de articulos
-//        muestro todos los activos
-        /*        if($warehouse->type_id==1)
-                {
-                    $articles = DB::table('articles')
-                            ->where('active', '=', 1)
-                            ->orderBy('name')
-                            ->get();
-                }
-
-                if (!empty($articles)) {
-                    foreach ($articles as $article)
-                    {
-                        $articlesAvailable[$article->id] = $article->name;
-                    }
-                }
-                return $articlesAvailable;*/
+        $warehouse = Warehouse::findOrFail($warehouse_id);
         return $warehouse->inventory;
     }
 }

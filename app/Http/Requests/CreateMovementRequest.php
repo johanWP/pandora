@@ -24,9 +24,14 @@ class CreateMovementRequest extends Request
     public function rules()
     {
         return [
-            'quantity'  => 'required|numeric',
-            'remito'  => 'numeric',
-            'serial' => 'alpha_num',
+            'quantity'      => 'required|numeric',
+            'remito'        => 'numeric',
+            'serial'        => 'alpha_num',
+            'origin_id'     => 'required',
+            'destination_id'=> 'required',
+            'article_id'    => 'required',
+            'ticket'        => 'required'
+
         ];
     }
 }

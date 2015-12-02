@@ -25,20 +25,6 @@ class Warehouse extends Model
     ];
 
     protected $dates = ['deleted_at'];
-/*    public function getWarehouseListAttribute()
-    {
-        $warehouseList = Array();
-        $warehouses = Auth::user()->warehousesList;
-//        Tomo solo los valores que necesito de la Collection y los pongo en
-//        un array para poblar el combobox en la vista
-        foreach ($warehouses as $warehouse)
-        {
-            $warehouseList[$warehouse->id] = $warehouse->name;
-        }
-
-        return $warehouseList;
-    }*/
-
 
     /**
      * Retorna la compañía a la que pertenece el almacen
@@ -72,6 +58,8 @@ class Warehouse extends Model
      */
     public function getInventoryAttribute()
     {
+        $inventory = Array();
+        $result = Array();
         if ($this->type->id != 1)
         {
         //        Traigo todos los movimientos que han enviado articulos hacia este almacen
@@ -94,32 +82,31 @@ class Warehouse extends Model
                 ->orderBy('article_id', 'asc')
                 ->get();
 
-            $inventory = Array();
-
             foreach ($in as $movIn) {
-                /*            Busco cada articulo que tuvo una entrada al almacén en el arreglo de articulos
+                $art = Article::find($movIn->article_id);
+                if (!empty($out))
+                {
+//                    dd('hey');
+/*            Busco cada articulo que tuvo una entrada al almacén en el arreglo de articulos
                             que salieron del almacén y resto
-                */
-                foreach ($out as $movOut) {
-                    if ($movIn->article_id == $movOut->article_id) {
-                        $inventory[$movIn->article_id] = [$movIn->article_id => $movIn->totalIn - $movOut->totalOut];
-                        break;
-                    } else {
-                        //                    Si el articulo no ha tenido salidas, el total es lo que entró
-                        $inventory[$movIn->article_id] = [$movIn->article_id => $movIn->totalIn];
+*/
+
+                    foreach ($out as $movOut) {
+                        if ($movIn->article_id == $movOut->article_id) {
+
+
+                            $total = $movIn->totalIn - $movOut->totalOut;
+                            $result[$art->id] = ['id' => $art->id, 'name' => $art->name, 'cantidad' => $total];
+                            break;
+                        }
                     }
+
+                } else {
+                    $result[$art->id] = ['id' => $art->id, 'name' => $art->name, 'cantidad' => $movIn->totalIn];
                 }
             }
 
-//        Armo un arreglo con el nombre del articlulo, su id y cantidad
-            foreach ($inventory as $article) {
-                $key = key($article);
-                $art = Article::find($key);
-                $result[$key] = [$art->name => $article[$key]];
-            }
-
-
-        } else
+        } else // Si el almacén es de Sistema
         {
 //            Si es un almacen de sistema, devuevo lista de articulos activos
             $all = DB::table('articles')
@@ -130,7 +117,8 @@ class Warehouse extends Model
 
             foreach ($all as $art)
             {
-                $result[$art->id] = [$art->name => 999999];
+//                $result[$art->id] = [$art->name => 999999];
+                $result[$art->id] = [ 'id' => $art->id, 'name'=>$art->name, 'cantidad' => 999999];
             }
 
         }

@@ -27,13 +27,13 @@
     <!-- Begin password textfield -->
             <div class="form-group">
                 {!! Form::label('password', 'Password:') !!}
-                {!! Form::text('password', null, ['class' => 'form-control']) !!}
+                {!! Form::password('password', ['class' => 'form-control']) !!}
             </div>
     <!-- End password textfield -->
     <!-- Begin password_confirmation textfield -->
             <div class="form-group">
                 {!! Form::label('password_confirmation', 'Confirmar Password:') !!}
-                {!! Form::text('password_confirmation', null, ['class' => 'form-control']) !!}
+                {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
             </div>
     <!-- End password_confirmation textfield -->
 
@@ -50,13 +50,14 @@
                 </label>
             </div>
     <!-- End active textfield -->
+    @if(Auth::user()->securityLevel == 100)
     <!-- Begin company_id textfield -->
-            {{--<div class="form-group">--}}
-                {{--{!! Form::label('company_id', 'Company ID:') !!}--}}
-                {{--{!! Form::text('company_id', 1, ['class' => 'form-control']) !!}--}}
-            {{--</div>--}}
+            <div class="form-group">
+                {!! Form::label('company_id', 'Company ID:') !!}
+                {!! Form::text('company_id', 1, ['class' => 'form-control']) !!}
+            </div>
     <!-- End company_id textfield -->
-
+    @endif
     <!-- Begin Submit button -->
 <!-- Begin security_level textfield -->
         <div class="form-group">
