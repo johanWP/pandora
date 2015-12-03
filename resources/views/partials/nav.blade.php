@@ -108,6 +108,18 @@
                 </ul>
             </li>
 
+            <li>
+                <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Reportes<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="{!!URL::to('/articulos/create')!!}"><i class='fa fa-plus fa-fw'></i> Agregar</a>
+                    </li>
+                    <li>
+                        <a href="{!!URL::to('/articulos')!!}"><i class='fa fa-list-ol fa-fw'></i> Ver Listados</a>
+                    </li>
+                </ul>
+            </li>
+
         </ul>
     </div>
 </div>

@@ -45,6 +45,14 @@ class UsersController extends Controller
      */
     public function store(CustomUserRequest $request)
     {
+        if ($request['securityLevel']>Auth::user()->securityLevel)
+        {
+            session()->flash('flash_message_danger', 'Usted no puede crear usuarios de este nivel.');
+//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+            session()->flash('flash_message_important', true);
+            return Redirect::to('usuarios/create')->withInput();
+
+        }
 //        dd($request['active']);
         if (is_null($request['active']))
         {
@@ -52,6 +60,7 @@ class UsersController extends Controller
         } else {
             $act = $request['active'];
         }
+
 
 //        Si el que hace el insert es un superusuario, puede setear la empresa del usuario creado
 //    a través de la interface

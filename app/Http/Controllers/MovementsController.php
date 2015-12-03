@@ -158,13 +158,36 @@ class MovementsController extends Controller
         return Redirect::to('movimientos');
     }
 
-    /** Valida el movimiento antes de insertarlo, devuelve un array vacío si no hay errores
+    /** Valida el movimiento antes de insertarlo, devuelve un string vacío si no hay errores
      * @param Movement $m
-     * @return array
+     * @return string
      */
     private function validateMov(Movement $m)
     {
         $msg = '';
+
+        if ($m->origin->active != 1)
+        {
+            $msg .= '<li>El almacén de origen se encuentra inactivo.</li>';
+        }
+        if ($m->destination->active != 1)
+        {
+            $msg .= '<li>El almacén de destino se encuentra inactivo.</li>';
+        }
+        if((Auth::user()->securityLevel < 20) AND ($m->destination->type_id != 1))
+        {
+            $msg .= '<li>Usted no puede hacer movimientos hacia este tipo de almacén.</li>';
+        }
+
+        if (($m->origin->type_id == 2) AND ($m->destination->type_id == 2))
+        {
+            $msg .= '<li>Los movimientos entre almacenes móviles no están permitidos.</li>';
+        }
+
+        if (($m->origin->type_id == 1) AND ($m->destination->type_id == 1))
+        {
+            $msg .= '<li>Los movimientos entre almacenes de sistema no están permitidos.</li>';
+        }
         if($m->origin == $m->destination)
         {
             $msg .= '<li>Los almacenes de origen y destinos son iguales</li>';
@@ -208,6 +231,7 @@ class MovementsController extends Controller
                          Verifique el serial del equipo.</li>';
             }
         }
+
 
         if ($msg != '')
         {
