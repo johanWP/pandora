@@ -11,6 +11,7 @@
 |
 */
 Route::get('/', 'PagesController@home');
+Route::get('/inicio', 'PagesController@inicio');
 
 Route::get('escritorio', 'DefaultController@dashboard');
 Route::get('api/warehousesList', 'jsonController@warehousesList');
@@ -55,3 +56,4 @@ Route::resource('tipos' , 'TypesController');
 Route::resource('usuarios', 'UsersController');
 Route::resource('almacenes', 'WarehousesController');
 Route::resource('movimientos', 'MovementsController');
+Route::resource('mail', 'MailController');

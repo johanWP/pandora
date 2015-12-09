@@ -206,7 +206,7 @@ class MovementsController extends Controller
         {
             $msg .= '<li>Los almacenes de origen y destino son de tipo "Sistema"</li>';
         }
-
+/*
         if ($m->origin->active != 1)
         {
             $msg .= '<li>El almacén de origen no se encuentra activo.</li>';
@@ -215,7 +215,7 @@ class MovementsController extends Controller
         {
             $msg .= '<li>El almacén de destino no se encuentra activo.</li>';
         }
-
+*/
         if(($m->article->serializable == 1) && ($m->serial == ''))
         {
             $msg .= '<li>Debe incluir el serial del artículo</li>';
