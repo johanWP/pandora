@@ -16,37 +16,19 @@ Route::get('/inicio', 'PagesController@inicio');
 Route::get('escritorio', 'DefaultController@dashboard');
 Route::get('api/warehousesList', 'jsonController@warehousesList');
 Route::get('api/inventory/{warehouse_id}', 'jsonController@articlesAvailable');
+Route::get('api/warehousesType/{id}', 'jsonController@warehousesType');
+Route::get('api/articles/serial', 'jsonController@articlesSerial');
 
 /*Route::get('/', function () {
     return 'Hello World';
 });*/
 Route::get('reportes/articulos/', 'ReportsController@articles');
 Route::get('reportes/articulos/all', 'ReportsController@excelArticles');
-/*
-Route::get('empresas', 'CompaniesController@index');
-Route::get('empresas/create', 'CompaniesController@create');
-Route::get('empresas/{id}', 'CompaniesController@show');
-Route::post('empresas', 'CompaniesController@store');
-*/
-/*
-// Authentication routes...
-Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
-
-
-
-// Custom Authentication routes...
-Route::get('auth/login2', 'Auth\AuthController@getLogin');
-Route::post('auth/login2', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
-
-*/
-
-// Registration routes...
-//Route::get('registro', 'CustomAuthController@create');
-//Route::post('registro', 'CustomAuthController@postRegister');
-
+Route::get('reportes/almacenes', 'ReportsController@inventory');
+Route::get('movimientos/alta', function () {
+    $warehouseList = Array();
+    return view('movements.alta', compact('warehouseList'));
+});
 Route::resource('login', 'CustomAuthController');
 Route::get('logout', 'CustomAuthController@logout');
 Route::resource('actividades', 'ActivitiesController');

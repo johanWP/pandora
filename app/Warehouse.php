@@ -82,27 +82,47 @@ class Warehouse extends Model
                 ->orderBy('article_id', 'asc')
                 ->get();
 
-            foreach ($in as $movIn) {
+            foreach ($in as $movIn)
+            {
                 $art = Article::find($movIn->article_id);
                 if (!empty($out))
                 {
-//                    dd('hey');
 /*            Busco cada articulo que tuvo una entrada al almacén en el arreglo de articulos
                             que salieron del almacén y resto
 */
 
-                    foreach ($out as $movOut) {
+                    foreach ($out as $movOut)
+                    {
                         if ($movIn->article_id == $movOut->article_id) {
 
 
                             $total = $movIn->totalIn - $movOut->totalOut;
-                            $result[$art->id] = ['id' => $art->id, 'name' => $art->name, 'cantidad' => $total];
-                            break;
+                            if($total >0)
+                            {
+                                $result[$art->id] = [
+                                    'id' => $art->id,
+                                    'name' => $art->name,
+                                    'fav' => $art->fav,
+                                    'product_code' => $art->product_code,
+                                    'serializable' => $art->serializable,
+                                    'cantidad' => $total
+                                ];
+                                break;
+                            }
+
+                        } else
+                        {
+                            $result[$art->id] = [
+                                'id' => $art->id,
+                                'name' => $art->name,
+                                'fav' => $art->fav,
+                                'product_code' => $art->product_code,
+                                'serializable' => $art->serializable,
+                                'cantidad' => $movIn->totalIn
+                            ];
                         }
                     }
 
-                } else {
-                    $result[$art->id] = ['id' => $art->id, 'name' => $art->name, 'cantidad' => $movIn->totalIn];
                 }
             }
 
@@ -110,19 +130,27 @@ class Warehouse extends Model
         {
 //            Si es un almacen de sistema, devuevo lista de articulos activos
             $all = DB::table('articles')
-                ->select('id', 'name')
+                ->select('id', 'name', 'serializable', 'fav')
                 ->where('active', '=', 1)
-                ->orderBy('id', 'asc')
+                ->orderBy('name', 'asc')
                 ->get();
 
             foreach ($all as $art)
             {
 //                $result[$art->id] = [$art->name => 999999];
-                $result[$art->id] = [ 'id' => $art->id, 'name'=>$art->name, 'cantidad' => 999999];
+                $result[$art->name] =
+                    [
+                    'id' => $art->id,
+                    'name'=>$art->name,
+                    'fav' => $art->fav,
+                    'serializable' => $art->serializable,
+                    'cantidad' => 999999
+                    ];
             }
 
+            //dd($result);
         }
-
+        ksort($result);
         return $result;
     }
 }

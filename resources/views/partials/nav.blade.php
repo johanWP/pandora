@@ -92,6 +92,9 @@
                         <a href="{!!URL::to('/movimientos/create')!!}"><i class='fa fa-plus fa-fw'></i> Agregar</a>
                     </li>
                     <li>
+                        <a href="{!!URL::to('/movimientos/alta')!!}"><i class='fa fa-arrow-circle-up fa-fw'></i> Alta de artículos</a>
+                    </li>
+                    <li>
                         <a href="{!!URL::to('/movimientos')!!}"><i class='fa fa-list-ol fa-fw'></i> Ver Últimos Movimientos</a>
                     </li>
                 </ul>
@@ -112,10 +115,10 @@
                 <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Reportes<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="{!!URL::to('/articulos/create')!!}"><i class='fa fa-plus fa-fw'></i> Agregar</a>
+                        <a href="{!!URL::to('/reportes/articulos')!!}"><i class='fa fa-plus fa-fw'></i> Listado de articulos</a>
                     </li>
                     <li>
-                        <a href="{!!URL::to('/articulos')!!}"><i class='fa fa-list-ol fa-fw'></i> Ver Listados</a>
+                        <a href="{!!URL::to('/reportes/almacenes')!!}"><i class='fa fa-list-ol fa-fw'></i> Artículos por Almacén</a>
                     </li>
                 </ul>
             </li>

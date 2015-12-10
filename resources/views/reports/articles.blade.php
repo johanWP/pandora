@@ -10,7 +10,7 @@
     <h1>Reporte de Artículos</h1>
   </div>
   <div class=""><br/>
-    <a class="btn btn-success" href="{{ action('ReportsController@excelArticles') }}"><i class="fa fa-file-excel-o fa-fw"></i> Exportar</a>
+    <a class="btn btn-primary" href="{{ action('ReportsController@excelArticles') }}"><i class="fa fa-file-excel-o fa-fw"></i> Exportar</a>
   </div>
 </div>
 

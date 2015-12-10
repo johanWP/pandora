@@ -79,7 +79,18 @@ class User extends Model implements AuthenticatableContract,
             ->orderBy('name')
             ->get();
 
-        return $warehouses;
+        foreach ($warehouses as $w)
+        {
+            $result[$w->id] = [
+                'id' => $w->id,
+                'name' => $w->name,
+                'type_id' => $w->type_id,
+                'activity_id' => $w->activity_id,
+                'active' => $w->active
+            ];
+        }
+
+        return $result;
 
 
 

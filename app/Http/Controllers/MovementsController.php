@@ -41,7 +41,7 @@ class MovementsController extends Controller
 //        un array para poblar el combobox en la vista
         foreach ($warehouses as $warehouse)
         {
-            $warehouseList[$warehouse->id] = $warehouse->name;
+            $warehouseList[$warehouse['id']] = $warehouse['name'];
         }
 
         return view('movements.create', compact('warehouseList'));

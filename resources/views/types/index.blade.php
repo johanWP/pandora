@@ -10,7 +10,7 @@
     <h1>Tipos de Almacén</h1>
   </div>
   <div class=""><br/>
-    <a class="btn btn-success" href="tipos/create"><i class="fa fa-plus fa-fw"></i> Crear Nuevo</a>
+    <a class="btn btn-primary" href="tipos/create"><i class="fa fa-plus fa-fw"></i> Crear Nuevo</a>
   </div>
 </div>
 

@@ -10,7 +10,7 @@
     <h1>Empresas Registradas</h1>
   </div>
   <div class=""><br/>
-    <a class="btn btn-success" href="{{ action('CompaniesController@create') }}"><i class="fa fa-plus fa-fw"></i> Crear Nueva</a>
+    <a class="btn btn-primary" href="{{ action('CompaniesController@create') }}"><i class="fa fa-plus fa-fw"></i> Crear Nueva</a>
   </div>
 </div>
 
