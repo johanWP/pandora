@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/custom.css">
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-
+    @yield('css')
     <style>
 
         .logo  {background-image: url('/images/pandora-icon-32.png');

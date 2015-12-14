@@ -13,7 +13,7 @@ class AddArticleCodeFieldToArticlesTable extends Migration
     public function up()
     {
         Schema::table('articles', function ($table) {
-            $table->integer('product_code');
+            $table->integer('product_code')->unique();
         });
     }
 
@@ -25,6 +25,7 @@ class AddArticleCodeFieldToArticlesTable extends Migration
     public function down()
     {
         Schema::table('articles', function ($table) {
+            $table->dropUnique('articles_product_code_unique');
             $table->dropColumn('product_code');
         });
     }
