@@ -112,13 +112,13 @@
             </li>
 
             <li>
-                <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Reportes<span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-table fa-fw"></i> Reportes<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="{!!URL::to('/reportes/articulos')!!}"><i class='fa fa-plus fa-fw'></i> Listado de articulos</a>
+                        <a href="{!!URL::to('/reportes/articulos')!!}"><i class='fa fa-th-list fa-fw'></i> Maestro de articulos</a>
                     </li>
                     <li>
-                        <a href="{!!URL::to('/reportes/almacenes')!!}"><i class='fa fa-list-ol fa-fw'></i> Artículos por Almacén</a>
+                        <a href="{!!URL::to('/reportes/almacenes')!!}"><i class='fa fa-list-ol fa-fw'></i> Artículos por almacén</a>
                     </li>
                 </ul>
             </li>

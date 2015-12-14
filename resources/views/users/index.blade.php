@@ -17,9 +17,9 @@
     <hr/>
 
 <div class="row">
-  <div class="col-sm-5 vcenter">
-    <input type="text" placeholder="Buscador"> <input class="btn btn-default" type="submit" value="Buscar">
-  </div>
+
+    @include('search.autocomplete')
+
 </div>
 <div class="row">
 @if($users->count() > 0)
@@ -81,5 +81,30 @@
 @section('scripts')
 
   @include('partials.modalConfirm')
+  <script src="/js/jquery-ui.min.js"></script>
+  <script src="/js/functions.js"></script>
+  <script>
+$(function()
+  {
+      $( "#q" ).autocomplete(
+      {
+          source: "search/autocomplete/users",
+          minLength: 3,
+          select: function(event, ui)
+          {
+              $('#q').val(ui.item.value);
+              $('#btnDetalle').attr('href','/usuarios/'+ ui.item.id)
+                              .attr('disabled', false);
+          }  // fin del select
+      });     // fin del $( "#q" ).autocomplete
+  });   // fin del document.ready
+
+  </script>
+@endsection
+
+@section('css')
+  <link rel="stylesheet" href="/css/jquery-ui.min.css">
+  <link rel="stylesheet" href="/css/jquery-ui.structure.min.css">
+  <link rel="stylesheet" href="/css/jquery-ui.theme.min.css">
 
 @endsection
