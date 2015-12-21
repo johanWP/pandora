@@ -68,7 +68,7 @@
                   </td>
                   <td class="col-sm-2">
                     <p class="text-left">
-                      <a href="{{ action('MovementsController@show', $movement->id) }}">{{ $movement->origin->name}}</a>
+                      {{ $movement->origin->name}}
                     </p>
                   </td>
                   <td>
@@ -78,20 +78,23 @@
                   </td>
                   <td>
                     <p class="text-left">
-                      <a href="{{ action('MovementsController@show', $movement->id) }}">{{ $movement->destination->name}}</a>
+                      {{ $movement->destination->name}}
                     </p>
                   </td>
                   <td class="text-right">
-                  @if(Auth::user()->securityLevel >= 20)
+                    <a href="movimientos/{{ $movement->id }}" id="btnVer" class="btn btn-default">
+                      <i class="fa fa-eye fa-2x"></i>
+                    </a>
+                  @if((Auth::user()->securityLevel >= 20) AND ($movement->status_id ==2))
                     <a href="#modalApprove" id="btnApprove" class="btn btn-default" data-toggle="modal" data-name="este movimiento" data-approveMe="{{ $movement->id }}">
-                      <i class="fa fa-check fa-fw"></i> Aprobar
+                      <i class="fa fa-check fa-2x"></i>
                     </a>
                   @endif
                   </td>
                   <td>
-                  @if(Auth::user()->securityLevel >= 20)
+                  @if(Auth::user()->securityLevel >= 20 AND ($movement->status_id !=3))
                     <a href="#modalConfirm" id="btnDelete" class="btn btn-danger" data-toggle="modal" data-name="este movimiento" data-deleteMe="{{ $movement->id }}">
-                      <i class="fa fa-trash fa-fw"></i> Eliminar
+                      <i class="fa fa-trash fa-2x"></i>
                     </a>
                   @endif
                   </td>

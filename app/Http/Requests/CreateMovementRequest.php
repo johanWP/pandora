@@ -25,12 +25,12 @@ class CreateMovementRequest extends Request
     {
         return [
             'quantity'      => 'required|numeric',
-            'remito'        => 'numeric',
+            'remito'        => 'alpha_num',
             'serial'        => 'alpha_num',
-            'origin_id'     => 'required',
-            'destination_id'=> 'required',
-            'article_id'    => 'required',
-            'ticket'        => 'required'
+            'origin_id'     => 'required|numeric',
+            'destination_id'=> 'required|numeric',
+            'article_id'    => 'required|numeric',
+            'ticket'        => 'required|alpha_num'
 
         ];
     }

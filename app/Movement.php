@@ -23,7 +23,8 @@ class Movement extends Model
         'user_id',
         'approved_by',
         'deleted_by',
-        'status_id'
+        'status_id',
+        'note'
     ];
 
     protected $dates = ['deleted_at'];
@@ -74,4 +75,21 @@ class Movement extends Model
         return $status;
     }
 
+    /**Poner el Ticket en mayuscula antes de insertarlo
+     * @param $value
+     */
+    public function setTicketAttribute($value)
+    {
+        //preg_replace("/[^A-Za-z0-9 ]/", '', $string);
+        $this->attributes['ticket'] = strtoupper($value);
+    }
+
+    /**
+     * @param $value
+     */
+    public function setRemitoAttribute($value)
+    {
+        //preg_replace("/[^A-Za-z0-9 ]/", '', $string);
+        $this->attributes['remito'] = strtoupper($value);
+    }
 }

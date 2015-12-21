@@ -11,7 +11,6 @@
 |
 */
 Route::get('/', 'PagesController@home');
-Route::get('/inicio', 'PagesController@inicio');
 
 Route::get('escritorio', 'DefaultController@dashboard');
 Route::get('api/warehousesList', 'jsonController@warehousesList');
@@ -20,10 +19,18 @@ Route::get('api/warehousesType/{id}', 'jsonController@warehousesType');
 Route::get('api/articles/serial', 'jsonController@articlesSerial');
 Route::get('search/autocomplete/{table}', 'SearchController@autocomplete');
 Route::get('search/name2Id', 'SearchController@name2Id');
+Route::get('articulos/import', 'ImportController@articles');
+Route::post('articulos/import', 'ImportController@importArticles');
 
-/*Route::get('/', function () {
-    return 'Hello World';
-});*/
+// Password reset link request routes...
+Route::get('password/email', 'Auth\PasswordController@getEmail');
+Route::post('password/email', 'Auth\PasswordController@postEmail');
+
+// Password reset routes...
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('password/reset', 'Auth\PasswordController@postReset');
+
+
 Route::get('reportes/articulos/', 'ReportsController@articles');
 Route::get('reportes/articulos/all', 'ReportsController@excelArticles');
 Route::get('reportes/almacenes', 'ReportsController@inventory');
@@ -41,3 +48,8 @@ Route::resource('usuarios', 'UsersController');
 Route::resource('almacenes', 'WarehousesController');
 Route::resource('movimientos', 'MovementsController');
 Route::resource('mail', 'MailController');
+
+
+/*Route::get('/', function () {
+    return 'Hello World';
+});*/

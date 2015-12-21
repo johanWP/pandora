@@ -29,6 +29,9 @@
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
             <li><a href="{!!URL::to('/escritorio')!!}"><i class="fa fa-desktop fa-fw"></i> Escritorio</a></li>
+
+{{--Los usuarios los crea Gerente o mayor            --}}
+@if (Auth::user()->securityLevel >= 40)
             <li>
                 <a href="#"><i class="fa fa-users fa-fw"></i> Usuarios<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -40,6 +43,9 @@
                     </li>
                 </ul>
             </li>
+@endif
+{{--Las empresas las crea el Director o mayor--}}
+@if (Auth::user()->securityLevel >= 50)
             <li>
                 <a href="#"><i class="fa fa-building-o fa-fw"></i> Empresas<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -51,6 +57,9 @@
                     </li>
                 </ul>
             </li>
+@endif
+{{--Solo admin puede hacer esto--}}
+@if (Auth::user()->securityLevel > 99)
             <li>
                 <a href="#"><i class="fa fa-tasks fa-fw"></i> Tipos de Almacén<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -62,6 +71,9 @@
                     </li>
                 </ul>
             </li>
+@endif
+{{--Solo Admin puede hacer esto--}}
+@if (Auth::user()->securityLevel > 99)
             <li>
                 <a href="#"><i class="fa fa-cubes fa-fw"></i> Actividades<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -73,7 +85,9 @@
                     </li>
                 </ul>
             </li>
-
+@endif
+{{--Jefe o mayor puede hacer esto--}}
+@if (Auth::user()->securityLevel >= 30)
             <li>
                 <a href="#"><i class="fa fa-archive fa-fw"></i> Almacenes<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -85,6 +99,7 @@
                     </li>
                 </ul>
             </li>
+@endif
             <li>
                 <a href="#"><i class="fa fa-exchange fa-fw"></i> Movimientos<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -99,6 +114,8 @@
                     </li>
                 </ul>
             </li>
+{{--Supervisor o mayor puede hacer esto--}}
+@if (Auth::user()->securityLevel >= 20)
             <li>
                 <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Artículos<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -108,9 +125,15 @@
                     <li>
                         <a href="{!!URL::to('/articulos')!!}"><i class='fa fa-list-ol fa-fw'></i> Ver Listados</a>
                     </li>
+                    <li>
+                        <a href="{!!URL::to('/articulos/import')!!}"><i class='fa fa-cloud-upload fa-fw'></i> Importar</a>
+                    </li>
                 </ul>
             </li>
+@endif
 
+{{--Los reportes lo ven Jefe o mayor--}}
+@if (Auth::user()->securityLevel >= 30)
             <li>
                 <a href="#"><i class="fa fa-table fa-fw"></i> Reportes<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -122,7 +145,7 @@
                     </li>
                 </ul>
             </li>
-
+@endif
         </ul>
     </div>
 </div>

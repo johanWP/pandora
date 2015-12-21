@@ -46,6 +46,14 @@
             {!! Form::text('ticket', null, ['class' => 'form-control']) !!}
         </div>
 <!-- End ticket textfield -->
+
+<!-- Begin note textfield -->
+        <div class="form-group">
+            {!! Form::label('note', 'Notas / Observaciones:') !!}
+            {!! Form::text('note', null, ['class' => 'form-control', 'placeholder' => 'Opcional']) !!}
+        </div>
+<!-- End note textfield -->
+
 <!-- Begin Submit button -->
     <div class="form-group">
             {!! Form::submit($submitButtonText, ['class' => 'btn btn-primary form-control']) !!}

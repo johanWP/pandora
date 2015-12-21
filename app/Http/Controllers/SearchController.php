@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 
 class SearchController extends Controller
@@ -21,6 +22,7 @@ class SearchController extends Controller
 
         if ($table <> 'users') {
             $queries = DB::table($table)
+                ->where('company_id', '=', Auth::user()->company_id)
                 ->where('name', 'LIKE', '%' . $term . '%')
                 ->take(5)->get();
             foreach ($queries as $query)
@@ -29,8 +31,14 @@ class SearchController extends Controller
             }
         } else {
             $queries = DB::table($table)
-                ->where('firstName', 'LIKE', '%' . $term . '%')
-                ->orWhere('lastName', 'LIKE', '%' . $term . '%')
+                ->where('company_id', '=', Auth::user()->company_id)
+                ->where(function ($query) {
+                    $term = Input::get('term');
+                    $query->where('firstName', 'LIKE', '%' . $term . '%')
+                        ->orWhere('lastName', 'LIKE', '%' . $term . '%')
+                        ->orWhere('username', 'LIKE', '%' . $term . '%');
+                })
+
                 ->take(5)->get();
             foreach ($queries as $query)
             {

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Requests\CreateMovementRequest;
 use Auth;
 use App\Movement;
+use App\User;
 use Redirect;
 use Session;
 use Illuminate\Support\Facades\DB;
@@ -66,7 +66,7 @@ class MovementsController extends Controller
         $mov->user_id = Auth::user()->id;
         $mov->status_id = $status_id;
 
-//        dd(count($this->validateMov($mov)));
+//dd($mov);
         $valid = $this->validateMov($mov);
         //dd($valid);
         if ($valid != '')
@@ -96,7 +96,16 @@ class MovementsController extends Controller
     public function show($id)
     {
         $movement = Movement::findOrFail($id);
-        return view('movements.ver', compact('movement'));
+//        dd($movement);
+        if($movement->approved_by !=null)
+        {
+            $approved = User::find($movement->approved_by);
+        }
+        if($movement->deleted_by !=null)
+        {
+            $deleted = User::find($movement->deleted_by);
+        }
+        return view('movements.ver', compact('movement', 'approved', 'deleted'));
     }
 
     /**

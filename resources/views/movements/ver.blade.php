@@ -38,6 +38,19 @@
             <th>Realizado por</th>
             <td>{{ $movement->user->firstName }} {{ $movement->user->lastName }}</td>
          </tr>
+      @if ($movement->approved_by != 0)
+         <tr>
+            <th>Aprobado por</th>
+
+              <td>{{ $approved->firstName }} {{ $approved->lastName }}</td>
+         </tr>
+      @endif
+      @if ($movement->deleted_by != 0)
+         <tr>
+            <th>Eliminado por</th>
+            <td>{{ $deleted->firstName }} {{ $deleted->lastName }} </td>
+         </tr>
+      @endif
          <tr>
             <th>Fecha de creación</th>
             <td>{{ $movement->created_at }}</td>
@@ -47,6 +60,11 @@
   </div>
 </div>
 
+    <div class="form-group">
+            <a class="btn btn-default" href="/movimientos/"><i class="fa fa-chevron-left fa-fw"></i> Volver</a>
+    </div>
+{{--
+
 @if (Auth::user()->securityLevel >= 20)
 <!-- Begin Submit button -->
     <div class="form-group">
@@ -54,4 +72,6 @@
     </div>
 <!-- End Submit Button -->
 @endif
+
+--}}
 @endsection
