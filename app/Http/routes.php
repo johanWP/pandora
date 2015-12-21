@@ -14,8 +14,10 @@ Route::get('/', 'PagesController@home');
 
 Route::get('escritorio', 'DefaultController@dashboard');
 Route::get('api/warehousesList', 'jsonController@warehousesList');
+Route::get('api/warehousesByType/{id}', 'jsonController@warehousesType');
+Route::get('api/warehousesByActivity/{id}', 'jsonController@warehousesActivity');
+Route::get('api/warehouseDetail/{id}', 'jsonController@warehouseDetail');
 Route::get('api/inventory/{warehouse_id}', 'jsonController@articlesAvailable');
-Route::get('api/warehousesType/{id}', 'jsonController@warehousesType');
 Route::get('api/articles/serial', 'jsonController@articlesSerial');
 Route::get('search/autocomplete/{table}', 'SearchController@autocomplete');
 Route::get('search/name2Id', 'SearchController@name2Id');

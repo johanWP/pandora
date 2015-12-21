@@ -29,7 +29,7 @@
 <!-- Begin serial textfield -->
         <div class="form-group">
             {!! Form::label('serial', 'Serial:', ['id'=>'serialLabel']) !!}
-            {!! Form::text('serial', null, ['class' => 'form-control', 'placeholder' => 'Opcional', 'id'=>'serial']) !!}
+            {!! Form::text('serial', null, ['class' => 'form-control', 'id'=>'serial']) !!}
         </div>
 <!-- End serial textfield -->
 

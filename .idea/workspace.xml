@@ -29,64 +29,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MovementsController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/MovementsController.php">
+      <file leaf-file-name="create.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/movements/create.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.625" vertical-offset="660" max-vertical-offset="4170">
-              <caret line="69" column="11" selection-start-line="69" selection-start-column="11" selection-end-line="69" selection-end-column="11" />
-              <folding>
-                <element signature="e#40#68#0#PHP" expanded="true" />
-                <marker date="1450702793000" expanded="true" signature="7523:7650" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="2015_12_18_195911_change_ticket_type_in_Movements.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database/migrations/2015_12_18_195911_change_ticket_type_in_Movements.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.625" vertical-offset="0" max-vertical-offset="540">
-              <caret line="26" column="32" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
+            <state vertical-scroll-proportion="-2.0528455" vertical-offset="1965" max-vertical-offset="2730">
+              <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CreateMovementRequest.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Requests/CreateMovementRequest.php">
+      <file leaf-file-name="jsonController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/jsonController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.875" vertical-offset="0" max-vertical-offset="645">
-              <caret line="27" column="41" selection-start-line="27" selection-start-column="41" selection-end-line="27" selection-end-column="41" />
+            <state vertical-scroll-proportion="-19.5" vertical-offset="327" max-vertical-offset="1590">
+              <caret line="60" column="34" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="form.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/movements/form.blade.php">
+      <file leaf-file-name="Warehouse.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Warehouse.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-29.5" vertical-offset="132" max-vertical-offset="990">
-              <caret line="56" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/movements/index.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.125" vertical-offset="900" max-vertical-offset="1935">
-              <caret line="89" column="55" selection-start-line="89" selection-start-column="22" selection-end-line="89" selection-end-column="55" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ver.blade.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/views/movements/ver.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.74825174" vertical-offset="410" max-vertical-offset="1230">
-              <caret line="63" column="94" selection-start-line="63" selection-start-column="94" selection-end-line="63" selection-end-column="94" />
+            <state vertical-scroll-proportion="-23.125" vertical-offset="1500" max-vertical-offset="2385">
+              <caret line="141" column="32" selection-start-line="141" selection-start-column="32" selection-end-line="141" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -95,38 +62,28 @@
       <file leaf-file-name="alta.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/movements/alta.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="14.375" vertical-offset="345" max-vertical-offset="3105">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="-11.375" vertical-offset="2247" max-vertical-offset="3045">
+              <caret line="168" column="0" selection-start-line="160" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="create.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/movements/create.blade.php">
+      <file leaf-file-name="form.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/movements/form.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1125">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="-15.125" vertical-offset="102" max-vertical-offset="990">
+              <caret line="31" column="71" selection-start-line="31" selection-start-column="71" selection-end-line="31" selection-end-column="71" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="altaForm.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/movements/altaForm.blade.php">
+      <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-29.5" vertical-offset="132" max-vertical-offset="990">
-              <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Movement.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Movement.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-55.0" vertical-offset="0" max-vertical-offset="1455">
-              <caret line="92" column="33" selection-start-line="92" selection-start-column="33" selection-end-line="92" selection-end-column="33" />
+            <state vertical-scroll-proportion="-4.875" vertical-offset="138" max-vertical-offset="930">
+              <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -142,10 +99,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/Http/Controllers/jsonController.php" />
-        <option value="$PROJECT_DIR$/resources/views/activities/index.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/companies/index.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/types/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/reports/articles.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/ReportsController.php" />
         <option value="$PROJECT_DIR$/resources/views/master.blade.php" />
@@ -174,7 +127,6 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/ImportController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/PagesController.php" />
         <option value="$PROJECT_DIR$/resources/views/pages/login.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/resources/views/emails/password.blade.php" />
         <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/ResetsPasswords.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/PasswordController.php" />
@@ -185,7 +137,6 @@
         <option value="$PROJECT_DIR$/resources/views/articles/import.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/partials/nav.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2015_12_18_130853_add_note_field_to_Movements.php" />
-        <option value="$PROJECT_DIR$/resources/views/movements/form.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/movements/altaForm.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/movements/index.blade.php" />
         <option value="$PROJECT_DIR$/app/Movement.php" />
@@ -193,6 +144,12 @@
         <option value="$PROJECT_DIR$/database/migrations/2015_12_18_195911_change_ticket_type_in_Movements.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/MovementsController.php" />
         <option value="$PROJECT_DIR$/resources/views/movements/ver.blade.php" />
+        <option value="$PROJECT_DIR$/app/Warehouse.php" />
+        <option value="$PROJECT_DIR$/resources/views/movements/form.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/jsonController.php" />
+        <option value="$PROJECT_DIR$/app/Http/routes.php" />
+        <option value="$PROJECT_DIR$/resources/views/movements/alta.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/movements/create.blade.php" />
       </list>
     </option>
   </component>
@@ -282,18 +239,8 @@
               <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="pandora" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pandora" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="database" />
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -307,11 +254,29 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="database" />
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="migrations" />
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="movements" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pandora" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pandora" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -455,7 +420,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="composer.j&#9;null&#9;null&#10;na&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/partials/nav.blade.php&#10;rou&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/routes.php&#10;nav&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/partials/nav.blade.php&#10;fla&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/partials/flash.blade.php&#10;passwor&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/Auth/PasswordController.php&#10;pages&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/PagesController.php&#10;route&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/routes.php&#10;json&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/jsonController.php&#10;wa&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Warehouse.php&#10;move&#9;null&#9;null&#10;user&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/User.php&#10;ware&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Warehouse.php&#10;us&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/User.php&#10;use&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/User.php&#10;mov&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/MovementsController.php&#10;cont&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/pages/contact.blade.php&#10;ini&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/pages/inicio.blade.php&#10;con&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/emails/contact.blade.php&#10;flash&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/partials/flash.blade.php&#10;mail&#9;null&#9;null&#10;pagesc&#9;null&#9;null&#10;todo&#9;FILE&#9;file:///Users/johan/Sites/pandora/.TODO&#10;mas&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/master.blade.php&#10;master&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/master.blade.php&#10;rout&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/routes.php&#10;arti&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/ArticlesController.php&#10;articles&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/ArticlesController.php&#10;article&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Article.php&#10;to&#9;FILE&#9;file:///Users/johan/Sites/pandora/.TODO&#10;DB&#9;null&#9;null&#10;usercon&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/UsersController.php&#10;activ&#9;null&#9;null&#10;wareho&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/WarehousesController.php&#10;form&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/movements/form.blade.php&#10;app.&#9;FILE&#9;file:///Users/johan/Sites/pandora/config/app.php&#10;seeder&#9;null&#9;null&#10;ty&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/TypesController.php&#10;wareh&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/WarehousesController.php&#10;types&#9;null&#9;null&#10;articl&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/ArticlesController.php&#10;activi&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/ActivitiesController.php&#10;create&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/activities/create.blade.php&#10;cus&#9;FILE&#9;file:///Users/johan/Sites/pandora/public/css/custom.css&#10;custo&#9;FILE&#9;file:///Users/johan/Sites/pandora/public/css/custom.css&#10;act&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Activity.php&#10;typ&#9;null&#9;null&#10;maste&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/master.blade.php&#10;artic&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/ArticlesController.php&#10;syste&#9;FILE&#9;file:///Users/johan/Sites/pandora/database/migrations/2015_11_10_181005_create_system_tables.php" />
+    <property name="SearchEverywhereHistoryKey" value="ware&#9;null&#9;null&#10;rou&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/routes.php&#10;composer.j&#9;null&#9;null&#10;na&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/partials/nav.blade.php&#10;nav&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/partials/nav.blade.php&#10;fla&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/partials/flash.blade.php&#10;passwor&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/Auth/PasswordController.php&#10;pages&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/PagesController.php&#10;route&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/routes.php&#10;json&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/jsonController.php&#10;wa&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Warehouse.php&#10;move&#9;null&#9;null&#10;user&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/User.php&#10;us&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/User.php&#10;use&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/User.php&#10;mov&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/MovementsController.php&#10;cont&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/pages/contact.blade.php&#10;ini&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/pages/inicio.blade.php&#10;con&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/emails/contact.blade.php&#10;flash&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/partials/flash.blade.php&#10;mail&#9;null&#9;null&#10;pagesc&#9;null&#9;null&#10;todo&#9;FILE&#9;file:///Users/johan/Sites/pandora/.TODO&#10;mas&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/master.blade.php&#10;master&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/master.blade.php&#10;rout&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/routes.php&#10;arti&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/ArticlesController.php&#10;articles&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/ArticlesController.php&#10;article&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Article.php&#10;to&#9;FILE&#9;file:///Users/johan/Sites/pandora/.TODO&#10;DB&#9;null&#9;null&#10;usercon&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/UsersController.php&#10;activ&#9;null&#9;null&#10;wareho&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/WarehousesController.php&#10;form&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/movements/form.blade.php&#10;app.&#9;FILE&#9;file:///Users/johan/Sites/pandora/config/app.php&#10;seeder&#9;null&#9;null&#10;ty&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/TypesController.php&#10;wareh&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/WarehousesController.php&#10;types&#9;null&#9;null&#10;articl&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/ArticlesController.php&#10;activi&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/ActivitiesController.php&#10;create&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/activities/create.blade.php&#10;cus&#9;FILE&#9;file:///Users/johan/Sites/pandora/public/css/custom.css&#10;custo&#9;FILE&#9;file:///Users/johan/Sites/pandora/public/css/custom.css&#10;act&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Activity.php&#10;typ&#9;null&#9;null&#10;maste&#9;FILE&#9;file:///Users/johan/Sites/pandora/resources/views/master.blade.php&#10;artic&#9;FILE&#9;file:///Users/johan/Sites/pandora/app/Http/Controllers/ArticlesController.php&#10;syste&#9;FILE&#9;file:///Users/johan/Sites/pandora/database/migrations/2015_11_10_181005_create_system_tables.php" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="FullScreen" value="false" />
     <property name="LayoutCode.rearrangeEntriesHTML" value="false" />
@@ -540,25 +505,25 @@
     <frame x="55" y="23" width="1284" height="833" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36780104" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36780104" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984293" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27258566" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984293" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39873418" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39921466" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -585,20 +550,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/pages/contact.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="762">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/MailController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="16.25" vertical-offset="390" max-vertical-offset="1680">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CustomAuthController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1725">
@@ -849,14 +800,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.87940377" vertical-offset="161" max-vertical-offset="900">
-          <caret line="54" column="5" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/auth/password.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.2916665" vertical-offset="260" max-vertical-offset="975">
@@ -912,24 +855,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/movements/altaForm.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-29.5" vertical-offset="132" max-vertical-offset="990">
+        <state vertical-scroll-proportion="0.9593496" vertical-offset="132" max-vertical-offset="990">
           <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/movements/create.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1125">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/movements/alta.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="14.375" vertical-offset="345" max-vertical-offset="3105">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -942,17 +869,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/movements/form.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-29.5" vertical-offset="132" max-vertical-offset="990">
-          <caret line="56" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Movement.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-55.0" vertical-offset="0" max-vertical-offset="1455">
+        <state vertical-scroll-proportion="1.7886178" vertical-offset="0" max-vertical-offset="1455">
           <caret line="92" column="33" selection-start-line="92" selection-start-column="33" selection-end-line="92" selection-end-column="33" />
           <folding />
         </state>
@@ -980,7 +899,7 @@
           <caret line="69" column="11" selection-start-line="69" selection-start-column="11" selection-end-line="69" selection-end-column="11" />
           <folding>
             <element signature="e#40#68#0#PHP" expanded="true" />
-            <marker date="1450702793000" expanded="true" signature="7523:7650" placeholder="..." />
+            <marker date="1450702793000" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -995,8 +914,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/movements/ver.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.74825174" vertical-offset="410" max-vertical-offset="1230">
+        <state vertical-scroll-proportion="1.2804878" vertical-offset="0" max-vertical-offset="1230">
           <caret line="63" column="94" selection-start-line="63" selection-start-column="94" selection-end-line="63" selection-end-column="94" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/movements/form.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.125" vertical-offset="102" max-vertical-offset="990">
+          <caret line="31" column="71" selection-start-line="31" selection-start-column="71" selection-end-line="31" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Warehouse.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-23.125" vertical-offset="1500" max-vertical-offset="2385">
+          <caret line="141" column="32" selection-start-line="141" selection-start-column="32" selection-end-line="141" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/jsonController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.5" vertical-offset="327" max-vertical-offset="1590">
+          <caret line="60" column="34" selection-start-line="60" selection-start-column="34" selection-end-line="60" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.875" vertical-offset="138" max-vertical-offset="930">
+          <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/movements/alta.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.375" vertical-offset="2247" max-vertical-offset="3045">
+          <caret line="168" column="0" selection-start-line="160" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/movements/create.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.0528455" vertical-offset="1965" max-vertical-offset="2730">
+          <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
           <folding />
         </state>
       </provider>

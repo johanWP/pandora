@@ -35,7 +35,7 @@ Ingreso de Artículos
 //        Cargar los almacenes unicamente de sistemas en el dropdown de origen
             var origin = $.ajax({
             /* Devuelve los almacenes de Sistema */
-              url: "/api/warehousesType/1",
+              url: "/api/warehousesByType/1",
               method: "GET",
               dataType: "json"
             });
@@ -71,19 +71,11 @@ Ingreso de Artículos
                 });
 
                 request.done(function( result ) {
-
-
-
                     var allArticles = $('<optgroup>');
                     allArticles.attr('label', 'Todos los Artículos');
                     var favArticles = $('<optgroup>');
                     favArticles.attr('label', 'Favoritos');
 
-
-                    $('#article_id').empty()
-                                    .append($('<option>')
-                                    .text('Seleccione el artículo...')
-                                    .attr('value', ''));
                     inventario = result;
                     for(var k in result) {
                         allArticles.append($('<option>')
@@ -95,10 +87,12 @@ Ingreso de Artículos
                                         .text(result[k].name)
                                         .attr('value', result[k].id));
                         }
-
-
                     }
-                    $('#article_id').append(favArticles)
+                    $('#article_id').empty()
+                                    .append($('<option>')
+                                    .text('Seleccione el artículo...')
+                                    .attr('value', ''))
+                                    .append(favArticles)
                                     .append(allArticles);
 
                     var sel = $('#origin_id').val();
@@ -143,7 +137,9 @@ Ingreso de Artículos
             $('#article_id').change(function (){
 
                 var text = $('#article_id option:selected').text();
-                if(inventario[text].serializable == 1)
+                var selected_id = $(this).val();
+//                if(inventario[text].serializable == 1)
+                if(inventario[selected_id].serializable == 1)
                 {
                     $('#serialLabel').show();
                     $('#serial').show();
@@ -162,41 +158,41 @@ Ingreso de Artículos
 
         });  // Fin del document.ready()
 
-        function sortDropDownListByText(selectId) {
-            var foption = $('#'+ selectId + ' option:first');
-            var soptions = $('#'+ selectId + ' option:not(:first)').sort(function(a, b) {
-               return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
-            });
-            $('#' + selectId).html(soptions).prepend(foption);
+function sortDropDownListByText(selectId) {
+    var foption = $('#'+ selectId + ' option:first');
+    var soptions = $('#'+ selectId + ' option:not(:first)').sort(function(a, b) {
+       return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+    });
+    $('#' + selectId).html(soptions).prepend(foption);
 
-        };
+};
 
-        function loadDestination_id() {
+function loadDestination_id() {
 
-                var request = $.ajax({
-                  url: "/api/warehousesList/",
-                  method: "GET",
-                  dataType: "json"
-                });
+        var request = $.ajax({
+          url: "/api/warehousesList/",
+          method: "GET",
+          dataType: "json"
+        });
 
-                request.done(function( result ) {
-                    $('#destination').empty()
-                                    .append($('<option>')
-                                    .text('Seleccione el destino...')
-                                    .attr('value', ''));
-                    for(var k in result) {
-                        inventario = result;
+        request.done(function( result ) {
+            $('#destination').empty()
+                            .append($('<option>')
+                            .text('Seleccione el destino...')
+                            .attr('value', ''));
+            for(var k in result) {
+                inventario = result;
 
-                        $('#article_id').append($('<option>')
-                                        .text(result[k].name)
-                                        .attr('value', result[k].id));
-                    }
-                });
+                $('#article_id').append($('<option>')
+                                .text(result[k].name)
+                                .attr('value', result[k].id));
+            }
+        });
 
-                request.fail(function( jqXHR, textStatus ) {
-                  alert( "Request failed: " + textStatus );
-                });
-        }
+        request.fail(function( jqXHR, textStatus ) {
+          alert( "Request failed: " + textStatus );
+        });
+}
 
     </script>
 @endsection

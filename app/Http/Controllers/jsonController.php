@@ -25,7 +25,8 @@ class jsonController extends Controller
 
             return ($warehouses);
         }
-   }    /**
+   }
+    /**
      * Retorna una lista json de los almacenes que tiene permitidos el usuario de un cierto tipo
      * @return json
      */
@@ -48,6 +49,25 @@ class jsonController extends Controller
             return ($result);
         }
    }
+    public function warehousesActivity($id)
+    {
+        $result = Array();
+        if(Auth::user()->activities != '')
+        {
+            $warehouses = Auth::user()->warehouseList;
+            if (!empty($warehouses)) {
+                foreach ($warehouses as $w)
+                {
+                   if($w['activity_id'] == $id)
+                   {
+                       $result[$w['id']] = $w;
+                   }
+                }
+            }
+
+            return ($result);
+        }
+   }
 
     /**
      * Retorna un arreglo json de los articulos disponibles en el almacen
@@ -61,10 +81,19 @@ class jsonController extends Controller
         return $warehouse->inventory;
     }
 
+    /** Devuelve el detalle de un almacén especificado
+     * @param $id
+     * @return Warehouse
+     */
+    public function warehouseDetail($id)
+    {
+        $w = Warehouse::findOrFail($id);
+        return $w;
+    }
+
+
     public function articlesSerial()
     {
-        $destination =94;
-        $article_id = 105;
         $m = DB::table('movements')
             ->where('destination_id', '=', $destination)
             ->where('article_id', '=', $article_id)

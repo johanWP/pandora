@@ -138,7 +138,8 @@ class Warehouse extends Model
             foreach ($all as $art)
             {
 //                $result[$art->id] = [$art->name => 999999];
-                $result[$art->name] =
+//                $result[$art->name] =
+                $result[$art->id] =
                     [
                     'id' => $art->id,
                     'name'=>$art->name,
