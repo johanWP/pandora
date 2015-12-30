@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use App\Article;
+use Illuminate\Support\Facades\Auth;
 
 class Warehouse extends Model
 {
@@ -58,7 +59,7 @@ class Warehouse extends Model
      */
     public function getInventoryAttribute()
     {
-        $inventory = Array();
+
         $result = Array();
         if ($this->type->id != 1)
         {
@@ -66,79 +67,84 @@ class Warehouse extends Model
 
             $in = DB::table('movements')
                 ->select(DB::raw('article_id, SUM(quantity) AS totalIn'))
-                ->where('status_id', '=', 1)
+                ->whereIn('status_id', [1, 2])     // status 1: Aprobado, Status 2: por aprobar
                 ->where('destination_id', '=', $this->id)
                 ->groupBy('article_id')
                 ->orderBy('article_id', 'asc')
                 ->get();
 
-
 //        Traigo todos los movimientos que han sacado articulos de este almacen
             $out = DB::table('movements')
                 ->select(DB::raw('article_id, SUM(quantity) AS totalOut'))
-                ->where('status_id', '=', 1)
+                ->whereIn('status_id', [1, 2])     // status 1: Aprobado, Status 2: por aprobar
                 ->where('origin_id', '=', $this->id)
                 ->groupBy('article_id')
                 ->orderBy('article_id', 'asc')
                 ->get();
 
+            // Los convierto en Collection para poder filtrar por article_id
+            $in = collect($in);
+            $out = collect($out);
+
             foreach ($in as $movIn)
             {
                 $art = Article::find($movIn->article_id);
-                if (!empty($out))
+                $filtered = $out->filter(function ($item) use($movIn)
                 {
-/*            Busco cada articulo que tuvo una entrada al almacén en el arreglo de articulos
-                            que salieron del almacén y resto
-*/
 
-                    foreach ($out as $movOut)
-                    {
-                        if ($movIn->article_id == $movOut->article_id) {
+                    return $item->article_id == $movIn->article_id;
+                });
 
+                if ($filtered->count() > 0)
+                {
 
-                            $total = $movIn->totalIn - $movOut->totalOut;
-                            if($total >0)
-                            {
-                                $result[$art->id] = [
-                                    'id' => $art->id,
-                                    'name' => $art->name,
-                                    'fav' => $art->fav,
-                                    'product_code' => $art->product_code,
-                                    'serializable' => $art->serializable,
-                                    'cantidad' => $total
-                                ];
-                                break;
-                            }
+                    $movOut = $filtered->first();
+                    $total = $movIn->totalIn - $movOut->totalOut;
+                    $result[$art->id] = [
+                            'id' => $art->id,
+                            'name' => $art->name,
+                            'fav' => $art->fav,
+                            'product_code' => $art->product_code,
+                            'serializable' => $art->serializable,
+                            'cantidad' => $total
+                        ];
 
-                        } else
-                        {
-                            $result[$art->id] = [
-                                'id' => $art->id,
-                                'name' => $art->name,
-                                'fav' => $art->fav,
-                                'product_code' => $art->product_code,
-                                'serializable' => $art->serializable,
-                                'cantidad' => $movIn->totalIn
-                            ];
-                        }
-                    }
-
+                } else  // Si no hay movimientos de salida desde este almacén
+                {
+                    $result[$art->id] = [
+                        'id' => $art->id,
+                        'name' => $art->name,
+                        'fav' => $art->fav,
+                        'product_code' => $art->product_code,
+                        'serializable' => $art->serializable,
+                        'cantidad' => $movIn->totalIn
+                    ];
                 }
-            }
+            }   // fin del foreach($in as $movIn)
 
-        } else // Si el almacén es de Sistema
+        } else
         {
 //            Si es un almacen de sistema, devuevo lista de articulos activos
-            $all = DB::table('articles')
-                ->select('id', 'name', 'serializable', 'fav')
-                ->where('active', '=', 1)
-                ->orderBy('name', 'asc')
-                ->get();
+//              que incluye articulos de todas las compañias si el usuario pertenece a una empresa parent
+//dd(Auth::user()->company->parent);
+            if(Auth::user()->company->parent==1)
+            {
+                $all = DB::table('articles')
+                    ->select('id', 'name', 'serializable', 'fav')
+                    ->where('active', '=', 1)
+                    ->orderBy('name', 'asc')
+                    ->get();
+            } else {
+                $all = DB::table('articles')
+                    ->select('id', 'name', 'serializable', 'fav')
+                    ->where('active', '=', 1)
+                    ->where('company_id', '=', Auth::user()->company_id)
+                    ->orderBy('name', 'asc')
+                    ->get();
+            }
 
             foreach ($all as $art)
             {
-//                $result[$art->id] = [$art->name => 999999];
-//                $result[$art->name] =
                 $result[$art->id] =
                     [
                     'id' => $art->id,
