@@ -40,6 +40,8 @@ Route::get('movimientos/alta', function () {
     $warehouseList = Array();
     return view('movements.alta', compact('warehouseList'));
 });
+Route::get('reportes/listadoCumplimientoDeMaterial', 'ReportsController@showListadoCumplimientoDeMaterial');
+Route::post('reportes/listadoCumplimientoDeMaterial', 'ReportsController@ListadoCumplimientoDeMaterial');
 Route::resource('login', 'CustomAuthController');
 Route::get('logout', 'CustomAuthController@logout');
 Route::resource('actividades', 'ActivitiesController');
