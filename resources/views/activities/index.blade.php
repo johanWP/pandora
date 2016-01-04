@@ -54,12 +54,6 @@
 	</div>
 
 
-
-
-
-
-
-
 @else
 	<h2>No hay Actividades cargadas en el sistema.</h2>
 @endif

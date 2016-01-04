@@ -61,7 +61,7 @@
 </div>
 
     <div class="form-group">
-            <a class="btn btn-default" href="/movimientos/"><i class="fa fa-chevron-left fa-fw"></i> Volver</a>
+            <a class="btn btn-default" href="#" onclick="window.history.back()"><i class="fa fa-chevron-left fa-fw"></i> Volver</a>
     </div>
 {{--
 

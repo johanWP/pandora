@@ -104,13 +104,16 @@
                 <a href="#"><i class="fa fa-exchange fa-fw"></i> Movimientos<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="{!!URL::to('/movimientos/create')!!}"><i class='fa fa-plus fa-fw'></i> Agregar</a>
+                        <a href="{!!URL::to('/movimientos/create')!!}"><i class='fa fa-plus'></i> Agregar</a>
                     </li>
                     <li>
-                        <a href="{!!URL::to('/movimientos/alta')!!}"><i class='fa fa-arrow-circle-up fa-fw'></i> Alta de artículos</a>
+                        <a href="{!!URL::to('/movimientos/alta')!!}"><i class='fa fa-arrow-circle-up'></i> Alta de artículos</a>
                     </li>
                     <li>
-                        <a href="{!!URL::to('/movimientos')!!}"><i class='fa fa-list-ol fa-fw'></i> Ver Últimos Movimientos</a>
+                        <a href="{!!URL::to('/movimientos/porAprobar')!!}"><i class='fa fa-check'></i> Pendientes por Aprobar</a>
+                    </li>
+                    <li>
+                        <a href="{!!URL::to('/movimientos/')!!}"><i class='fa fa-list-ol'></i> Ver Últimos Movimientos</a>
                     </li>
                 </ul>
             </li>

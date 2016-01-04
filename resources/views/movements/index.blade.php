@@ -27,7 +27,6 @@
 		<table class="table table-striped">
 			<thead>
 			<tr>
-			  <th>Status</th>
 			  <th>Cant.</th>
 			  <th>Artículo</th>
 			  <th><h3>Desde</h3></th>
@@ -40,22 +39,6 @@
 			<tbody>
 			@foreach($movements as $movement)
                 <tr>
-                  <td class="col-sm-1">
-                    <p class="text-left">
-{{--
-                    Status 1: Aprobado
-                    Status 2: Por Aprobar
-                    Status 3: Eliminado
---}}
-                      @if ($movement->status_id ==1)
-                        <p><b>OK</b></p>
-                      @elseif ($movement->status_id ==2)
-                        <p style="color:red">P</p>
-                      @else
-                        <p>D</p>
-                      @endif
-
-                  </td>
                   <td class="col-sm-1">
                     <p class="text-left">
                       {{ $movement->quantity}}
@@ -81,22 +64,24 @@
                       {{ $movement->destination->name}}
                     </p>
                   </td>
-                  <td class="text-right">
+                  <td class="text-center">
                     <a href="movimientos/{{ $movement->id }}" id="btnVer" class="btn btn-default">
                       <i class="fa fa-eye fa-2x"></i>
                     </a>
-                  @if((Auth::user()->securityLevel >= 20) AND ($movement->status_id ==2))
-                    <a href="#modalApprove" id="btnApprove" class="btn btn-default" data-toggle="modal" data-name="este movimiento" data-approveMe="{{ $movement->id }}">
+
+                  @if(Auth::user()->securityLevel >= 20)
+                    <a href="#modalApprove" id="btnApprove" class="btn btn-success" data-toggle="modal" data-name="este movimiento" data-approveMe="{{ $movement->id }}">
                       <i class="fa fa-check fa-2x"></i>
                     </a>
                   @endif
                   </td>
                   <td>
-                  @if(Auth::user()->securityLevel >= 20 AND ($movement->status_id !=3))
+                  @if(Auth::user()->securityLevel >= 20)
                     <a href="#modalConfirm" id="btnDelete" class="btn btn-danger" data-toggle="modal" data-name="este movimiento" data-deleteMe="{{ $movement->id }}">
-                      <i class="fa fa-trash fa-2x"></i>
+                      <i class="fa fa-close fa-2x"></i>
                     </a>
                   @endif
+
                   </td>
                 </tr>
 			@endforeach
@@ -111,14 +96,4 @@
 @else
 	<h2>No hay movimientos cargados en el sistema.</h2>
 @endif
-@endsection
-
-@section('scripts')
-
-  @include('partials.modalConfirm')
-
-  @if(Auth::user()->securityLevel > 20)
-    @include('partials.modalApprove')
-  @endif
-
 @endsection

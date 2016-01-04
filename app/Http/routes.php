@@ -23,6 +23,8 @@ Route::get('search/autocomplete/{table}', 'SearchController@autocomplete');
 Route::get('search/name2Id', 'SearchController@name2Id');
 Route::get('articulos/import', 'ImportController@articles');
 Route::post('articulos/import', 'ImportController@importArticles');
+Route::get('movimientos/porAprobar', 'ApproveController@viewAll');
+Route::post('movimientos/aprobar', 'ApproveController@approveMovement');
 
 // Password reset link request routes...
 Route::get('password/email', 'Auth\PasswordController@getEmail');

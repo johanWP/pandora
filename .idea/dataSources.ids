@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - pandora@localhost" uuid="7fa80351-9e93-4c19-abe2-32f136e851a9">
+    <database-info product="MySQL" version="5.6.27" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper"/>
+    <schema name="" catalog="pandora"/>
+    <table name="activities" schema="" catalog="pandora" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="deleted_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="activity_user_activity_id_foreign" table="activity_user" schema="" catalog="pandora" columns="activity_id"/>
+      <exported-key name="warehouses_activity_id_foreign" table="warehouses" schema="" catalog="pandora" columns="activity_id"/>
+      <index name="activities_name_unique" unique="true" columns="name"/>
+    </table>
+    <table name="activity_user" schema="" catalog="pandora" type="TABLE">
+      <column name="activity_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="user_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <foreign-key name="activity_user_activity_id_foreign" columns="activity_id" ref-table="activities" ref-schema="" ref-catalog="pandora" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="activity_user_user_id_foreign" columns="user_id" ref-table="users" ref-schema="" ref-catalog="pandora" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="activity_user_activity_id_index" unique="false" columns="activity_id"/>
+      <index name="activity_user_user_id_index" unique="false" columns="user_id"/>
+    </table>
+    <table name="articles" schema="" catalog="pandora" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="barcode" sqlType="VARCHAR" precision="12" scale="0" nullable="true" jdbcType="12"/>
+      <column name="serializable" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="active" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="company_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="deleted_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="product_code" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="fav" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="unit" sqlType="CHAR" precision="4" scale="0" nullable="false" jdbcType="1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="movements_article_id_foreign" table="movements" schema="" catalog="pandora" columns="article_id"/>
+      <index name="articles_active_index" unique="false" columns="active"/>
+      <index name="articles_company_id_index" unique="false" columns="company_id"/>
+      <index name="articles_name_index" unique="false" columns="name"/>
+    </table>
+    <table name="companies" schema="" catalog="pandora" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="parent" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="deleted_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="warehouses_company_id_foreign" table="warehouses" schema="" catalog="pandora" columns="company_id"/>
+      <index name="companies_name_unique" unique="true" columns="name"/>
+      <index name="companies_name_index" unique="false" columns="name"/>
+    </table>
+    <table name="migrations" schema="" catalog="pandora" type="TABLE">
+      <column name="migration" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="batch" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+    </table>
+    <table name="movements" schema="" catalog="pandora" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="remito" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="article_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="serial" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <column name="origin_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="destination_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="user_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="status_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="deleted_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="quantity" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ticket" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="approved_by" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="deleted_by" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="note" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="movements_article_id_foreign" columns="article_id" ref-table="articles" ref-schema="" ref-catalog="pandora" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="movements_destination_id_foreign" columns="destination_id" ref-table="warehouses" ref-schema="" ref-catalog="pandora" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="movements_origin_id_foreign" columns="origin_id" ref-table="warehouses" ref-schema="" ref-catalog="pandora" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="movements_status_id_foreign" columns="status_id" ref-table="statuses" ref-schema="" ref-catalog="pandora" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <foreign-key name="movements_user_id_foreign" columns="user_id" ref-table="users" ref-schema="" ref-catalog="pandora" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <index name="movements_article_id_index" unique="false" columns="article_id"/>
+      <index name="movements_destination_id_index" unique="false" columns="destination_id"/>
+      <index name="movements_origin_id_index" unique="false" columns="origin_id"/>
+      <index name="movements_serial_index" unique="false" columns="serial"/>
+      <index name="movements_status_id_index" unique="false" columns="status_id"/>
+      <index name="movements_user_id_foreign" unique="false" columns="user_id"/>
+    </table>
+    <table name="password_resets" schema="" catalog="pandora" type="TABLE">
+      <column name="email" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="token" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <index name="password_resets_email_index" unique="false" columns="email"/>
+      <index name="password_resets_token_index" unique="false" columns="token"/>
+    </table>
+    <table name="statuses" schema="" catalog="pandora" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="deleted_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="movements_status_id_foreign" table="movements" schema="" catalog="pandora" columns="status_id"/>
+      <index name="statuses_name_unique" unique="true" columns="name"/>
+    </table>
+    <table name="types" schema="" catalog="pandora" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="deleted_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="warehouses_type_id_foreign" table="warehouses" schema="" catalog="pandora" columns="type_id"/>
+      <index name="types_name_unique" unique="true" columns="name"/>
+    </table>
+    <table name="users" schema="" catalog="pandora" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="username" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="firstName" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="lastName" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="active" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="company_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="employee_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="securityLevel" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="remember_token" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="deleted_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="activity_user_user_id_foreign" table="activity_user" schema="" catalog="pandora" columns="user_id"/>
+      <exported-key name="movements_user_id_foreign" table="movements" schema="" catalog="pandora" columns="user_id"/>
+      <index name="users_username_unique" unique="true" columns="username"/>
+      <index name="users_company_id_index" unique="false" columns="company_id"/>
+      <index name="users_email_index" unique="false" columns="email"/>
+    </table>
+    <table name="warehouses" schema="" catalog="pandora" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="company_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="activity_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="type_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="created_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="updated_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <column name="description" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12" def="Jyc="/>
+      <column name="active" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="deleted_at" sqlType="TIMESTAMP" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="warehouses_activity_id_foreign" columns="activity_id" ref-table="activities" ref-schema="" ref-catalog="pandora" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <foreign-key name="warehouses_company_id_foreign" columns="company_id" ref-table="companies" ref-schema="" ref-catalog="pandora" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <foreign-key name="warehouses_type_id_foreign" columns="type_id" ref-table="types" ref-schema="" ref-catalog="pandora" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <exported-key name="movements_destination_id_foreign" table="movements" schema="" catalog="pandora" columns="destination_id"/>
+      <exported-key name="movements_origin_id_foreign" table="movements" schema="" catalog="pandora" columns="origin_id"/>
+      <index name="warehouses_activity_id_index" unique="false" columns="activity_id"/>
+      <index name="warehouses_company_id_index" unique="false" columns="company_id"/>
+      <index name="warehouses_type_id_index" unique="false" columns="type_id"/>
+    </table>
+  </data-source>
+</component>
