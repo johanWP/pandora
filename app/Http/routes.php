@@ -25,6 +25,7 @@ Route::get('articulos/import', 'ImportController@articles');
 Route::post('articulos/import', 'ImportController@importArticles');
 Route::get('movimientos/porAprobar', 'ApproveController@viewAll');
 Route::post('movimientos/aprobar', 'ApproveController@approveMovement');
+Route::post('movimientos/rechazar', 'ApproveController@rejectMovement');
 
 // Password reset link request routes...
 Route::get('password/email', 'Auth\PasswordController@getEmail');

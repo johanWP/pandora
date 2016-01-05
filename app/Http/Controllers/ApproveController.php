@@ -6,7 +6,7 @@ use App\Movement;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 
 class ApproveController extends Controller
@@ -34,10 +34,43 @@ class ApproveController extends Controller
             $m = Movement::findOrFail($request->id);
             $result = $m->update([
                 'status_id' => '1',
-                'approved_by' => Auth::user()->id
+                'approved_by' => Auth::user()->id,
+                'note'  => $request->note
             ]);
         }
         return $request->id;
 
+    }
+
+    public function rejectMovement(Request $request)
+    {
+        if(Auth::user()->securityLevel >= 20)
+        {
+            $m = Movement::findOrFail($request->id);
+            $m->update([
+                'status_id' => '4',
+                'approved_by' => Auth::user()->id,
+                'note'  => $request->note
+            ]);
+
+            $arrayM = [
+                        'article' => $m->article->name,
+                        'origen'  => $m->origin->name,
+                        'destino' => $m->destination->name,
+                        'created_at'=> $m->created_at,
+                        'ticket'  => $m->ticket,
+                        'cantidad'=> $m->quantity,
+                        'nota'    => $m->note
+                    ];
+
+            $result = Mail::send('emails.movementRejected',$arrayM, function($message) use ($m) {
+//                $message->from($request->email);
+                $message->to($m->user->email)
+                    ->subject('Tu movimiento ha sido rechazado')
+                    ->replyTo(Auth::user()->email);
+            });
+
+        }
+        return $request->id;
     }
 }

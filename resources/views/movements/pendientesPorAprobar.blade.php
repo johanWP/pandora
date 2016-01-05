@@ -4,6 +4,30 @@
     Movimientos Pendientes por Aprobar
 @endsection
 
+@section('css')
+<style>
+    .spinner {
+      display: inline-block;
+      opacity: 0;
+      width: 0;
+
+      -webkit-transition: opacity 0.25s, width 0.25s;
+      -moz-transition: opacity 0.25s, width 0.25s;
+      -o-transition: opacity 0.25s, width 0.25s;
+      transition: opacity 0.25s, width 0.25s;
+    }
+
+    .has-spinner.active {
+      cursor:progress;
+    }
+
+    .has-spinner.active .spinner {
+      opacity: 1;
+      width: auto; /* This doesn't work, just fix for unkown width elements */
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="row">
   <div class="col-sm-10">
@@ -24,14 +48,14 @@
                 @if ($i > 0)
                     </tbody>
                     </table>
-                    Fin de {{$i}}
+
                 @endif
 <?php
 $ticketActual = $movement->ticket;
 $i++;
 ?>
-                <h3 class="{{$movement->id}}">{{$ticketActual}}</h3>
-                <table class="table table-striped {{$movement->id}}" id="table_{{$movement->id}}">
+                <h3 class="{{$ticketActual}}">{{$ticketActual}}</h3>
+                <table class="table table-striped {{$ticketActual}}" id="table_{{$ticketActual}}">
                     <thead>
                     <tr>
                       <th>Cant.</th>
@@ -45,7 +69,7 @@ $i++;
                     </thead>
                     <tbody>
             @endif
-                <tr id="tr_{{ $movement->id }}">
+                <tr class="{{ $movement->id }}">
                   <td class="col-sm-1">
                     <p class="text-left">
                       {{ $movement->quantity}}
@@ -74,7 +98,7 @@ $i++;
                   <td class="text-center">
 
                   @if((Auth::user()->securityLevel >= 20) AND ($movement->status_id ==2))
-                    <a href="#modalApprove" class="btn btn-primary" data-toggle="modal" data-id="{{ $movement->id }}">
+                    <a href="#modalApprove" class="btn btn-primary" data-toggle="modal" data-id="{{ $movement->id }}" data-name="aprobar"  data-ticket="{{$movement->ticket}}" data-note="{{ $movement->note }}">
                       <i class="fa fa-check fa-2x"></i>
                     </a>
                   @endif
@@ -84,15 +108,15 @@ $i++;
                   </a>
 
                   @if(Auth::user()->securityLevel >= 20)
-                    <a href="#modalConfirm" id="btnDelete" class="btn btn-danger" data-toggle="modal" data-deleteMe="{{ $movement->id }}">
-                      <i class="fa fa-trash fa-2x"></i>
+                    <a href="#modalApprove" class="btn btn-danger" data-toggle="modal" data-id="{{ $movement->id }}" data-name="rechazar" data-ticket="{{$movement->ticket}}" data-note="{{ $movement->note }}">
+                      <i class="fa fa-close fa-2x"></i>
                     </a>
                   @endif
                   </td>
                 </tr>
 		@endforeach
                 </tbody>
-                </table> Fin de {{$i}}
+                </table>
 	</div>
 
 </div>
@@ -110,6 +134,7 @@ $i++;
 
   @if(Auth::user()->securityLevel > 20)
     @include('partials.modalApprove')
+    {{--@include('partials.modalReject')--}}
   @endif
 
 @endsection
