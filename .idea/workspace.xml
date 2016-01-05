@@ -32,11 +32,17 @@
       <file leaf-file-name="Warehouse.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Warehouse.php">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
             <state vertical-scroll-proportion="0.37669376" vertical-offset="892" max-vertical-offset="2535">
               <caret line="78" column="36" selection-start-line="78" selection-start-column="36" selection-end-line="78" selection-end-column="36" />
               <folding>
                 <element signature="e#23#62#0#PHP" expanded="true" />
               </folding>
+=======
+            <state vertical-scroll-proportion="0.44308943" vertical-offset="708" max-vertical-offset="2385">
+              <caret line="73" column="12" selection-start-line="73" selection-start-column="12" selection-end-line="73" selection-end-column="12" />
+              <folding />
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
@@ -864,11 +870,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Warehouse.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state vertical-scroll-proportion="0.37669376" vertical-offset="892" max-vertical-offset="2535">
           <caret line="78" column="36" selection-start-line="78" selection-start-column="36" selection-end-line="78" selection-end-column="36" />
           <folding>
             <element signature="e#23#62#0#PHP" expanded="true" />
           </folding>
+=======
+        <state vertical-scroll-proportion="0.44308943" vertical-offset="708" max-vertical-offset="2385">
+          <caret line="73" column="12" selection-start-line="73" selection-start-column="12" selection-end-line="73" selection-end-column="12" />
+          <folding />
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>

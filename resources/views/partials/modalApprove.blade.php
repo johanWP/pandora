@@ -10,7 +10,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger has-spinner" id="btnReject" name="btnReject"><i class="fa fa-close"></i> Rechazar</button>
+        <button type="button" class="btn btn-danger" id="btnReject" name="btnReject"><i class="fa fa-close"></i> Rechazar</button>
         <button type="submit" class="btn btn-primary" id="btnSubmit" name="btnSubmit"><i class="fa fa-check fa-fw"></i> Aprobar</button>
       </div>
         {!! Form::hidden('id', '0', ['name'=>'id', 'id'=>'id']); !!}
@@ -37,12 +37,16 @@
               modal.find('.btn-danger').hide();
               modal.find('.btn-primary').show();
               $('#frmApprove').attr('action', '/movimientos/aprobar');
+              $('#btnSubmit').html('<i class="fa fa-check fa-fw"></i> Aprobar')
+                                .attr('disabled', false);
 
             } else
             {
               modal.find('.btn-danger').show();
               modal.find('.btn-primary').hide();
               $('#frmApprove').attr('action', '/movimientos/rechazar');
+              $('#btnReject').html('<i class="fa fa-close"></i> Rechazar')
+                                .attr('disabled', false);
             }
             modal.find('.btn-primary').attr('disabled', false);
             $('#id').val(button.data('id'));
@@ -53,8 +57,14 @@
 
         frm.submit(function (ev)
         {
-            //$('#frmApprove').hide();
-             ev.preventDefault();
+            ev.preventDefault();
+            if (accion='rechazar') {
+                $('#btnReject').html('<i class="fa fa-cog fa-spin"></i> Espere...')
+                            .attr('disabled', 'disabled');
+            } else {
+                $('#btnSubmit').html('<i class="fa fa-cog fa-spin"></i> Espere...')
+                            .attr('disabled', 'disabled');
+            }
 
             $.ajax({
                 method: frm.attr('method'),
