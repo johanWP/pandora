@@ -25,7 +25,7 @@ class ChangeTicketTypeInMovements extends Migration
     public function down()
     {
         Schema::table('movements', function ($table) {
-            $table->integer('ticket', 50)->change();
+            $table->integer('ticket')->change();
         });
     }
 }

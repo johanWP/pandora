@@ -28,6 +28,6 @@ class CreateActivityUserPivotTable extends Migration
      */
     public function down()
     {
-        Scheme::drop('activity_user');
+        Schema::drop('activity_user');
     }
 }

@@ -140,14 +140,6 @@ class CreateSystemTables extends Migration
      */
     public function down()
     {
-        Schema::drop('companies');
-        Schema::drop('activities');
-        Schema::drop('articles');
-        Schema::drop('warehouses');
-        Schema::drop('types');
-        Schema::drop('statuses');
-        Schema::drop('movements');
-
         Schema::table('movements', function ($table) {
 
             $table->dropForeign('movements_article_id_foreign');
@@ -170,5 +162,14 @@ class CreateSystemTables extends Migration
             $table->dropForeign('warehouses_activity_id_foreign');
             $table->dropForeign('warehouses_type_id_foreign');
         });
+
+        Schema::drop('articles');
+        Schema::drop('activities');
+        Schema::drop('warehouses');
+        Schema::drop('types');
+        Schema::drop('statuses');
+        Schema::drop('movements');
+        Schema::drop('companies');
+
     }
 }

@@ -23,7 +23,7 @@
                     }
         .spanLogo {padding-left: 50px; color: #00BCD4; font-size: 1.4em;}
 
-        .bg-gris {background-color: rgb(232,232,232)}
+        .bg-gris {background-color: rgb(232,232,232); margin-bottom: 20px;}
     </style>
 
 </head>

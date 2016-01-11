@@ -10,7 +10,8 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::get('/', 'PagesController@home');
+Route::get('/home', 'PagesController@home');
+Route::get('/', 'CustomAuthController@index');
 
 Route::get('escritorio', 'DefaultController@dashboard');
 Route::get('api/warehousesList', 'jsonController@warehousesList');

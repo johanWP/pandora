@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <h1>Ingreso al Sistema Custom</h1>
+    <h1>Ingreso al Sistema de Inventario</h1>
     <hr/>
     @include('partials.flash')
  {!! Form::open(['url' => 'login', 'method' => 'POST', 'class' => 'form-horizontal']) !!}
