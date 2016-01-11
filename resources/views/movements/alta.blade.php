@@ -117,7 +117,7 @@ Ingreso de Artículos
 
                     var sel = $('#origin_id').val();
                     var selectedWarehouse = warehouses[sel];
-                    sortDropDownListByText('article_id');
+//                    sortDropDownListByText('article_id');
                 }); /* Fin del .done */
 
                 request.fail(function( jqXHR, textStatus ) {
