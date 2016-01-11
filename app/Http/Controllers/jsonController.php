@@ -33,6 +33,7 @@ class jsonController extends Controller
     public function warehousesType($id)
     {
         $result = Array();
+
         if(Auth::user()->activities != '')
         {
             $warehouses = Auth::user()->warehouseList;
@@ -69,6 +70,18 @@ class jsonController extends Controller
         }
    }
 
+    public function warehousesByActivity(Request $request)
+    {
+        $company_id = $request->company_id;
+        $warehouses = Warehouse::where('company_id', $company_id)
+                                ->where('activity_id', $request->rdActivity)
+                                ->where('active', '1')
+                                ->orderBy('name')
+                                ->get();
+
+//        dd($warehouses);
+        return $warehouses;
+    }
     /**
      * Retorna un arreglo json de los articulos disponibles en el almacen
      * @param $warehouse_id

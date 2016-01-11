@@ -32,7 +32,7 @@
 			  <th><h3>Desde</h3></th>
 			  <th><b> &nbsp;</b></th>
 			  <th><h3>Hacia</h3></th>
-			  <th class="text-center" colspan="2"><h3>Acciones</h3></th>
+			  <th class="text-center"><h3>Acciones</h3></th>
 
 			</tr>
 			</thead>
@@ -68,13 +68,18 @@
                     <a href="movimientos/{{ $movement->id }}" id="btnVer" class="btn btn-default">
                       <i class="fa fa-eye fa-2x"></i>
                     </a>
+{{--
 
                   @if(Auth::user()->securityLevel >= 20)
                     <a href="#modalApprove" id="btnApprove" class="btn btn-primary" data-toggle="modal" data-name="este movimiento" data-approveMe="{{ $movement->id }}">
                       <i class="fa fa-check fa-2x"></i>
                     </a>
                   @endif
+
+--}}
                   </td>
+{{--
+
                   <td>
                   @if(Auth::user()->securityLevel >= 20)
                     <a href="#modalConfirm" id="btnDelete" class="btn btn-danger" data-toggle="modal" data-name="este movimiento" data-deleteMe="{{ $movement->id }}">
@@ -83,6 +88,8 @@
                   @endif
 
                   </td>
+--}}
+
                 </tr>
 			@endforeach
 			</tbody>
