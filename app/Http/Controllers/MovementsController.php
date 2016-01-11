@@ -35,15 +35,7 @@ class MovementsController extends Controller
      */
     public function create()
     {
-        $warehouseList = Array();
-//        user()->warehouseList se define en el modelo User
-        $warehouses = Auth::user()->warehouseList;
-//        Tomo solo los valores que necesito de la Collection y los pongo en
-//        un array para poblar el combobox en la vista
-        foreach ($warehouses as $warehouse)
-        {
-            $warehouseList[$warehouse['id']] = $warehouse['name'];
-        }
+
         if (Auth::user()->company->parent == 0)
         {
             $companies = [
@@ -60,8 +52,31 @@ class MovementsController extends Controller
             ->orderBy('name')
             ->get();
 
-        return view('movements.create', compact('warehouseList', 'companies', 'activities'));
+        return view('movements.create', compact('companies', 'activities'));
     }
+
+    public function alta()
+    {
+
+        if (Auth::user()->company->parent == 0)
+        {
+            $companies = [
+                'id' => Auth::user()->company->id,
+                'name' => Auth::user()->company->name
+            ];
+        } else
+        {
+            $companies = Company::lists('name', 'id');
+        }
+
+        $activities = DB::table('activities')
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get();
+
+        return view('movements.alta', compact('companies', 'activities'));
+    }
+
 
     /**
      * Store a newly created resource in storage.

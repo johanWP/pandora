@@ -30,10 +30,10 @@ class jsonController extends Controller
      * Retorna una lista json de los almacenes que tiene permitidos el usuario de un cierto tipo
      * @return json
      */
-    public function warehousesType($id)
+    public function warehousesByType(Request $request)
     {
-        $result = Array();
-
+       $result = Array();
+/*
         if(Auth::user()->activities != '')
         {
             $warehouses = Auth::user()->warehouseList;
@@ -49,6 +49,14 @@ class jsonController extends Controller
 
             return ($result);
         }
+        */
+
+        $warehouses = Warehouse::where('type_id', $request->type_id)
+                    ->where('activity_id', $request->rdActivity)
+                    ->where('company_id', $request->company_id)
+                    ->where('active', '1')
+                    ->get();
+        return $warehouses;
    }
     public function warehousesActivity($id)
     {
@@ -70,6 +78,11 @@ class jsonController extends Controller
         }
    }
 
+    /**
+     * Devuelve lista de almacenes filtrados por compañía y actividad
+     * @param Request $request
+     * @return Warehouses
+     */
     public function warehousesByActivity(Request $request)
     {
         $company_id = $request->company_id;

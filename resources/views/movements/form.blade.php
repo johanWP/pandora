@@ -72,7 +72,7 @@
 <!-- Begin destination_id select -->
         <div class="form-group">
             {!! Form::label('destination_id', 'Almacén de Destino:') !!}
-            {!! Form::select('destination_id', $warehouseList, null, ['class' => 'form-control','placeholder' => 'Seleccione el destino...']) !!}
+            {!! Form::select('destination_id', [], null, ['class' => 'form-control','placeholder' => 'Seleccione el destino...']) !!}
         </div>
 <!-- End origin_id select -->
 

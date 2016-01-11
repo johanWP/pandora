@@ -91,5 +91,5 @@
 	<h2>No hay movimientos cargados en el sistema.</h2>
 @endif
 
-<a href="/reportes/movimientosPorAlmacen"><i class="fa fa-chevron-left"></i> Volver</a>
+<a href="/reportes/movimientosPorAlmacen" class="btn btn-default"><i class="fa fa-chevron-left"></i> Volver</a>
 @endsection

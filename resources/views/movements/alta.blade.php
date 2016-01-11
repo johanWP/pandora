@@ -11,7 +11,7 @@ Ingreso de Artículos
 
     @include('errors.list')
 
-    {!! Form::open(['url' => 'movimientos']) !!}
+    {!! Form::open(['url' => 'movimientos', 'id' => 'frm']) !!}
     @include('movements.form', ['submitButtonText' => 'Registrar Ingreso de Productos'])
 
     {!! Form::close() !!}
@@ -24,45 +24,62 @@ Ingreso de Artículos
 
         $( document ).ready(function()
         {
-        @if (Auth::user()->securityLevel < 20)
-            $('h1').html('Recuperación de Equipos');
-        @endif
+            @if (Auth::user()->securityLevel < 20)
+                $('h1').html('Recuperación de Equipos');
+            @endif
 
             $('#serialLabel').hide();
             $('#serial').hide();
             $('#cantidad').hide();
             var warehouses;
-//        Cargar los almacenes unicamente de sistemas en el dropdown de origen
-            var origin = $.ajax({
-            /* Devuelve los almacenes de Sistema */
-              url: "/api/warehousesByType/1",
-              method: "GET",
-              dataType: "json"
-            });
+            $("#frm input[type='radio'][name='rdActivity']").change(function()
+            {
+                loadDestination_id();
+                var activity_id = "";
+                var rdActivity = $("input[type='radio'][name='rdActivity']:checked");
+                if (rdActivity.length > 0) {
+                    activity_id = rdActivity.val();
+                }
+                var company_id = $('#companyList').val();
+                //        Cargar los almacenes unicamente de sistemas en el dropdown de origen
+                if (company_id !='')
+                {
+                    var origin = $.ajax({
 
-            origin.done(function( result ) {
-                warehouses = result;
-                $('#origin_id').empty()
+                        url: "/api/warehousesByType",
+                        data: {company_id: company_id, rdActivity: activity_id, type_id: '1'},
+                        method: "GET",
+                        dataType: "json"
+                    });
+
+                    origin.done(function (result)
+                    {
+                        warehouses = result;
+                        $('#origin_id').empty()
                                 .append($('<option>')
-                                .text('Seleccione el origen...')
-                                .attr('value', ''));
-                for(var k in result) {
-                    $('#origin_id').append($('<option>')
+                                        .text('Seleccione el origen...')
+                                        .attr('value', ''));
+                        for (var k in result) {
+                            $('#origin_id').append($('<option>')
                                     .text(result[k].name)
                                     .attr('value', result[k].id));
+                        }
+
+                    });  //  Fin del request.done
+
+                    origin.fail(function (jqXHR, textStatus)
+                    {
+                        alert("Fallo cargando los almacenes de origen: " + textStatus);
+                    }); // Fin del request.fail
+
+
                 }
 
-            }); /*  Fin del request.done */
-
-            origin.fail(function( jqXHR, textStatus ) {
-              alert( "Fallo cargando los almacenes de origen: " + textStatus );
-            });  /*Fin del request.fail*/
-
+            });
 
             var inventario;
             $('#origin_id').change(function()
             {
-
                 var $warehouse_id = $(this).val();
                 var request = $.ajax({
                   url: "/api/inventory/" + $warehouse_id,
@@ -70,14 +87,16 @@ Ingreso de Artículos
                   dataType: "json"
                 });
 
-                request.done(function( result ) {
+                request.done(function( result )
+                {
                     var allArticles = $('<optgroup>');
                     allArticles.attr('label', 'Todos los Artículos');
                     var favArticles = $('<optgroup>');
                     favArticles.attr('label', 'Favoritos');
 
                     inventario = result;
-                    for(var k in result) {
+                    for(var k in result)
+                    {
                         allArticles.append($('<option>')
                                         .text(result[k].name)
                                         .attr('value', result[k].id));
@@ -98,39 +117,12 @@ Ingreso de Artículos
                     var sel = $('#origin_id').val();
                     var selectedWarehouse = warehouses[sel];
 
-                    $('#destination_id').empty()
-                                    .append($('<option>')
-                                    .text('Seleccione el destino...')
-                                    .attr('value', ''));
-                    var destination = $.ajax({
-                      url: "/api/warehousesList/",
-                      method: "GET",
-                      dataType: "json"
-                    });
-
-                    destination.done(function( result ) {
-                        for(var k in result)
-                        {
-                          if (result[k].activity_id == selectedWarehouse.activity_id)
-                          {
-
-                            $('#destination_id').append($('<option>')
-                                            .text(result[k].name)
-                                            .attr('value', result[k].id));
-                          }
-                        } /* Fin del for */
-                        sortDropDownListByText('destination_id');
-                    });
-
-                    destination.fail(function( jqXHR, textStatus ) {
-                      alert( "Fallo cargando los almacenes de destino: " + textStatus );
-                    });
-
                 }); /* Fin del .done */
 
                 request.fail(function( jqXHR, textStatus ) {
                   alert( "Fallo cargando los articulos: " + textStatus );
                 });
+
 
             }); /* Fin del .change() */
 
@@ -155,7 +147,7 @@ Ingreso de Artículos
 
             });
 
-
+            sortDropDownListByText('destination_id');
         });  // Fin del document.ready()
 
 function sortDropDownListByText(selectId) {
@@ -167,32 +159,59 @@ function sortDropDownListByText(selectId) {
 
 };
 
-function loadDestination_id() {
+function loadDestination_id()
+{
 
+    $('#destination_id').empty()
+                    .append($('<option>')
+                    .text('Seleccione el destino...')
+                    .attr('value', ''));
+
+//                var activity_id = ;
+    var activity_id = "";
+    var rdActivity = $("input[type='radio'][name='rdActivity']:checked");
+    if (rdActivity.length > 0) {
+        activity_id = rdActivity.val();
+    }
+
+    var company_id = $('#companyList').val();
+    if(company_id != '')
+    {
         var request = $.ajax({
-          url: "/api/warehousesList/",
+          url: "/api/warehousesByActivity/",
+          data: {company_id: company_id, rdActivity: activity_id},
           method: "GET",
           dataType: "json"
         });
 
         request.done(function( result ) {
-            $('#destination').empty()
+            $('#origin_id').empty()
                             .append($('<option>')
-                            .text('Seleccione el destino...')
+                            .text('Seleccione el artículo...')
                             .attr('value', ''));
             for(var k in result) {
-                inventario = result;
-
-                $('#article_id').append($('<option>')
+                $('#origin_id').append($('<option>')
                                 .text(result[k].name)
                                 .attr('value', result[k].id));
             }
+
+            $('#destination_id').empty()
+                            .append($('<option>')
+                            .text('Seleccione el artículo...')
+                            .attr('value', ''));
+            for(var k in result) {
+                $('#destination_id').append($('<option>')
+                                .text(result[k].name)
+                                .attr('value', result[k].id));
+            }
+
         });
 
         request.fail(function( jqXHR, textStatus ) {
-          alert( "Request failed: " + textStatus );
+            alert( "Error al cargar los almacenes destino: " + textStatus );
         });
-}
+    }
+ }
 
     </script>
 @endsection

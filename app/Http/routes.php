@@ -15,7 +15,7 @@ Route::get('/', 'CustomAuthController@index');
 
 Route::get('escritorio', 'DefaultController@dashboard');
 Route::get('api/warehousesList', 'jsonController@warehousesList');
-Route::get('api/warehousesByType/{id}', 'jsonController@warehousesType');
+Route::get('api/warehousesByType', 'jsonController@warehousesByType');
 Route::get('api/warehousesByActivity/{id}', 'jsonController@warehousesActivity');
 Route::get('api/warehousesByActivity', 'jsonController@warehousesByActivity');  // este es el nuevo
 Route::get('api/warehouseDetail/{id}', 'jsonController@warehouseDetail');
@@ -29,7 +29,7 @@ Route::post('articulos/import', 'ImportController@importArticles');
 Route::get('movimientos/porAprobar', 'ApproveController@viewAll');
 Route::post('movimientos/aprobar', 'ApproveController@approveMovement');
 Route::post('movimientos/rechazar', 'ApproveController@rejectMovement');
-
+Route::get('movimientos/alta', 'MovementsController@alta');
 // Password reset link request routes...
 Route::get('password/email', 'Auth\PasswordController@getEmail');
 Route::post('password/email', 'Auth\PasswordController@postEmail');
@@ -47,10 +47,12 @@ Route::post('reportes/movimientosPorAlmacen', 'ReportsController@movimientosPorA
 Route::get('reportes/listadoCumplimientoDeMaterial', 'ReportsController@showListadoCumplimientoDeMaterial');
 Route::post('reportes/listadoCumplimientoDeMaterial', 'ReportsController@ListadoCumplimientoDeMaterial');
 
-Route::get('movimientos/alta', function () {
+/*Route::get('movimientos/alta', function () {
     $warehouseList = Array();
+
     return view('movements.alta', compact('warehouseList'));
-});
+});*/
+
 Route::resource('login', 'CustomAuthController');
 Route::get('logout', 'CustomAuthController@logout');
 Route::resource('actividades', 'ActivitiesController');

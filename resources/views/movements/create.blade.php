@@ -158,6 +158,8 @@ Nuevo Movimiento
                     $('#serial').show();
                 }
             });
+            sortDropDownListByText('origin_id');
+            sortDropDownListByText('destination_id');
         });  // Fin del document.ready()
 
         function validate() {}
