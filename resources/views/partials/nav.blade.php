@@ -109,9 +109,11 @@
                     <li>
                         <a href="{!!URL::to('/movimientos/alta')!!}"><i class='fa fa-arrow-circle-up'></i> Alta de artículos</a>
                     </li>
+@if (Auth::user()->securityLevel >= 20)
                     <li>
                         <a href="{!!URL::to('/movimientos/porAprobar')!!}"><i class='fa fa-check'></i> Pendientes por Aprobar</a>
                     </li>
+@endif
                     <li>
                         <a href="{!!URL::to('/movimientos/')!!}"><i class='fa fa-list-ol'></i> Ver Últimos Movimientos</a>
                     </li>
