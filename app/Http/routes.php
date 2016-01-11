@@ -39,12 +39,15 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 Route::get('reportes/articulos/', 'ReportsController@articles');
 Route::get('reportes/articulos/all', 'ReportsController@excelArticles');
 Route::get('reportes/almacenes', 'ReportsController@inventory');
+Route::get('reportes/movimientosPorAlmacen', 'ReportsController@showMovimientosPorAlmacen');
+Route::post('reportes/movimientosPorAlmacen', 'ReportsController@movimientosPorAlmacen');
+Route::get('reportes/listadoCumplimientoDeMaterial', 'ReportsController@showListadoCumplimientoDeMaterial');
+Route::post('reportes/listadoCumplimientoDeMaterial', 'ReportsController@ListadoCumplimientoDeMaterial');
+
 Route::get('movimientos/alta', function () {
     $warehouseList = Array();
     return view('movements.alta', compact('warehouseList'));
 });
-Route::get('reportes/listadoCumplimientoDeMaterial', 'ReportsController@showListadoCumplimientoDeMaterial');
-Route::post('reportes/listadoCumplimientoDeMaterial', 'ReportsController@ListadoCumplimientoDeMaterial');
 Route::resource('login', 'CustomAuthController');
 Route::get('logout', 'CustomAuthController@logout');
 Route::resource('actividades', 'ActivitiesController');

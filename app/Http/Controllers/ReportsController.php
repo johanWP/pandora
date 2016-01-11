@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Movement;
 use Illuminate\Http\Request;
 use App\Company;
 use App\Activity;
@@ -16,6 +17,9 @@ use Illuminate\Support\Facades\DB;
 class ReportsController extends Controller
 {
     //
+    /**
+     * Exporta el Listado de todos los articulos en formato Excel
+     */
     public function excelArticles()
     {
 
@@ -98,5 +102,69 @@ class ReportsController extends Controller
     {
         dd($request->all());
         return view('reports.listadoCumplimientoDeMaterial');
+    }
+
+    /**
+     * Muestra el formulario para el reporte de movimientos por almacén
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showMovimientosPorAlmacen()
+    {
+//        dd(Auth::user()->company);
+        if (Auth::user()->company->parent == 0)
+        {
+            $companies = ['id' => Auth::user()->company->id, 'name' => Auth::user()->company->name];
+        } else
+        {
+            $companies = Company::lists('name', 'id');
+        }
+        $activities = DB::table('activities')
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get();
+        return view('reports.movimientosPorAlmacenForm',compact('companies', 'activities'));
+    }
+
+    public function movimientosPorAlmacen(Request $request)
+    {
+
+        $desde= date_format(date_create($request->fechaDesde),"Y/m/d H:i:s");
+        $hasta= date_format(date_create($request->fechaHasta),"Y/m/d 23:59:99");
+
+        if ($request->rdOrigin == 'one')
+        {
+            $origin_id[] = $request->origin;
+        } else
+        {
+            $warehouses = Warehouse::select('id')
+                ->where('company_id',$request->companyList)
+                ->where('activity_id', $request->rdActivity)
+                ->get();
+            foreach ($warehouses as $warehouse)
+            {
+                $origin_id[] = $warehouse->id;
+            }
+        }
+
+        if ($request->rdDestination == 'one')
+        {
+            $destination_id[] = $request->destination;
+        } else
+        {
+            $warehouses = Warehouse::select('id')
+                ->where('company_id',$request->companyList)
+                ->where('activity_id', $request->rdActivity)
+                ->get();
+            foreach ($warehouses as $warehouse)
+            {
+                $destination_id[] = $warehouse->id;
+            }
+        }
+        $movements = Movement::where('created_at', '>=', $desde)
+                            ->where('created_at', '<=', $hasta)
+                            ->whereIn('origin_id', $origin_id)
+                            ->whereIn('destination_id', $destination_id)
+                            ->get();
+        return view('reports.movimientosPorAlmacen', compact('movements'));
     }
 }
