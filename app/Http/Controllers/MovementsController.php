@@ -46,12 +46,13 @@ class MovementsController extends Controller
         {
             $companies = Company::lists('name', 'id');
         }
-
+/*
         $activities = DB::table('activities')
             ->select('id', 'name')
             ->orderBy('name')
             ->get();
-
+*/
+        $activities = Auth::user()->activities;
         return view('movements.create', compact('companies', 'activities'));
     }
 
@@ -68,12 +69,13 @@ class MovementsController extends Controller
         {
             $companies = Company::lists('name', 'id');
         }
-
+/*
         $activities = DB::table('activities')
             ->select('id', 'name')
             ->orderBy('name')
             ->get();
-
+*/
+        $activities = Auth::user()->activities;
         return view('movements.alta', compact('companies', 'activities'));
     }
 
