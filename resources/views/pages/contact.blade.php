@@ -15,7 +15,7 @@
                       <abbr title="Phone">P:</abbr> +54 (11) 6967 5264
                     </address>
 
-                    {!! Form::open(['route'=>'mail.store', 'method'=>'POST']) !!}
+                    {!! Form::open(['url'=>'/mail', 'method'=>'POST']) !!}
                         <div class="form-group">
                             <input type="text" name="name" class="form-control" placeholder="Nombre" required>
                         </div>

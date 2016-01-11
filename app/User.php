@@ -70,7 +70,7 @@ class User extends Model implements AuthenticatableContract,
      */
     public function getWarehouseListAttribute()
     {
-
+        $result='';
         $activities = $this->activities()->lists('id')->toArray();
         $warehouses = DB::table('warehouses')
             ->whereIn('activity_id', $activities)
