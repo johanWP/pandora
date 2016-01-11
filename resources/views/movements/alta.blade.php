@@ -112,11 +112,12 @@ Ingreso de Artículos
                                     .text('Seleccione el artículo...')
                                     .attr('value', ''))
                                     .append(favArticles)
-                                    .append(allArticles);
+                                    .append(allArticles).
+                                    attr('disabled', false);
 
                     var sel = $('#origin_id').val();
                     var selectedWarehouse = warehouses[sel];
-
+                    sortDropDownListByText('article_id');
                 }); /* Fin del .done */
 
                 request.fail(function( jqXHR, textStatus ) {

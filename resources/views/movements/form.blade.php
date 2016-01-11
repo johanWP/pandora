@@ -50,7 +50,7 @@
 <!-- Begin article_id select -->
         <div class="form-group">
             {!! Form::label('article_id', 'Artículo:') !!}
-            {!! Form::select('article_id', ['' => 'Seleccione el artículo...'], null, ['id'=>'article_id', 'class' => 'form-control']) !!}
+            {!! Form::select('article_id', ['' => 'Seleccione el artículo...'], null, ['id'=>'article_id', 'class' => 'form-control', 'disabled' => 'disabled']) !!}
         </div>
 <!-- End origin_id select -->
 

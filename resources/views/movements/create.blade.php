@@ -112,7 +112,8 @@ Nuevo Movimiento
                                     .text('Seleccione el artículo...')
                                     .attr('value', ''))
                                     .append(favArticles)
-                                    .append(allArticles);
+                                    .append(allArticles)
+                                    .attr('disabled', false);
 
                     var sel = $('#origin_id').val();
 
