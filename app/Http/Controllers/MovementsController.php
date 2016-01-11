@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Requests\CreateMovementRequest;
 use Auth;
 use App\Movement;
+use App\Company;
 use App\User;
 use Redirect;
 use Session;
@@ -43,8 +44,23 @@ class MovementsController extends Controller
         {
             $warehouseList[$warehouse['id']] = $warehouse['name'];
         }
+        if (Auth::user()->company->parent == 0)
+        {
+            $companies = [
+                        'id' => Auth::user()->company->id,
+                        'name' => Auth::user()->company->name
+                        ];
+        } else
+        {
+            $companies = Company::lists('name', 'id');
+        }
 
-        return view('movements.create', compact('warehouseList'));
+        $activities = DB::table('activities')
+            ->select('id', 'name')
+            ->orderBy('name')
+            ->get();
+
+        return view('movements.create', compact('warehouseList', 'companies', 'activities'));
     }
 
     /**

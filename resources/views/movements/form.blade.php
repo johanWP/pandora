@@ -1,3 +1,39 @@
+<div class="row">
+    <!-- Begin Company textfield -->
+    <div class="form-group">
+
+    {!! Form::label('companyList', 'Empresas:') !!}
+    @if(Auth::user()->company->parent==0)
+{{--Si el usuario no es de una empresa parente, le preselecciono la empresa--}}
+
+        {!! Form::text('company', Auth::user()->company->name, ['class' => 'form-control', 'readonly']) !!}
+        {!! Form::hidden('companyList', Auth::user()->company->id) !!}
+    @else
+{{--Si el usuario es de una empresa parent, le muestro un dropdown para seleccionar la empresa--}}
+        {!! Form::select('companyList[]', $companies , null, ['class' => 'form-control', 'id'=>'companyList', 'placeholder'=>'Seleccione...']) !!}
+    @endif
+
+    </div>
+    <!-- End Company textfield -->
+</div>
+
+<!-- Begin activity textfield -->
+<div class="row">
+    <div class="col-sm-12" id="divActivity">
+        <label>Actividad:</label>
+        <br/>
+        @foreach($activities as $activity)
+            <label class="radio-inline">
+              <input type="radio" name="rdActivity" id="activity_{{ $activity->id }}" value="{{ $activity->id }}">
+              {{ $activity->name }}
+            </label>
+
+        @endforeach
+
+    </div>
+</div>
+<hr />
+<!-- End activity textfield -->
 <!-- Begin remito textfield -->
         <div class="form-group">
             {!! Form::label('remito', 'Remito:') !!}
@@ -7,7 +43,7 @@
 <!-- Begin origin_id select -->
         <div class="form-group">
             {!! Form::label('origin_id', 'Almacén de Origen:') !!}
-            {!! Form::select('origin_id', $warehouseList, null, ['class' => 'form-control','placeholder' => 'Seleccione el origen...', 'id'=>'origin_id']) !!}
+            {!! Form::select('origin_id', [], null, ['class' => 'form-control','placeholder' => 'Seleccione el origen...', 'id'=>'origin_id']) !!}
         </div>
 <!-- End origin_id select -->
 

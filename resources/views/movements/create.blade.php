@@ -11,7 +11,7 @@ Nuevo Movimiento
 
     @include('errors.list')
 
-    {!! Form::open(['url' => 'movimientos']) !!}
+    {!! Form::open(['url' => 'movimientos', 'id'=>'frm']) !!}
     @include('movements.form', ['submitButtonText' => 'Registrar nuevo movimiento'])
 
     {!! Form::close() !!}
@@ -29,35 +29,56 @@ Nuevo Movimiento
             var inventario;
             $('#serial').hide();
             $('#serialLabel').hide();
-/*
-            $('#origin_id').change(function()
+            $("#frm input[type='radio'][name='rdActivity']").change(function()
             {
-                var $warehouse_id = $(this).val();
-                var request = $.ajax({
-                  url: "/api/inventory/" + $warehouse_id,
-                  method: "GET",
-                  dataType: "json"
-                });
 
-                request.done(function( result ) {
-                    $('#article_id').empty()
-                                    .append($('<option>')
-                                    .text('Seleccione el artículo...')
-                                    .attr('value', ''));
-                    inventario = result;
-                    for(var k in result) {
-                        $('#article_id').append($('<option>')
-                                        .text(result[k].name)
-                                        .attr('value', result[k].id));
-                    }
-                });
+//                var activity_id = ;
+                var activity_id = "";
+                var rdActivity = $("input[type='radio'][name='rdActivity']:checked");
+                if (rdActivity.length > 0) {
+                    activity_id = rdActivity.val();
+                }
 
-                request.fail(function( jqXHR, textStatus ) {
-                    alert( "Request failed: " + textStatus );
-                });
+                var company_id = $('#companyList').val();
+                if(company_id != '')
+                {
+                    var request = $.ajax({
+                      url: "/api/warehousesByActivity/",
+                      data: {company_id: company_id, rdActivity: activity_id},
+                      method: "GET",
+                      dataType: "json"
+                    });
+
+                    request.done(function( result ) {
+                        $('#origin_id').empty()
+                                        .append($('<option>')
+                                        .text('Seleccione el artículo...')
+                                        .attr('value', ''));
+                        for(var k in result) {
+                            $('#origin_id').append($('<option>')
+                                            .text(result[k].name)
+                                            .attr('value', result[k].id));
+                        }
+
+                        $('#destination_id').empty()
+                                        .append($('<option>')
+                                        .text('Seleccione el artículo...')
+                                        .attr('value', ''));
+                        for(var k in result) {
+                            $('#destination_id').append($('<option>')
+                                            .text(result[k].name)
+                                            .attr('value', result[k].id));
+                        }
+
+                    });
+
+                    request.fail(function( jqXHR, textStatus ) {
+                        alert( "Error al cargar los almacenes: " + textStatus );
+                    });
+                }
 
             });
-*/
+
             $('#origin_id').change(function()
             {
 
@@ -101,6 +122,7 @@ Nuevo Movimiento
                   alert( "Fallo cargando los articulos: " + textStatus );
                 });
 //   *********************
+/*
             $('#destination_id').empty()
                             .append($('<option>')
                             .text('Seleccione el destino...')
@@ -119,6 +141,7 @@ Nuevo Movimiento
                 alert( "Fallo cargando detalles del almacén de origen: " + textStatus );
             });
 
+*/
 /*******/
             }); /* Fin del .change() */
             $('#article_id').change(function (){
