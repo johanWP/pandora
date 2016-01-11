@@ -24,7 +24,7 @@ class MovementsController extends Controller
      */
     public function index()
     {
-        $movements = Movement::orderBy('id', 'desc')->paginate(10);
+        $movements = Movement::whereIn('status_id', ['1', '2'])->orderBy('id', 'desc')->paginate(10);
         return view('movements.index', compact('movements'));
     }
 
