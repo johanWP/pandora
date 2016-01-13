@@ -40,16 +40,8 @@ class MailController extends Controller
      */
     public function store(Request $request)
     {
-/*
-        $result =Mail::send('emails.contact', $request->all(), function($message)
-        {
-            $message->subject   =   'Correo de Contacto';
-            $message->to        =   'jmarchan@gmail.com';
-        });
-*/
-
-
         $result = Mail::send('emails.contact',$request->all(), function($message) use ($request) {
+
             $message->from($request->email);
             $message->to('jmarchan@gmail.com')
                 ->subject($request->subject)
@@ -61,7 +53,7 @@ class MailController extends Controller
         session()->flash('flash_message', 'Mensaje enviado.');
         session()->flash('flash_message_important', true);
 
-        return Redirect::to('/inicio#get-in-touch');
+        return Redirect::to('/home#get-in-touch');
 
     }
 
