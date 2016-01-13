@@ -20,7 +20,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::orderBy('name', 'asc')->paginate(10);
+        $articles = Article::where('company_id', Auth::user()->company_id)->orderBy('name', 'asc')->paginate(10);
         return view('articles.index', compact('articles'));
     }
 

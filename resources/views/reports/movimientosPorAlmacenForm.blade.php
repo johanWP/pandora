@@ -173,13 +173,15 @@
         {
 //                Lleno el dropdown de almacén de origen cuando se selecciona la actividad
             var activity_id = $("#frm input[name='rdActivity']:checked").val();
+            var company_id = $("#companyList").val();
             $('#origin').empty()
                         .append($('<option>')
                         .text('Seleccione...')
                         .attr('value', ''));
 
             var origin = $.ajax({
-              url: "/api/warehousesByActivity/" + activity_id,
+              url: "/api/warehousesByActivity/",
+              data: {company_id: company_id, rdActivity: activity_id},
               method: "GET",
               dataType: "json"
             });
