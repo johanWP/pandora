@@ -16,11 +16,14 @@
 
     <hr/>
 
+{{--
 <div class="row">
   <div class="col-sm-5 vcenter">
     <input type="text" placeholder="Buscador"> <input class="btn btn-default" type="submit" value="Buscar">
   </div>
 </div>
+--}}
+
 <div class="row">
 @if($movements->count() > 0)
 	<div class="table-responsive">
