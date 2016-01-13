@@ -157,7 +157,18 @@ class Warehouse extends Model
 
             //dd($result);
         }
-        ksort($result);
+ /*****************/
+        usort($result, function($a, $b) {
+            // You can use an anonymous function like this for the usort comparison function.
+            if ($a['name'] < $b['name']) return -1;
+            if ($a['name'] == $b['name']) return 0;
+            // In case of 'order' ties, you may want to add a comparison of a different key
+            return 1; // $a['order'] must be > $b['order'] at this point
+        });
+
+/******************/
         return $result;
     }
+
+
 }
