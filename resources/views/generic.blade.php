@@ -30,7 +30,7 @@
 
 <body>
 <div class="col-sm-12 bg-gris">
-<a class="col-sm-12 navbar-brand logo" href="/" ><span class="spanLogo">Inventario</span></a>
+<a class="col-sm-12 navbar-brand logo" href="/" ><span class="spanLogo"></span></a>
 </div>
 <div class="container-fluid">
             @yield('content')

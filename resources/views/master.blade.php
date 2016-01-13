@@ -42,13 +42,9 @@
 
         <div id="page-wrapper">
            <div class="container-fluid">
-            @include('partials.flash')
-            @yield('content')
-
-
+                @include('partials.flash')
+                @yield('content')
            </div>
-
-
         </div>
 
         @yield('modal')

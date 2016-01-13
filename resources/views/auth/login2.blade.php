@@ -1,7 +1,7 @@
 @extends('generic')
 
 @section('title')
-    Ingresar al Sistema
+    Panatel::Inventario
 @endsection
 
 @section('content')
@@ -28,7 +28,7 @@
             </div>
     <!-- End username textfield -->
 
-     <div class="form-group">
+    <div class="form-group">
         <div class="col-sm-offset-2 col-sm-4">
           <div class="checkbox">
             <label for="remember">
@@ -36,11 +36,12 @@
             </label>
           </div>
         </div>
-      </div>
+    </div>
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-4">
       <button type="submit" class="btn btn-primary">Ingresar</button>
+      {!! link_to('password/email', $title='Olvidé mi contraseña', $attributesm= null, $secure=null) !!}
     </div>
   </div>
 {!! Form::close() !!}
