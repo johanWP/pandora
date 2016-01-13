@@ -43,7 +43,7 @@ class MailController extends Controller
         $result = Mail::send('emails.contact',$request->all(), function($message) use ($request) {
 
             $message->from($request->email);
-            $message->to('jmarchan@gmail.com')
+            $message->to('panatel.argentina@gmail.com')
                 ->subject($request->subject)
                 ->replyTo($request->email);
         });

@@ -24,7 +24,7 @@ class PasswordController extends Controller
     */
 
     use ResetsPasswords;
-    protected $subject = "Resetea tu contraseña de Pandora";
+    protected $subject = "Resetea tu contraseña de Panatel: Inventario";
 
     /**
      * Create a new password controller instance.
