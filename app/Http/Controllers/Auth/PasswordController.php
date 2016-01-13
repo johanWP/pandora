@@ -61,7 +61,6 @@ class PasswordController extends Controller
         {
             if($correo->email == $request->email)
             {
-//            dd($request->email);
                 $response = Password::sendResetLink($request->only('email'), function (Message $message) {
                     $message->subject($this->getEmailSubject());
                 });
