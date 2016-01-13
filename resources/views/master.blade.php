@@ -20,13 +20,13 @@
     @yield('css')
     <style>
 
-        .logo  {background-image: url('/images/pandora-icon-32.png');
+        .logo  {background-image: url('/images/logo-panatel_160x50.png');
                     background-position: 15px center;
                     background-repeat: no-repeat;
                     font-family: Lato, Helvetica Neue, Helvetica; font-weight: bolder;
                     width: 250px; height: 50px;text-align: right; font-size: 26px; margin: 10 0 0 15px;
                     }
-        .spanLogo {margin-righ: 50px; color: #00BCD4}
+        .spanLogo {padding-left: 180px; color: #00BCD4; font-size: 1.4em;}
     </style>
 </head>
 

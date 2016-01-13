@@ -32,7 +32,7 @@
         <div class="col-sm-offset-2 col-sm-4">
           <div class="checkbox">
             <label for="remember">
-              <input type="checkbox" value="1"> Recordarme en este equipo
+              <input type="checkbox" value="1" name="rememberMe" id="rememberMe"> Recordarme en este equipo
             </label>
           </div>
         </div>

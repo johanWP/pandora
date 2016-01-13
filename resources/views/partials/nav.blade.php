@@ -5,7 +5,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand logo" href="index.html"><span class="spanLogo">Pandora Admin</span></a>
+    <a class="navbar-brand logo" href="index.html"><span class="spanLogo"></span></a>
 </div>
 
 

@@ -13,7 +13,7 @@
     <style>
      body {width: 100%; height: 100%;}
 
-        .logo  {background-image: url('/images/pandora-icon-32.png');
+        .logo  {background-image: url('/images/logo-panatel_160x50.png');
                     background-position: 25px center;
                     background-repeat: no-repeat;
                     font-family: Lato, Helvetica Neue, Helvetica; font-weight: bolder;
@@ -21,7 +21,7 @@
                      margin: 15px 0 15px 0;
 
                     }
-        .spanLogo {padding-left: 50px; color: #00BCD4; font-size: 1.4em;}
+        .spanLogo {padding-left: 180px; color: #00BCD4; font-size: 1.4em;}
 
         .bg-gris {background-color: rgb(232,232,232); margin-bottom: 20px;}
     </style>
@@ -30,7 +30,7 @@
 
 <body>
 <div class="col-sm-12 bg-gris">
-<a class="col-sm-12 navbar-brand logo" href="/" ><span class="spanLogo">Pandora Soft</span></a>
+<a class="col-sm-12 navbar-brand logo" href="/" ><span class="spanLogo">Inventario</span></a>
 </div>
 <div class="container-fluid">
             @yield('content')

@@ -216,11 +216,12 @@ class MovementsController extends Controller
         {
             $msg .= '<li>El almacén de destino se encuentra inactivo.</li>';
         }
-        if((Auth::user()->securityLevel < 20) AND ($m->destination->type_id != 1))
+/*    REVISAR ESTA REGLA
+        if((Auth::user()->securityLevel < 20) AND ($m->destination->type_id == 1))
         {
             $msg .= '<li>Usted no puede hacer movimientos hacia este tipo de almacén.</li>';
         }
-
+*/
         if (($m->origin->type_id == 2) AND ($m->destination->type_id == 2))
         {
             $msg .= '<li>Los movimientos entre almacenes móviles no están permitidos.</li>';
