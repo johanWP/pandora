@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
     <link rel=”apple-touch-icon” href=”/logo-panatel-144x144.png”/>
     <link rel=”apple-touch-icon-precomposed” href=”/logo-panatel-144x144.png”/>
-    <link rel="shortcut icon" href="/favicon.ico" /> 
+    <link rel="shortcut icon" href="/favicon.ico" />
 
     @yield('css')
     <style>

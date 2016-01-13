@@ -41,26 +41,48 @@ class CustomAuthController extends Controller
      */
     public function store(CustomAuthRequest $request)
     {
-
-//        if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'active' => 1]))
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password]))
+        if (isset($request->rememberMe))
         {
-//  Si el usuario existe pero esta inactivo, la sesión se crea igual.  1) la destruyo 2) muestro mensaje
-            if (Auth::user()->active == 0)
+            if (Auth::attempt(['username' => $request->username, 'password' => $request->password], $remember))
             {
-                Auth::logout();
-                return view('pages.inactive');
+                //  Si el usuario existe pero esta inactivo, la sesión se crea igual.  1) la destruyo 2) muestro mensaje
+                //  Si el usuario tiene credenciales y está activo, muestro su escritorio
+                $redirect = 'escritorio';
+                if (Auth::user()->active == 0) {
+                    Auth::logout();
+                    return view('pages.inactive');
+                }
+
+            } else
+            {
+                $redirect = '/login';
+                session()->flash('flash_message_error', 'Nombre de usuario y/o contraseña no válidos.');
+                //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+                session()->flash('flash_message_important', true);
             }
 
-//            Si el usuario tiene credenciales y está activo, muestro su escritorio
-            return Redirect::to('escritorio');
+        } else
+        {
+            if (Auth::attempt(['username' => $request->username, 'password' => $request->password]))
+            {
+                //  Si el usuario existe pero esta inactivo, la sesión se crea igual.  1) la destruyo 2) muestro mensaje
+                //  Si el usuario tiene credenciales y está activo, muestro su escritorio
+                $redirect = 'escritorio';
+                if (Auth::user()->active == 0) {
+                    Auth::logout();
+                    return view('pages.inactive');
+                }
+
+            } else
+            {
+                $redirect = '/login';
+                session()->flash('flash_message_danger', 'Nombre de usuario y/o contraseña no válidos.');
+                //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
+                session()->flash('flash_message_important', true);
+            }
         }
-        session()->flash('flash_message_error', 'Nombre de usuario y/o contraseña no válidos.');
 
-//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
-        session()->flash('flash_message_important', true);
-
-        return Redirect::to('/login');
+        return Redirect::to($redirect);
     }
 
     public function logout()
