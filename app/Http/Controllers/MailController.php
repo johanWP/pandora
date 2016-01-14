@@ -42,8 +42,8 @@ class MailController extends Controller
     {
         $result = Mail::send('emails.contact',$request->all(), function($message) use ($request) {
 
-            $message->from($request->email);
-            $message->to('panatel.argentina@gmail.com')
+            $message->from(env('MAIL_USERNAME'));
+            $message->to('jmarchan@gmail.com')
                 ->subject($request->subject)
                 ->replyTo($request->email);
         });

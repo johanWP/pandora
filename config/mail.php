@@ -1,15 +1,16 @@
 <?php
 return array(
     "driver" => "smtp",
-    "host" => "mailtrap.io",
-    "port" => 2525,
+    "host" => "smtpout.secureserver.net",
+    "port" => 465,
     "from" => array(
-        "address" => "from@example.com",
-        "name" => "Example"
+        "address" => "inventario@panatelcomm.com",
+        "name" => "Panatel Communications"
     ),
-    "username" => "497288e730aa5fdc0",
-    "password" => "c475d281f4c3d6",
+    "username" => "inventario@panatelcomm.com",
+    "password" => "wwwinventario",
     "sendmail" => "/usr/sbin/sendmail -bs",
+    "encryption" => "ssl",
     "pretend" => false
 );
 

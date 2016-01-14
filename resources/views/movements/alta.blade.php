@@ -95,7 +95,7 @@ Ingreso de Artículos
                                     attr('disabled', false);
 
                     var sel = $('#origin_id').val();
-                    var selectedWarehouse = warehouses[sel];
+//                    var selectedWarehouse = warehouses[sel];
 //                    sortDropDownListByText('article_id');
                 }); /* Fin del .done */
 
