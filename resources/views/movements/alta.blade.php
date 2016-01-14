@@ -21,7 +21,7 @@ Ingreso de Artículos
 @section('scripts')
 
     <script>
-
+        var inventario;
         $( document ).ready(function()
         {
             @if (Auth::user()->securityLevel < 20)
@@ -41,7 +41,7 @@ Ingreso de Artículos
                     activity_id = rdActivity.val();
                 }
                 var company_id = $('#companyList').val();
-                //        Cargar los almacenes unicamente de sistemas en el dropdown de origen
+                //        Cargar unicamente los almacenes  de sistemas en el dropdown de origen
                 if (company_id !='')
                 {
                     var origin = $.ajax({
@@ -77,7 +77,7 @@ Ingreso de Artículos
 
             });
 
-            var inventario;
+
             $('#origin_id').change(function()
             {
                 var $warehouse_id = $(this).val();
@@ -127,12 +127,24 @@ Ingreso de Artículos
 
             }); /* Fin del .change() */
 
-            $('#article_id').change(function (){
+            $('#article_id').change(function ()
+            {
 
                 var text = $('#article_id option:selected').text();
                 var selected_id = $(this).val();
+                var serializable = false;
+                var cantidad = 0;
 //                if(inventario[text].serializable == 1)
-                if(inventario[selected_id].serializable == 1)
+                for (var i in inventario)
+                {
+                    if (inventario[i].id == selected_id)
+                    {
+                        serializable = inventario[i].serializable;
+                        cantidad = inventario[i].quantity;
+                    }
+                }
+//                alert(serializable);
+                if(serializable)
                 {
                     $('#serialLabel').show();
                     $('#serial').show();
@@ -186,16 +198,6 @@ function loadDestination_id()
         });
 
         request.done(function( result ) {
-            $('#origin_id').empty()
-                            .append($('<option>')
-                            .text('Seleccione el artículo...')
-                            .attr('value', ''));
-            for(var k in result) {
-                $('#origin_id').append($('<option>')
-                                .text(result[k].name)
-                                .attr('value', result[k].id));
-            }
-
             $('#destination_id').empty()
                             .append($('<option>')
                             .text('Seleccione el artículo...')

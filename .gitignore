@@ -3,7 +3,7 @@
 Homestead.yaml
 Homestead.json
 .env
-/config
+/config/*.php
 .idea/workspace.xml
 *.xml
 /storage

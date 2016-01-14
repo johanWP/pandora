@@ -93,18 +93,33 @@ Nuevo Movimiento
                 });
 
             }); /* Fin del .change() */
+
             $('#article_id').change(function (){
-                var cant = inventario[this.value].cantidad;
-                var serializable = inventario[this.value].serializable;
-                $('#maxQ').html(cant);
-                if(serializable=='0')
+                var cant =0;
+                var serializable = 0;
+                var selected_id = $(this).val();
+                for (var i in inventario)
                 {
-                    $('serialLabel').hide();
-                    $('serial').hide();
-                } else
+                    if (inventario[i].id == selected_id)
+                    {
+                        serializable = inventario[i].serializable;
+                        cant = inventario[i].quantity;
+                    }
+                }
+
+                $('#maxQ').html(cant);
+                if(serializable)
                 {
                     $('#serialLabel').show();
                     $('#serial').show();
+                    $('#quantity').val('1')
+                                .attr('readonly', true);
+                } else
+                {
+                     $('#serialLabel').hide();
+                     $('#serial').hide();
+                     $('#quantity').val('')
+                                .attr('readonly', false);
                 }
             });
             sortDropDownListByText('origin_id');
