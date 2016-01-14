@@ -20,7 +20,8 @@ class ActivitiesController extends Controller
      */
     public function index()
     {
-        $activities = Activity::orderBy('name', 'asc')->get();
+        $activities = Activity::where('company_id', Auth::user()->company_id)
+                                ->orderBy('name', 'asc')->get();
         return view('activities.index', compact('activities'));
 
     }

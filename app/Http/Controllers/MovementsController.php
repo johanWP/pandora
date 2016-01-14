@@ -24,7 +24,17 @@ class MovementsController extends Controller
      */
     public function index()
     {
-        $movements = Movement::whereIn('status_id', ['1', '2'])->orderBy('id', 'desc')->paginate(10);
+
+        $arrayW = DB::table('warehouses')
+                    ->select('id')
+                    ->where('company_id', Auth::user()->company_id)
+                    ->get();
+        $arrayW = collect($arrayW);
+//        dd($arrayW->lists('id')->toArray());
+        $movements = Movement::whereIn('status_id', ['1', '2'])
+                            ->whereIn('origin_id', $arrayW->lists('id')->toArray())
+                            ->orderBy('id', 'desc')
+                            ->paginate(10);
         return view('movements.index', compact('movements'));
     }
 
