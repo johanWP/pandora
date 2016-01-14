@@ -32,6 +32,13 @@ Ingreso de Artículos
             $('#serial').hide();
             $('#cantidad').hide();
             var warehouses;
+            var count = $("#frm input[type='radio']").length;
+            if(count == 1 )
+            {
+                $("#frm input[type='radio'][name='rdActivity']:first").attr('checked', true);
+                $("#frm input[type='radio'][name='rdActivity']").change();
+            }
+
             $("#frm input[type='radio'][name='rdActivity']").change(function()
             {
                 loadDestination_id();

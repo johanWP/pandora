@@ -76,7 +76,7 @@
                     </p>
                   </td>
                   <td class="text-center">
-                    <a href="movimientos/{{ $movement->id }}" id="btnVer" class="btn btn-default">
+                    <a href="/movimientos/{{ $movement->id }}" id="btnVer" class="btn btn-default">
                       <i class="fa fa-eye fa-2x"></i>
                     </a>
                   </td>

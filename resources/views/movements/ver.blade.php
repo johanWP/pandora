@@ -27,6 +27,10 @@
             <td>{{ $movement->article->name }}</td>
          </tr>
          <tr>
+            <th>Serial</th>
+            <td>{{ $movement->serial }}</td>
+         </tr>
+         <tr>
             <th>Cantidad</th>
             <td>{{ $movement->quantity }}</td>
          </tr>
