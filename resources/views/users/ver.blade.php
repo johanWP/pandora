@@ -41,7 +41,7 @@
          </tr>
          <tr>
             <th>Empresa</th>
-            <td>{{ $user->company_id }}</td>
+            <td>{{ $user->company->name }}</td>
          </tr>
          <tr>
             <th>ID Empleado</th>

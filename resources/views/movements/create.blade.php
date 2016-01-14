@@ -108,7 +108,7 @@ Nuevo Movimiento
                 }
 
                 $('#maxQ').html(cant);
-                if(serializable)
+                if(serializable=='1')
                 {
                     $('#serialLabel').show();
                     $('#serial').show();

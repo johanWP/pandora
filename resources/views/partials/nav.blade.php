@@ -151,9 +151,12 @@
                     <li>
                         <a href="{!!URL::to('/reportes/movimientosPorAlmacen')!!}"><i class='fa fa-arrows fa-fw'></i> Movimientos por Almacén</a>
                     </li>
+
+{{--
                     <li>
                         <a href="{!!URL::to('/reportes/listadoCumplimientoDeMaterial')!!}"><i class='fa fa-truck fa-fw'></i> Cumplimiento de Material</a>
                     </li>
+--}}
                 </ul>
             </li>
 @endif

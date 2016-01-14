@@ -34,6 +34,32 @@
          </a>
          </div>
       </div>
-    @endif
+    @else
 
+      <div class="col-sm-4">
+         <div class="rcorners  text-center">
+            <a href="/movimientos/create">
+            <i class='fa fa-plus fa-3x'></i><br>
+            Nuevo Movimiento</a>
+         </div>
+      </div>
+      <div class="col-sm-4">
+         <div class="rcorners  text-center">
+         <a href="{!!URL::to('/movimientos/')!!}">
+            <i class='fa fa-check fa-3x'></i><br>
+             Movimientos Pendientes por Aprobar
+            </a>
+
+         </div>
+      </div>
+      <div class="col-sm-4">
+         <div class="rcorners text-center">
+         <a href="{!!URL::to('/logout')!!}">
+         <i class="fa fa-list-ol fa-3x"></i><br>
+         Artículos por almacén
+         </a>
+         </div>
+      </div>
+    @endif
+    </div>
 @endsection

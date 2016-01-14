@@ -144,7 +144,7 @@ Ingreso de Artículos
                     }
                 }
 //                alert(serializable);
-                if(serializable)
+                if(serializable=='1')
                 {
                     $('#serialLabel').show();
                     $('#serial').show();
