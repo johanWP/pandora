@@ -36,7 +36,7 @@ Ingreso de Artículos
             if(count == 1 )
             {
                 $("#frm input[type='radio'][name='rdActivity']:first").attr('checked', true);
-                $("#frm input[type='radio'][name='rdActivity']").change();
+                loadOrigin();
             }
 
             $("#frm input[type='radio'][name='rdActivity']").change(function()
@@ -51,35 +51,7 @@ Ingreso de Artículos
                 //        Cargar unicamente los almacenes  de sistemas en el dropdown de origen
                 if (company_id !='')
                 {
-                    var origin = $.ajax({
-
-                        url: "/api/warehousesByType",
-                        data: {company_id: company_id, rdActivity: activity_id, type_id: '1'},
-                        method: "GET",
-                        dataType: "json"
-                    });
-
-                    origin.done(function (result)
-                    {
-                        warehouses = result;
-                        $('#origin_id').empty()
-                                .append($('<option>')
-                                        .text('Seleccione el origen...')
-                                        .attr('value', ''));
-                        for (var k in result) {
-                            $('#origin_id').append($('<option>')
-                                    .text(result[k].name)
-                                    .attr('value', result[k].id));
-                        }
-
-                    });  //  Fin del request.done
-
-                    origin.fail(function (jqXHR, textStatus)
-                    {
-                        alert("Fallo cargando los almacenes de origen: " + textStatus);
-                    }); // Fin del request.fail
-
-
+                    loadOrigin();
                 }
 
             });
@@ -223,5 +195,35 @@ function loadDestination_id()
     }
  }
 
+function loadOrigin()
+{
+    var origin = $.ajax({
+
+        url: "/api/warehousesByType",
+        data: {company_id: company_id, rdActivity: activity_id, type_id: '1'},
+        method: "GET",
+        dataType: "json"
+    });
+
+    origin.done(function (result)
+    {
+        warehouses = result;
+        $('#origin_id').empty()
+                .append($('<option>')
+                        .text('Seleccione el origen...')
+                        .attr('value', ''));
+        for (var k in result) {
+            $('#origin_id').append($('<option>')
+                    .text(result[k].name)
+                    .attr('value', result[k].id));
+        }
+
+    });  //  Fin del request.done
+
+    origin.fail(function (jqXHR, textStatus)
+    {
+        alert("Fallo cargando los almacenes de origen: " + textStatus);
+    }); // Fin del request.fail
+}
     </script>
 @endsection
