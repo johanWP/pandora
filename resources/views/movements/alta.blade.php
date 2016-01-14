@@ -197,6 +197,13 @@ function loadDestination_id()
 
 function loadOrigin()
 {
+    var activity_id = "";
+    var rdActivity = $("input[type='radio'][name='rdActivity']:checked");
+    if (rdActivity.length > 0) {
+        activity_id = rdActivity.val();
+    }
+    var company_id = $('#companyList').val();
+
     var origin = $.ajax({
 
         url: "/api/warehousesByType",
