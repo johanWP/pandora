@@ -21,7 +21,8 @@ class WarehousesController extends Controller
      */
     public function index()
     {
-        $warehouses = Warehouse::orderBy('name', 'asc')->paginate(10);
+        $warehouses = Warehouse::where('company_id', Auth::user()->company_id)
+                            ->orderBy('name', 'asc')->paginate(10);
         return view('warehouses.index', compact('warehouses'));
     }
 
