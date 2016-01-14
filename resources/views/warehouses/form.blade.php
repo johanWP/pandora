@@ -31,10 +31,11 @@
  <!-- End activo checkbox -->
 
 
-            {!! Form::hidden('company_id', '1', ['class' => 'form-control']) !!}
+            {!! Form::hidden('company_id', Auth::user()->company_id, ['class' => 'form-control']) !!}
 
 <!-- Begin Submit button -->
     <div class="form-group">
+
             {!! Form::submit($submitButtonText, ['class' => 'btn btn-primary form-control']) !!}
     </div>
 <!-- End Submit Button -->

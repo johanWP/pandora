@@ -57,12 +57,16 @@
                     </p>
                   </td>
                   <td class="text-right">
+                  @if (Auth::user()->securityLevel >= 40)
                     <a href="{{ action('UsersController@edit', $user->id) }}" class="btn btn-default"><i class="fa fa-pencil fa-fw"></i> Editar</a>
+                  @endif
                   </td>
                   <td>
+                  @if (Auth::user()->securityLevel >= 40)
                     <a href="#modalConfirm" id="btnDelete" class="btn btn-danger" data-toggle="modal" data-name="{{ $user->firstName . " ".$user->lastName}}" data-deleteMe="{{ $user->id }}">
                       <i class="fa fa-trash fa-fw"></i> Eliminar
                     </a>
+                  @endif
                   </td>
                 </tr>
 			@endforeach

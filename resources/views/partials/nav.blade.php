@@ -35,9 +35,11 @@
             <li>
                 <a href="#"><i class="fa fa-users fa-fw"></i> Usuarios<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
+                @if (Auth::user()->securityLevel >= 40)
                     <li>
                         <a href="{!!URL::to('/usuarios/create')!!}"><i class='fa fa-plus fa-fw'></i> Nuevo Usuario</a>
                     </li>
+                @endif
                     <li>
                         <a href="{!!URL::to('/usuarios')!!}"><i class='fa fa-list-ol fa-fw'></i> Ver Listado</a>
                     </li>
