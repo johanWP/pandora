@@ -148,7 +148,7 @@
                         <a href="{!!URL::to('/reportes/articulos')!!}"><i class='fa fa-th-list fa-fw'></i> Maestro de articulos</a>
                     </li>
                     <li>
-                        <a href="{!!URL::to('/reportes/almacenes')!!}"><i class='fa fa-list-ol fa-fw'></i> Artículos por almacén</a>
+                        <a href="{!!URL::to('/reportes/articulosPorAlmacen')!!}"><i class='fa fa-list-ol fa-fw'></i> Artículos por almacén</a>
                     </li>
                     <li>
                         <a href="{!!URL::to('/reportes/movimientosPorAlmacen')!!}"><i class='fa fa-arrows fa-fw'></i> Movimientos por Almacén</a>

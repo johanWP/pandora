@@ -16,6 +16,11 @@
 
     <hr/>
 <div class="row">
+  <div>
+     <a href="/reportes/articulosPorAlmacen" class="btn btn-default"><i class="fa fa-chevron-left"></i> Volver</a>
+  </div>
+</div>
+<div class="row">
   @foreach($result as $warehouse)
   <h3>{{ $warehouse['name'] }}</h3>
       @if(empty($warehouse['inventory']))

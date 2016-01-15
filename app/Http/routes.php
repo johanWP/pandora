@@ -42,7 +42,8 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 Route::get('reportes/articulos/', 'ReportsController@articles');
 Route::get('reportes/articulos/all', 'ReportsController@excelArticles');
-Route::get('reportes/almacenes', 'ReportsController@inventory');
+Route::get('reportes/articulosPorAlmacen', 'ReportsController@showArticulosPorAlmacen');
+Route::post('reportes/articulosPorAlmacen', 'ReportsController@articulosPorAlmacen');
 Route::get('reportes/movimientosPorAlmacen', 'ReportsController@showMovimientosPorAlmacen');
 Route::post('reportes/movimientosPorAlmacen', 'ReportsController@movimientosPorAlmacen');
 Route::get('reportes/listadoCumplimientoDeMaterial', 'ReportsController@showListadoCumplimientoDeMaterial');

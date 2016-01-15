@@ -59,28 +59,60 @@ class ReportsController extends Controller
         return view('reports.articles', compact('articles'));
     }
 
+    public function showArticulosPorAlmacen()
+    {
+        $activities = Auth::user()->activities;
+        if (Auth::user()->company->parent == 0)
+        {
+            $companies = ['id' => Auth::user()->company->id, 'name' => Auth::user()->company->name];
+        } else
+        {
+            $companies = Company::lists('name', 'id');
+        }
+
+        return view('reports.articulosPorAlmacenForm', compact('activities', 'companies'));
+    }
     /**
      * Devueve la lista de almacenes con el inventario de articulos en cada uno de ellos
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function inventory()
+    public function articulosPorAlmacen(Request $request)
     {
-        $warehouses = Warehouse::all();
-
-        foreach ($warehouses as $w)
+//        dd($request->all());
+        $company_id = $request->companyList;
+        if ($request->rdOrigin == 'all')
         {
-          if($w->type_id != 1)
-          {
-              $result[$w->id] = [
-                  'id' => $w->id,
-                  'name' => $w->name,
+            $warehouses = Warehouse::where('company_id', $company_id)->
+                                    where('activity_id', $request->rdActivity)->
+                                    where('type_id', '<>', '1')->
+                                    orderBy('name')->
+                                    get();
+            foreach ($warehouses as $w)
+            {
+                $result[$w->id] = [
+                    'id' => $w->id,
+                    'name' => $w->name,
 
-                  'description' => $w->description,
-                  'inventory' => $w->inventory
-              ];
-          }
+                    'description' => $w->description,
+                    'inventory' => $w->inventory
+                ];
+            }
+        } else
+        {
+            $warehouses = Warehouse::findOrFail($request->warehouse);
+            $result[$warehouses->id] = [
+                'id' => $warehouses->id,
+                'name' => $warehouses->name,
+
+                'description' => $warehouses->description,
+                'inventory' => $warehouses->inventory
+            ];
         }
-        return view('reports.inventory', compact('result'));
+//        $warehouses = Warehouse::all();
+
+//        $result = $warehouses;
+//        dd($result);
+        return view('reports.articulosPorAlmacen', compact('result'));
 
     }
 
