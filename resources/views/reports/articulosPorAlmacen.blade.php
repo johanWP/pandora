@@ -32,20 +32,33 @@
             <th>Código</th>
             <th>Nombre</th>
             <th>Cantidad</th>
+            <th>Serial</th>
          </tr>
       </thead>
-
+      <tbody>
 
         @foreach($warehouse['inventory'] as $article)
-           <tr>
-              <td>{{ $article['product_code'] }}</td>
-              <td>{{ $article['name'] }}</td>
-
-              <td>{{ $article['cantidad'] }}</td>
-           </tr>
+            @if($article['serializable']=='0')
+               <tr>
+                  <td>{{ $article['product_code'] }}</td>
+                  <td>{{ $article['name'] }}</td>
+                  <td>{{ $article['cantidad'] }}</td>
+                  <td class="text-center">&mdash;</td>
+               </tr>
+            @else
+                @foreach($article['seriales'] as $item)
+                   <tr>
+                      <td>{{ $article['product_code'] }}</td>
+                      <td>{{ $article['name'] }}</td>
+                      <td>1</td>
+                      <td>{{ $item->serial  }}</td>
+                   </tr>
+                @endforeach
+           @endif
         @endforeach
 
       @endif
+      </tbody>
     </table>
 
   @endforeach

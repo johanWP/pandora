@@ -66,7 +66,7 @@ class Warehouse extends Model
         //        Traigo todos los movimientos que han enviado articulos hacia este almacen
 
             $in = DB::table('movements')
-                ->select(DB::raw('article_id, SUM(quantity) AS totalIn'))
+                ->select(DB::raw('id,article_id, serial,SUM(quantity) AS totalIn'))
                 ->whereIn('status_id', [1, 2])     // status 1: Aprobado, Status 2: por aprobar
                 ->where('destination_id', '=', $this->id)
                 ->groupBy('article_id')
@@ -75,7 +75,7 @@ class Warehouse extends Model
 
 //        Traigo todos los movimientos que han sacado articulos de este almacen
             $out = DB::table('movements')
-                ->select(DB::raw('article_id, SUM(quantity) AS totalOut'))
+                ->select(DB::raw('id,article_id, serial,SUM(quantity) AS totalOut'))
                 ->whereIn('status_id', [1, 2])     // status 1: Aprobado, Status 2: por aprobar
                 ->where('origin_id', '=', $this->id)
                 ->groupBy('article_id')
@@ -91,35 +91,32 @@ class Warehouse extends Model
                 $art = Article::find($movIn->article_id);
                 $filtered = $out->filter(function ($item) use($movIn)
                 {
-
                     return $item->article_id == $movIn->article_id;
                 });
 
+                $seriales = Array();
                 if ($filtered->count() > 0)
                 {
-
                     $movOut = $filtered->first();
                     $total = $movIn->totalIn - $movOut->totalOut;
-                    $result[$art->id] = [
-                            'id' => $art->id,
-                            'name' => $art->name,
-                            'fav' => $art->fav,
-                            'product_code' => $art->product_code,
-                            'serializable' => $art->serializable,
-                            'cantidad' => $total
-                        ];
-
                 } else  // Si no hay movimientos de salida desde este almacén
                 {
-                    $result[$art->id] = [
-                        'id' => $art->id,
-                        'name' => $art->name,
-                        'fav' => $art->fav,
-                        'product_code' => $art->product_code,
-                        'serializable' => $art->serializable,
-                        'cantidad' => $movIn->totalIn
-                    ];
+                    $total = $movIn->totalIn;
                 }
+//                if($art->serializable =='1'){
+//                    $seriales = $this->buscarSeriales($movOut->article_id);
+//                }
+//
+                $result[$art->id] = [
+                    'id' => $art->id,
+                    'name' => $art->name,
+                    'fav' => $art->fav,
+                    'product_code' => $art->product_code,
+                    'serializable' => $art->serializable,
+                    'seriales' => $this->buscarSeriales($art),
+                    'cantidad' => $total
+                ];
+
             }   // fin del foreach($in as $movIn)
 
         } else
@@ -168,6 +165,49 @@ class Warehouse extends Model
 
 /******************/
         return $result;
+    }
+
+    private function buscarSeriales($art)
+    {
+        // status 1: Aprobado, Status 2: por aprobar
+
+        if ($art->serializable=='1')
+        {
+            $out = Movement::select(DB::raw('DISTINCT(serial)'))->
+            whereIn('status_id', [1, 2])->
+            where('origin_id', '=', $this->id)->
+            where('article_id', $art->id)->
+            orderBy('id', 'asc')->
+            get()->toArray();
+            foreach ($out as $movOut) {
+                $seriales[] = $movOut['serial'];
+            }
+            if (count($out) > 0) {
+                $s = DB::table('movements')->
+                select(DB::raw('DISTINCT(serial)'))->
+                whereIn('status_id', [1, 2])->
+                whereNotIn('serial', $seriales)->
+                where('destination_id', '=', $this->id)->
+                where('article_id', $art->id)->
+                orderBy('id', 'asc')->
+                get();
+
+            } else {
+                $s = DB::table('movements')->
+                select(DB::raw('DISTINCT(serial)'))->
+                whereIn('status_id', [1, 2])->
+                //            whereNotIn('serial', $seriales)->
+                where('destination_id', '=', $this->id)->
+                where('article_id', $art->id)->
+                    orderBy('id', 'asc')->
+                    get();
+                }
+        } else
+        {
+            $s[]='';
+        }
+
+        return $s;
     }
 
 

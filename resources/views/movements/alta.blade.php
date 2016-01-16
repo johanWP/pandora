@@ -31,6 +31,8 @@ Ingreso de Artículos
             $('#serialLabel').hide();
             $('#serial').hide();
             $('#cantidad').hide();
+            $('#serialListLabel').hide();
+            $('#serialList').hide();
             var warehouses;
             var count = $("#frm input[type='radio']").length;
             if(count == 1 )

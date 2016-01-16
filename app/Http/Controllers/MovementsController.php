@@ -79,12 +79,6 @@ class MovementsController extends Controller
         {
             $companies = Company::lists('name', 'id');
         }
-/*
-        $activities = DB::table('activities')
-            ->select('id', 'name')
-            ->orderBy('name')
-            ->get();
-*/
         $activities = Auth::user()->activities;
         return view('movements.alta', compact('companies', 'activities'));
     }
@@ -98,6 +92,7 @@ class MovementsController extends Controller
      */
     public function store(CreateMovementRequest $request)
     {
+//        dd($request->all());
         if(Auth::user()->securityLevel>=20)
         {
             $status_id = 1;     // Aprobado
@@ -105,23 +100,47 @@ class MovementsController extends Controller
         {
             $status_id = 2;     // Por Aprobar
         }
-        $mov = new Movement($request->all());
-        $mov->user_id = Auth::user()->id;
-        $mov->status_id = $status_id;
 
+        if($request->serialList != '')
+        {
+            $serial = $request->serialList;
+        } else
+        {
+            $serial = $request->serial;
+        }
+        $mov = new Movement(
+            [
+                'remito' => $request->remito,
+                'article_id' => $request->article_id,
+                'serial' => $serial,
+                'origin_id' => $request->origin_id,
+                'destination_id' => $request->destination_id,
+                'user_id' => Auth::user()->id,
+                'status_id' => $status_id,
+                'quantity' => $request->quantity,
+                'ticket' => $request->quantity,
+                'note' => $request->note
+            ]
+        );
+
+        /*
+                $mov = new Movement($request->all());
+                $mov->user_id = Auth::user()->id;
+                $mov->status_id = $status_id;
+        */
 //dd($mov);
         $valid = $this->validateMov($mov);
         //dd($valid);
         if ($valid != '')
         {
-            session()->flash('flash_message_danger', 'Movimiento no ha sido creado.' . $valid);
+            session()->flash('flash_message_danger', 'Movimiento no ha sido registrado.' . $valid);
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
             session()->flash('flash_message_important', true);
             return Redirect::to('movimientos/create')->withInput();
         } else
         {
             Movement::create($mov->toArray());
-            session()->flash('flash_message', 'Movimiento creado correctamente.');
+            session()->flash('flash_message', 'Movimiento registrado correctamente.');
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
 //            session()->flash('flash_message_important', true);
             return Redirect::to('movimientos');

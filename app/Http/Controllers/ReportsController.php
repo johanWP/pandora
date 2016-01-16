@@ -112,7 +112,7 @@ class ReportsController extends Controller
 
 //        $result = $warehouses;
 //        dd($result);
-        return view('reports.articulosPorAlmacen', compact('result'));
+        return view ('reports.articulosPorAlmacen', compact('result'));
 
     }
 
