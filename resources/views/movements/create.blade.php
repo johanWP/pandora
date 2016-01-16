@@ -23,12 +23,15 @@ Nuevo Movimiento
     <script src="external/jquery/jquery.js"></script>
     <script src="jquery-ui.min.js"></script>--}}
     <script>
-
+var warehouses;
         $( document ).ready(function()
         {
             var inventario;
+            var origin_type;
             $('#serial').hide();
+            $('#serialList').hide();
             $('#serialLabel').hide();
+            $('#serialListLabel').hide();
             $('#rdActivity');
 
             var count = $("#frm input[type='radio']").length;
@@ -39,8 +42,6 @@ Nuevo Movimiento
             }
             $("#frm input[type='radio'][name='rdActivity']").change(function()
             {
-
-//                var activity_id = ;
                 var company_id = $('#companyList').val();
                 if(company_id != '')
                 {
@@ -51,9 +52,31 @@ Nuevo Movimiento
             $('#origin_id').change(function()
             {
 
-                var $warehouse_id = $(this).val();
+                var origin_id = $(this).val();
+//                var origin_id = $('#origin_id').val();
+                for (var i in warehouses)
+                {
+                    // busco los detalles del warehouse seleccionado en una variable que guardé en el ajax request
+                    if(warehouses[i].id == origin_id)
+                    {
+                        origin_type= warehouses[i].type_id;
+                    }
+                }
+                if(origin_type == '1')
+                { alert('1');
+                      $('#serialLabel').hide();
+                      $('#serial').hide();
+                      $('#serialListLabel').hide();
+                      $('#serialList').hide();
+                      $('#quantity').val('')
+                                 .attr('readonly', false);
+                } else
+                {
+
+                }
+
                 var request = $.ajax({
-                  url: "/api/inventory/" + $warehouse_id,
+                  url: "/api/inventory/" + origin_id,
                   method: "GET",
                   dataType: "json"
                 });
@@ -98,29 +121,58 @@ Nuevo Movimiento
                 var cant =0;
                 var serializable = 0;
                 var selected_id = $(this).val();
+                var serial;
+
                 for (var i in inventario)
                 {
                     if (inventario[i].id == selected_id)
                     {
                         serializable = inventario[i].serializable;
                         cant = inventario[i].quantity;
-                    }
+                        if(serializable=='1')
+                        {
+                            $('#quantity').val('1')
+                                     .attr('readonly', true);
+
+                            if (origin_type != '1')
+                            {
+                                $('#serialList').empty()
+                                                .append($('<option>')
+                                                .text('Seleccione...')
+                                                .attr('value', ''));
+
+                                for (j in inventario[i].seriales)
+                                {
+                                    serial = inventario[i].seriales[j].serial;
+                                    $('#serialList').append($('<option>')
+                                                    .text(serial)
+                                                    .attr('value', serial));
+                                }
+                                $('#serialListLabel').show();
+                                $('#serialList').show();
+
+                            } else // el articulo es serializable y el almacen es de sistema
+                            {
+                                 $('#serialLabel').show();
+                                 $('#serial').show();
+                            }
+                        } else  // el articulo no es serializable
+                        {
+                              $('#serialLabel').hide();
+                              $('#serial').hide();
+                              $('#serialListLabel').hide();
+                              $('#serialList').hide();
+                              $('#quantity').val('')
+                                         .attr('readonly', false);
+                        }
+                   }
                 }
 
-                $('#maxQ').html(cant);
-                if(serializable=='1')
+                if(origin_type!='1')
                 {
-                    $('#serialLabel').show();
-                    $('#serial').show();
-                    $('#quantity').val('1')
-                                .attr('readonly', true);
-                } else
-                {
-                     $('#serialLabel').hide();
-                     $('#serial').hide();
-                     $('#quantity').val('')
-                                .attr('readonly', false);
+
                 }
+                $('#maxQ').html(cant);
             });
             sortDropDownListByText('origin_id');
             sortDropDownListByText('destination_id');
@@ -155,6 +207,8 @@ Nuevo Movimiento
 
                 request.done(function( result )
                 {
+                warehouses = result;
+
                     $('#origin_id').empty()
                                     .append($('<option>')
                                     .text('Seleccione el origen...')

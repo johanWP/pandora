@@ -69,6 +69,13 @@
         </div>
 <!-- End serial textfield -->
 
+<!-- Begin serial select -->
+        <div class="form-group">
+            {!! Form::label('serialListLabel', 'Serial:', ['id'=>'serialListLabel']) !!}
+            {!! Form::select('serialList', [], null, ['id'=>'serialList','class' => 'form-control','placeholder' => 'Seleccione...']) !!}
+        </div>
+<!-- End serial select -->
+
 <!-- Begin destination_id select -->
         <div class="form-group">
             {!! Form::label('destination_id', 'Almacén de Destino:') !!}

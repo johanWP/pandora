@@ -12,7 +12,7 @@
 
     <!-- Begin username textfield -->
             <div class="form-group">
-                {!! Form::label('username', 'Nombre de usuario:::', ['class' => 'col-sm-2 control-label']) !!}
+                {!! Form::label('username', 'Nombre de usuario:', ['class' => 'col-sm-2 control-label']) !!}
                 <div class="col-sm-4">
                 {!! Form::text('username', null, ['class' => 'form-control', 'placeholder'=>'Escriba su nombre de usuario']) !!}
                 </div>

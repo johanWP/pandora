@@ -118,16 +118,4 @@ class jsonController extends Controller
     }
 
 
-    public function articlesSerial()
-    {
-        $m = DB::table('movements')
-            ->where('destination_id', '=', $destination)
-            ->where('article_id', '=', $article_id)
-            ->where('status_id', '=', 1)
-            ->orderBy('id', 'desc');
-//            ->first();
-//        $m = Movement::find(36);
-        dd($m);
-        return $result;
-    }
 }
