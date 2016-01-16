@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 class ImportController extends Controller
 {
     public function importArticles(Request $request)
@@ -44,10 +45,17 @@ class ImportController extends Controller
         $filename = 'storage/app/'.$filename;
         Excel::load($filename, function($reader) use ($i){
             $results = $reader->get();
+
             foreach ($results as $article)
             {
-                if (is_null($article['serializable'])) { $serializable=0; }
-                $a = \App\Article::create(
+                if (is_null($article['serializable']))
+                {
+                    $serializable=0;
+                } else
+                {
+                    $serializable = $article['serializable'];
+                }
+                $a = Article::create(
                     [
                         'product_code' => $article['codigo'],
                         'unit' => $article['ub'],
@@ -55,6 +63,7 @@ class ImportController extends Controller
                         'barcode' => $article['barcode'],
                         'fav' =>$article['fav'],
                         'serializable' => $serializable,
+                        'company_id' => Auth::user()->company_id,
                         'active' => $article['activo']
                     ]
                 );
