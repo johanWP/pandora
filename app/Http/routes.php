@@ -12,7 +12,7 @@
 */
 Route::get('/home', 'PagesController@home');
 Route::get('/', 'CustomAuthController@index');
-Route::get('/login', 'CustomAuthController@index');
+Route::get('/login',  ['middleware'=>'guest', 'uses'=>'CustomAuthController@index']);
 
 Route::get('escritorio', 'DefaultController@dashboard');
 Route::get('api/warehousesList', 'jsonController@warehousesList');
