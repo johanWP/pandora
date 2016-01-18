@@ -63,7 +63,7 @@ var warehouses;
                     }
                 }
                 if(origin_type == '1')
-                { alert('1');
+                {
                       $('#serialLabel').hide();
                       $('#serial').hide();
                       $('#serialListLabel').hide();

@@ -11,10 +11,10 @@
 |
 */
 Route::get('/home', 'PagesController@home');
-Route::get('/', 'CustomAuthController@index');
-Route::get('/login', 'CustomAuthController@index');
+Route::get('/',  ['middleware'=>'soloInvitados','uses'=>'CustomAuthController@index']);
+Route::get('/login',  ['middleware'=>'soloInvitados','uses'=>'CustomAuthController@index']);
 
-Route::get('escritorio', 'DefaultController@dashboard');
+Route::get('escritorio', ['middleware' => 'soloUsuarios','uses'=>'DefaultController@dashboard']);
 Route::get('api/warehousesList', 'jsonController@warehousesList');
 Route::get('api/warehousesByType', 'jsonController@warehousesByType');
 Route::get('api/warehousesByActivity/{id}', 'jsonController@warehousesActivity');
