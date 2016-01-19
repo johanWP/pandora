@@ -30,7 +30,13 @@
                 $ticketActual = $movement->ticket;
                 $i++;
                 ?>
-                <h3 class="{{$ticketActual}}">{{$ticketActual}}</h3>
+                <h3 class="{{$ticketActual}}">
+                    @if ($movement->ticket=='')
+                        (Sin Ticket)
+                    @else
+                    {{$ticketActual}}
+                    @endif
+                </h3>
                 <table class="table table-striped {{$ticketActual}}" id="table_{{$ticketActual}}">
                     <thead>
                     <tr>
