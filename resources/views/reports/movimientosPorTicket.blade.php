@@ -100,4 +100,6 @@
     @else
         <h2> No hay movimientos cargados.</h2>
     @endif
+    <a href="/reportes/movimientosPorTicket" class="btn btn-default"><i class="fa fa-chevron-left"></i> Volver</a>
+
 @endsection
