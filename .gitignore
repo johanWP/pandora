@@ -11,3 +11,5 @@ Homestead.json
 *.sql
 .TODO
 *.xml
+
+.idea/workspace.xml
