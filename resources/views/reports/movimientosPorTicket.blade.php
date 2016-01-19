@@ -1,45 +1,40 @@
 @extends('master')
 
 @section('title')
-    Movimientos Por Ticket
+    Movimientos Pendientes por Aprobar
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-sm-10">
-            <h1>Movimientos Por Ticket</h1>
+            <h1>Movimientos Pendientes por Aprobar</h1>
         </div>
     </div>
 
     <hr/>
     <?php
-    $ticketActual = '~~~~~~~~~';
+    $ticketActual = '~~~~~~~~';
     $i = 0;
     ?>
     <div class="row">
         @if($movements->count() > 0)
             <div class="table-responsive">
-
                 @foreach($movements as $movement)
                 @if($ticketActual != $movement->ticket)
+                @if ($i > 0)
+                </tbody>
+                </table>
 
-                    @if ($i > 0)
-                        </tbody>
-                        </table>
-
-                    @endif
+                @endif
                 <?php
                 $ticketActual = $movement->ticket;
                 $i++;
                 ?>
                 <h3 class="{{$ticketActual}}">
-                    @if ($movement->ticket=='')
-
-                    @if ($ticketActual === '' OR $ticketActual === NULL)
+                    @if ($ticketActual =='')
                         (Sin Ticket)
-
                     @else
-                    {{$ticketActual}}
+                        {{$ticketActual}}
                     @endif
                 </h3>
                 <table class="table table-striped {{$ticketActual}}" id="table_{{$ticketActual}}">
@@ -48,17 +43,18 @@
                         <th>Status</th>
                         <th>Cant.</th>
                         <th>Artículo</th>
-                        <th><h3>Desde</h3></th>
+                        <th>Desde</th>
                         <th><b> &nbsp;</b></th>
-                        <th><h3>Hacia</h3></th>
-                        <th class="text-center"><h3>Acciones</h3></th>
+                        <th>Hacia</th>
+                        <th class="text-center" colspan="2">Acciones</th>
+
                     </tr>
                     </thead>
                     <tbody>
                     @endif
-                    <tr>
+                    <tr class="{{ $movement->id }}">
                         <td class="col-sm-1">
-                            <p class="text-left">
+                            <p class="text-center">
 
                                 @if ($movement->status_id == '1')
                                     <i class="fa fa-check"></i>
@@ -109,8 +105,6 @@
 
     </div>
     @else
-        <h2> No hay movimientos cargados.</h2>
+        <h2>No hay movimientos en el sistema.</h2>
     @endif
-    <a href="/reportes/movimientosPorTicket" class="btn btn-default"><i class="fa fa-chevron-left"></i> Volver</a>
-
 @endsection
