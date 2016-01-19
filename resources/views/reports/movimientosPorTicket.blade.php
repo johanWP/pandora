@@ -33,6 +33,8 @@
                 $i++;
                 ?>
                 <h3 class="{{$ticketActual}}">
+                    @if ($movement->ticket=='')
+
                     @if ($ticketActual === '' OR $ticketActual === NULL)
                         (Sin Ticket)
 
