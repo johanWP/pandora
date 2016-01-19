@@ -1,43 +1,38 @@
 @extends('master')
 
 @section('title')
-    Movimientos por Ticket
+    Movimientos por Usuario
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-sm-10">
-            <h1>Movimientos por Ticket</h1>
+            <h1>Movimientos por Usuario</h1>
         </div>
     </div>
 
     <hr/>
     <?php
-    $ticketActual = '~~~~~~~~';
+    $usuarioActual = '~~~~~~~~';
     $i = 0;
     ?>
     <div class="row">
         @if($movements->count() > 0)
             <div class="table-responsive">
                 @foreach($movements as $movement)
-                @if($ticketActual != $movement->ticket)
+                @if($usuarioActual != $movement->user_id)
                 @if ($i > 0)
-                </tbody>
-                </table>
-
+                    </tbody>
+                    </table>
                 @endif
                 <?php
-                $ticketActual = $movement->ticket;
+                $usuarioActual = $movement->user_id;
                 $i++;
                 ?>
-                <h3 class="{{$ticketActual}}">
-                    @if ($ticketActual =='')
-                        (Sin Ticket)
-                    @else
-                        {{$ticketActual}}
-                    @endif
+                <h3 class="{{$usuarioActual}}">
+                        {{ $movement->user->firstName }} {{ $movement->user->lastName }}
                 </h3>
-                <table class="table table-striped {{$ticketActual}}" id="table_{{$ticketActual}}">
+                <table class="table table-striped {{$usuarioActual}}" id="table_{{$usuarioActual}}">
                     <thead>
                     <tr>
                         <th>Status</th>
@@ -107,5 +102,5 @@
     @else
         <h2>No hay movimientos en el sistema.</h2>
     @endif
-    <a href="/reportes/movimientosPorTicket" class="btn btn-default"><i class="fa fa-chevron-left"></i> Volver</a>
+    <a href="/reportes/movimientosPorUsuario" class="btn btn-default"><i class="fa fa-chevron-left"></i> Volver</a>
 @endsection

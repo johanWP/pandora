@@ -205,6 +205,7 @@ class ReportsController extends Controller
     {
         $companies = Company::lists('name', 'id');
 
+//       Traigo todos los almacenes que pertenecen a la compañía del usuario
         $arrayW = collect(DB::table('warehouses')->
                 select('id')->
                 where('company_id', Auth::user()->company_id)->
@@ -227,10 +228,11 @@ class ReportsController extends Controller
 
         if($request->rdTicket == 'all')
         {
+//       Traigo todos los almacenes que pertenecen a la compañía del usuario
             $arrayW = collect(DB::table('warehouses')->
-            select('id')->
-            where('company_id', Auth::user()->company_id)->
-            get());
+                            select('id')->
+                            where('company_id', Auth::user()->company_id)->
+                            get());
 
             $movements = Movement::whereIn('origin_id', $arrayW->lists('id')->toArray())->
                         where('created_at', '>=', $desde)->
@@ -247,5 +249,54 @@ class ReportsController extends Controller
         }
 //        dd($mov);
         return view('reports.movimientosPorTicket', compact('movements'));
+    }
+
+    public function showMovimientosPorUsuario()
+    {
+        $companies = Company::lists('name', 'id');
+//       Traigo todos los almacenes que pertenecen a la compañía del usuario
+        $arrayW = collect(DB::table('warehouses')->
+                            select('id')->
+                            where('company_id', Auth::user()->company_id)->
+                            get());
+
+        $users = DB::table('users')->
+                        select(DB::raw('concat(firstName, " ", lastName) as name, id'))->
+                        whereNull('deleted_at')->
+                        where('company_id', Auth::user()->company_id)->
+                        lists('name', 'id');
+
+        return view('reports.movimientosPorUsuarioForm', compact('companies', 'users'));
+    }
+
+    public function movimientosPorUsuario(Request $request)
+    {
+
+        $desde= date_format(date_create($request->fechaDesde),"Y/m/d H:i:s");
+        $hasta= date_format(date_create($request->fechaHasta),"Y/m/d 23:59:99");
+
+        if($request->rdUser == 'all')
+        {
+//       Traigo todos los almacenes que pertenecen a la compañía del usuario
+            $arrayW = collect(DB::table('warehouses')->
+                    select('id')->
+                    where('company_id', Auth::user()->company_id)->
+                    get());
+
+            $movements = Movement::whereIn('origin_id', $arrayW->lists('id')->toArray())->
+                    where('created_at', '>=', $desde)->
+                    where('created_at', '<=', $hasta)->
+                    whereIn('status_id', [1,2,4])->
+                    orderBy('user_id', 'desc')->
+                    get();
+        } else
+        {
+            $movements = Movement::where('user_id', $request->user)->
+                    whereIn('status_id', [1,2,4])->
+                    orderBy('id', 'desc')->
+                    get();
+        }
+//        dd($movements);
+        return view('reports.movimientosPorUsuario', compact('movements'));
     }
 }
