@@ -13,26 +13,34 @@
 
     <hr/>
     <?php
-    $ticketActual = '';
+    $ticketActual = '~~~~~~~~~';
     $i = 0;
     ?>
     <div class="row">
         @if($movements->count() > 0)
             <div class="table-responsive">
+
                 @foreach($movements as $movement)
                 @if($ticketActual != $movement->ticket)
-                @if ($i > 0)
-                </tbody>
-                </table>
 
-                @endif
+                    @if ($i > 0)
+                        </tbody>
+                        </table>
+
+                    @endif
                 <?php
                 $ticketActual = $movement->ticket;
                 $i++;
                 ?>
                 <h3 class="{{$ticketActual}}">
+<<<<<<< HEAD
                     @if ($movement->ticket=='')
                         (Sin Ticket)
+=======
+                    @if ($ticketActual === '' OR $ticketActual === NULL)
+                        (Sin Ticket)
+
+>>>>>>> Development
                     @else
                     {{$ticketActual}}
                     @endif
