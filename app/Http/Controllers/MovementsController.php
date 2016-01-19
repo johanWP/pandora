@@ -118,7 +118,7 @@ class MovementsController extends Controller
                 'user_id' => Auth::user()->id,
                 'status_id' => $status_id,
                 'quantity' => $request->quantity,
-                'ticket' => $request->quantity,
+                'ticket' => $request->ticket,
                 'note' => $request->note
             ]
         );
@@ -255,6 +255,10 @@ class MovementsController extends Controller
         {
             $msg .= '<li>Los movimientos entre almacenes móviles no están permitidos.</li>';
         }
+/*        if(($m->origin->type_id == 2) AND ($m->destination->type_id == 2))
+        {
+            $msg .= '<li>No se puede realizar un movimiento entre dos almacenes móviles</li>';
+        }*/
 
         if (($m->origin->type_id == 1) AND ($m->destination->type_id == 1))
         {
@@ -265,10 +269,6 @@ class MovementsController extends Controller
             $msg .= '<li>Los almacenes de origen y destinos son iguales</li>';
         }
 
-        if(($m->origin->type_id == 2) AND ($m->destination->type_id == 2))
-        {
-            $msg .= '<li>No se puede realizar un movimiento entre dos almacenes móviles</li>';
-        }
 
         if ($m->origin->activity_id != $m->destination->activity_id)
         {

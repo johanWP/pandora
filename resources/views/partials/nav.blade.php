@@ -153,6 +153,9 @@
                     <li>
                         <a href="{!!URL::to('/reportes/movimientosPorAlmacen')!!}"><i class='fa fa-arrows fa-fw'></i> Movimientos por Almacén</a>
                     </li>
+                    <li>
+                        <a href="{!!URL::to('/reportes/movimientosPorTicket')!!}"><i class='fa fa-arrows fa-fw'></i> Movimientos por Ticket</a>
+                    </li>
 
 {{--
                     <li>

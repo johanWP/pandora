@@ -48,6 +48,8 @@ Route::get('reportes/movimientosPorAlmacen', 'ReportsController@showMovimientosP
 Route::post('reportes/movimientosPorAlmacen', 'ReportsController@movimientosPorAlmacen');
 Route::get('reportes/listadoCumplimientoDeMaterial', 'ReportsController@showListadoCumplimientoDeMaterial');
 Route::post('reportes/listadoCumplimientoDeMaterial', 'ReportsController@ListadoCumplimientoDeMaterial');
+Route::get('reportes/movimientosPorTicket', 'ReportsController@showMovimientosPorTicket');
+Route::post('reportes/movimientosPorTicket', 'ReportsController@movimientosPorTicket');
 
 /*Route::get('movimientos/alta', function () {
     $warehouseList = Array();
