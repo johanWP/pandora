@@ -33,14 +33,11 @@
                 $i++;
                 ?>
                 <h3 class="{{$ticketActual}}">
-<<<<<<< HEAD
                     @if ($movement->ticket=='')
-                        (Sin Ticket)
-=======
+
                     @if ($ticketActual === '' OR $ticketActual === NULL)
                         (Sin Ticket)
 
->>>>>>> Development
                     @else
                     {{$ticketActual}}
                     @endif
