@@ -50,6 +50,8 @@ Route::get('reportes/listadoCumplimientoDeMaterial', 'ReportsController@showList
 Route::post('reportes/listadoCumplimientoDeMaterial', 'ReportsController@ListadoCumplimientoDeMaterial');
 Route::get('reportes/movimientosPorTicket', 'ReportsController@showMovimientosPorTicket');
 Route::post('reportes/movimientosPorTicket', 'ReportsController@movimientosPorTicket');
+Route::get('reportes/movimientosPorUsuario', 'ReportsController@showMovimientosPorUsuario');
+Route::post('reportes/movimientosPorUsuario', 'ReportsController@movimientosPorUsuario');
 
 /*Route::get('movimientos/alta', function () {
     $warehouseList = Array();
