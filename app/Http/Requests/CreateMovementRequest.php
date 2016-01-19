@@ -30,7 +30,7 @@ class CreateMovementRequest extends Request
             'origin_id'     => 'required|numeric',
             'destination_id'=> 'required|numeric',
             'article_id'    => 'required|numeric',
-            'ticket'        => 'required|alpha_num'
+            'ticket'        => 'alpha_num'
 
         ];
     }

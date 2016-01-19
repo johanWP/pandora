@@ -24,7 +24,7 @@
   {!! Form::open(['url' => '/reportes/movimientosPorTicket', 'id' => 'frm']) !!}
 <div class="row">
     <!-- Begin Company textfield -->
-    <div class="form-group">
+    <div class="form-group" id="divCompany">
 
     {!! Form::label('companyList', 'Empresas:') !!}
     @if(Auth::user()->company->parent==1)
@@ -45,7 +45,7 @@
 
 <div class="row">
         <div class="col-sm-12">
-            <div class="form-group" id="divOrigin">
+            <div class="form-group" id="divTicket">
                  {!! Form::label('ticket', 'Ticket:') !!}<br/>
 
                  <label class="radio-inline">
@@ -57,11 +57,15 @@
                     Seleccione un ticket
                   </label>
                 <!-- Begin origin textfield -->
-
+                <p></p>
+                {!! Form::select('ticket', $tickets , null, ['class' => 'form-control', 'id'=>'ticket', 'placeholder'=>'Seleccione...', 'disabled'=>'disabled']) !!}
+{{--
                 <br/><br/>
                 <select id="ticket" name="ticket" class="form-control" disabled>
                     <option>Seleccione...</option>
                 </select>
+--}}
+
             </div>
             <!-- End origin textfield -->
         </div>
@@ -113,6 +117,14 @@
 
   <script type="text/javascript">
     $(function () {
+
+        var company_id = $('#companyList').val();
+
+        if ( company_id !='')
+        {
+            $('input[type="radio"][name="rdTicket"]').attr('disabled', false);
+
+        }
         $('#fechaHasta').datepicker({ maxDate: 'today'})
                     .change(function()
                     {
@@ -126,56 +138,16 @@
                         $( "#fechaHasta" ).datepicker( "option", "minDate", minDate);
                     });
 
-        $('#frm input[name="rdActivity"]').change(function()
-        {
-//                Lleno el dropdown de almacén de origen cuando se selecciona la actividad
-            var activity_id = $("#frm input[name='rdActivity']:checked").val();
-            $('#ticket').empty()
-                        .append($('<option>')
-                        .text('Seleccione...')
-                        .attr('value', ''));
 
-            var ticket = $.ajax({
-              url: "/api/ticket/",
-              method: "GET",
-              dataType: "json"
-            });
-
-            ticket.done(function( result )
-            {
-                for(var k in result)
-                {
-                    $('#ticket').append($('<option>')
-                                .text(result[k].name)
-                                .attr('value', result[k].id));
-                } /* Fin del for */
-
-
-                sortDropDownListByText('destination_id');
-//                $('#origin').attr('disabled', false);
-//                $('#destination').attr('disabled', false);
-
-            });/* Fin del .done */
-
-
-
-            ticket.fail(function( jqXHR, textStatus ) {
-                alert( "Fallo cargando los tickets " + textStatus );
-            });
-        }); // fin del form input[type=radio]
-
-        $('form input[name="rdDestination"]').change(function(){
-            $('#destination').prop('disabled', function(i, v) { return !v; });
+        $('form input[name="rdTicket"]').change(function(){
+            $('#ticket').prop('disabled', function(i, v) { return !v; });
 
         });
-        $('form input[name="rdOrigin"]').change(function(){
-            $('#origin').prop('disabled', function(i, v) { return !v; })
-                        .removeClass('has-error');
-        });
-        var frm = $('#frm');
+
 
         $('#btnValidate').click(function()
         {
+            var frm = $('#frm');
             valid = validate();
             if(valid)
             {
@@ -191,26 +163,19 @@
 
         $('#frm div').removeClass('has-error');
 
-// Hay actividad seleccionada?
-        var rdActivity = $("input[type='radio'][name='rdActivity']:checked").val();
-        if((typeof rdActivity)=== 'undefined')
+// Empresa
+        var company_id = $("#companyList").val();
+        if(company_id == '' )
         {
-          $('#divActivity').addClass('has-error');
-          valid = false;
-        }
-// Almacen de origen
-        var rdOrigin = $("input[name='rdOrigin']:checked").val();
-        if((rdOrigin=='one') && ($('#origin').val()==='Seleccione...' || $('#origin').val()==='') )
-        {
-            $('#divOrigin').addClass('has-error');
+            $('#divCompany').addClass('has-error');
             valid = false;
         }
 
 // Almacen Destino
-        var rdDestination = $("input[name='rdDestination']:checked").val();
-        if((rdDestination=='one') && ($('#destination').val()==='Seleccione...' || ($('#destination').val()==='') ))
+        var rdTicket = $("input[name='rdTicket']:checked").val();
+        if((rdTicket=='one') && ($('#ticket').val()==='Seleccione...' || ($('#ticket').val()==='') ))
         {
-            $('#divDestination').addClass('has-error');
+            $('#divTicket').addClass('has-error');
             valid = false;
         }
 // Fecha Desde

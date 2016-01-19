@@ -168,10 +168,10 @@ class ReportsController extends Controller
             $origin_id[] = $request->origin;
         } else
         {
-            $warehouses = Warehouse::select('id')
-                ->where('company_id',$request->companyList)
-                ->where('activity_id', $request->rdActivity)
-                ->get();
+            $warehouses = Warehouse::select('id')->
+                where('company_id',$request->companyList)->
+                where('activity_id', $request->rdActivity)->
+                get();
             foreach ($warehouses as $warehouse)
             {
                 $origin_id[] = $warehouse->id;
@@ -183,20 +183,69 @@ class ReportsController extends Controller
             $destination_id[] = $request->destination;
         } else
         {
-            $warehouses = Warehouse::select('id')
-                ->where('company_id',$request->companyList)
-                ->where('activity_id', $request->rdActivity)
-                ->get();
+            $warehouses = Warehouse::select('id')->
+                    where('company_id',$request->companyList)->
+                    where('activity_id', $request->rdActivity)->
+                    get();
             foreach ($warehouses as $warehouse)
             {
                 $destination_id[] = $warehouse->id;
             }
         }
-        $movements = Movement::where('created_at', '>=', $desde)
-                            ->where('created_at', '<=', $hasta)
-                            ->whereIn('origin_id', $origin_id)
-                            ->whereIn('destination_id', $destination_id)
-                            ->get();
+        $movements = Movement::where('created_at', '>=', $desde)->
+                            where('created_at', '<=', $hasta)->
+                            whereIn('origin_id', $origin_id)->
+                            whereIn('destination_id', $destination_id)->
+                            whereIn('status_id', [1,2,4])->
+                            get();
         return view('reports.movimientosPorAlmacen', compact('movements'));
+    }
+
+    public function showMovimientosPorTicket()
+    {
+        $companies = Company::lists('name', 'id');
+
+        $arrayW = collect(DB::table('warehouses')->
+                select('id')->
+                where('company_id', Auth::user()->company_id)->
+                get());
+        $tickets = Movement::select('ticket')->
+                        distinct()->
+                        whereIn('origin_id', $arrayW->lists('id')->toArray())->
+                        whereIn('status_id', [1,2,4])->
+                        orderBy('id', 'desc')->
+                        lists('ticket', 'ticket');
+
+        return view('reports.movimientosPorTicketForm', compact('companies', 'tickets'));
+    }
+
+    public function movimientosPorTicket(Request $request)
+    {
+
+        $desde= date_format(date_create($request->fechaDesde),"Y/m/d H:i:s");
+        $hasta= date_format(date_create($request->fechaHasta),"Y/m/d 23:59:99");
+
+        if($request->rdTicket == 'all')
+        {
+            $arrayW = collect(DB::table('warehouses')->
+            select('id')->
+            where('company_id', Auth::user()->company_id)->
+            get());
+
+            $movements = Movement::whereIn('origin_id', $arrayW->lists('id')->toArray())->
+                        where('created_at', '>=', $desde)->
+                        where('created_at', '<=', $hasta)->
+                        whereIn('status_id', [1,2,4])->
+                        orderBy('ticket', 'desc')->
+                        get();
+        } else
+        {
+            $movements = Movement::where('ticket', $request->ticket)->
+                        whereIn('status_id', [1,2,4])->
+                        orderBy('id', 'desc')->
+                        get();
+        }
+//        dd($mov);
+        return view('reports.movimientosPorTicket', compact('movements'));
     }
 }
