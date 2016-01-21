@@ -24,9 +24,11 @@ Nuevo Movimiento
     <script src="jquery-ui.min.js"></script>--}}
     <script>
 var warehouses;
+var inventario;
+var cantMax =0;
         $( document ).ready(function()
         {
-            var inventario;
+
             var origin_type;
             $('#serial').hide();
             $('#serialList').hide();
@@ -118,7 +120,7 @@ var warehouses;
             }); /* Fin del .change() */
 
             $('#article_id').change(function (){
-                var cant =0;
+
                 var serializable = 0;
                 var selected_id = $(this).val();
                 var serial;
@@ -128,7 +130,8 @@ var warehouses;
                     if (inventario[i].id == selected_id)
                     {
                         serializable = inventario[i].serializable;
-                        cant = inventario[i].quantity;
+                        cantMax = inventario[i].cantidad;
+                        $('#quantity').attr('max', cantMax);
                         if(serializable=='1')
                         {
                             $('#quantity').val('1')
@@ -172,13 +175,32 @@ var warehouses;
                 {
 
                 }
-                $('#maxQ').html(cant);
+                $('#maxQ').html(cantMax);
+/*
+
+                $( "form" ).submit(function( event ) {
+                    event.preventDefault();
+                    validate();
+                });
+
+*/
             });
             sortDropDownListByText('origin_id');
             sortDropDownListByText('destination_id');
         });  // Fin del document.ready()
 
-        function validate() {}
+        function validate()
+        {
+/*
+            var cantSeleccionada = $('#quantity').val();
+            var article_id = $('#article_id').val();
+//            var cantMax = inventario[article_id];
+            console.log('cantSeleccionada:'+cantSeleccionada);
+            console.log('article_id: '+article_id);
+            console.log('cantMax: '+cantMax);
+//            if(cantSeleccionada > )
+*/
+        }
 
         function sortDropDownListByText(selectId) {
           var foption = $('#'+ selectId + ' option:first');

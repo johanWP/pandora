@@ -45,7 +45,7 @@
       </div>
       <div class="col-sm-4">
          <div class="rcorners  text-center">
-         <a href="{!!URL::to('/movimientos/')!!}">
+         <a href="{!!URL::to('/movimientos/porAprobar')!!}">
             <i class='fa fa-check fa-3x'></i><br>
              Movimientos Pendientes por Aprobar
             </a>
