@@ -68,6 +68,7 @@ class UsersController extends Controller
                 'email'         => $request['email'],
                 'securityLevel' => $request['securityLevel'],
                 'company_id'    => Auth::user()->current_company_id,
+                'current_company_id'    => Auth::user()->current_company_id,
                 'password'      => bcrypt($request['password']),
                 'active'        => $act
             ]);
@@ -131,6 +132,7 @@ class UsersController extends Controller
             'email'         => $request['email'],
             'securityLevel' => $request['securityLevel'],
             'company_id'    => Auth::user()->current_company_id,
+            'current_company_id'    => Auth::user()->current_company_id,
             'active'        => $act
         ]);
 
