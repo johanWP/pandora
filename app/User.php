@@ -43,7 +43,8 @@ class User extends Model implements AuthenticatableContract,
                             'employee_id',
                             'company_id',
                             'securityLevel',
-                            'active'
+                            'active',
+                            'current_company'
                             ];
 
     protected $dates = ['deleted_at'];
@@ -121,5 +122,9 @@ class User extends Model implements AuthenticatableContract,
         return $this->belongsToMany('App\Activity')->withTimestamps();
     }
 
-
+    public function getCurrentCompanyAttribute()
+    {
+        $company = \App\Company::findOrFail($this->current_company_id);
+        return $company;
+    }
 }

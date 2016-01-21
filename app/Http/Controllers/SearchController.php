@@ -22,16 +22,16 @@ class SearchController extends Controller
 
         if ($table <> 'users') {
             $queries = DB::table($table)
-                ->where('company_id', '=', Auth::user()->company_id)
+                ->where('company_id', '=', Auth::user()->current_company_id)
                 ->where('name', 'LIKE', '%' . $term . '%')
-                ->take(5)->get();
+                ->take(10)->get();
             foreach ($queries as $query)
             {
                 $results[] = [ 'id' => $query->id, 'value' => $query->name];
             }
         } else {
             $queries = DB::table($table)
-                ->where('company_id', '=', Auth::user()->company_id)
+                ->where('company_id', '=', Auth::user()->current_company_id)
                 ->where(function ($query) {
                     $term = Input::get('term');
                     $query->where('firstName', 'LIKE', '%' . $term . '%')
@@ -39,7 +39,7 @@ class SearchController extends Controller
                         ->orWhere('username', 'LIKE', '%' . $term . '%');
                 })
 
-                ->take(5)->get();
+                ->take(10)->get();
             foreach ($queries as $query)
             {
                 $results[] = [ 'id' => $query->id, 'value' => $query->firstName.' '.$query->lastName];

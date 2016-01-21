@@ -30,12 +30,12 @@
     @if(Auth::user()->company->parent==1)
 
 {{--Si el usuario es de una empresa parent, le muestro un dropdown para seleccionar la empresa--}}
-        {!! Form::select('companyList[]', $companies , null, ['class' => 'form-control', 'id'=>'companyList', 'placeholder'=>'Seleccione...']) !!}
+        {!! Form::select('companyList', $companies , null, ['class' => 'form-control', 'id'=>'companyList', 'placeholder'=>'Seleccione...']) !!}
     @else
-{{--Si el usuario no es de una empresa parente, le preselecciono la empresa--}}
+{{--Si el usuario no es de una empresa parent, le preselecciono la empresa--}}
 
         {!! Form::text('company', Auth::user()->company->name, ['class' => 'form-control', 'readonly']) !!}
-        {!! Form::hidden('companyList', Auth::user()->company->id) !!}
+        {!! Form::hidden('companyList', Auth::user()->company_id, ['id' => 'companyList']) !!}
     @endif
 
     </div>
@@ -59,13 +59,6 @@
                 <!-- Begin origin textfield -->
                 <p></p>
                 {!! Form::select('ticket', $tickets , null, ['class' => 'form-control', 'id'=>'ticket', 'placeholder'=>'Seleccione...', 'disabled'=>'disabled']) !!}
-{{--
-                <br/><br/>
-                <select id="ticket" name="ticket" class="form-control" disabled>
-                    <option>Seleccione...</option>
-                </select>
---}}
-
             </div>
             <!-- End origin textfield -->
         </div>
@@ -116,7 +109,8 @@
   <script src="/js/datepicker-es.js"></script>
 
   <script type="text/javascript">
-    $(function () {
+    $(function ()
+    {
 
         var company_id = $('#companyList').val();
 
