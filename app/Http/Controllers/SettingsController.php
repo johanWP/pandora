@@ -23,8 +23,8 @@ class SettingsController extends Controller
         $response='';
         $user = \App\User::findOrFail(Auth::user()->id);
 
-        $result = $user->update(['current_company' => $request->newCompany]);
-        dd($result);
+        $result = $user->update(['current_company_id' => $request->newCompany]);
+//        dd($result);
         if ($result)
         {
             $response = 1;

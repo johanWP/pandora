@@ -15,8 +15,8 @@
     <div class="row">
         <div class="col-sm-12" id="divMsjCompany"></div>
         <div class="form-group" id="divCompany">
-            <p class="help-block">Usted está trabajando con <strong id="strCompany">{{ $current_company->name }}</strong></p>
-            {!! Form::hidden('oldCompany', $current_company->id, ['id'=>'oldCompany']) !!}
+            <p class="help-block">Usted está trabajando con <strong id="strCompany">{{ Auth::user()->currentCompany->name }}</strong></p>
+            {!! Form::hidden('oldCompany', Auth::user()->current_company_id, ['id'=>'oldCompany']) !!}
             {!! Form::label('currentCompany', 'Cambiar:') !!}
             {!! Form::select('newCompany', $companies , null, ['class' => 'form-control', 'id'=>'newCompany', 'placeholder'=>'Seleccione...']) !!}
         </div>
@@ -66,6 +66,7 @@
                         {
                             mensaje = 'La empresa se ha cambiado.';
                             $('#strCompany').html($('#newCompany option:selected').text());
+                            $('#spanCurrentCompanyName').html($('#newCompany option:selected').text());
                             $('#divMsjCompany').html(mensaje)
                                     .removeClass('alert alert-danger')
                                     .addClass('alert alert-success')

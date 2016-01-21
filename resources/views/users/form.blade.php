@@ -68,12 +68,7 @@
               <option value="30">Jefe</option>
               <option value="40">Gerente</option>
               <option value="50">Director</option>
-
             </select>
-{{--
-            {!! Form::label('securityLevel', 'Nivel de Seguridad:') !!}
-            {!! Form::number('securityLevel', null, ['class' => 'form-control']); !!}
---}}
         </div>
 <!-- End security_level textfield -->
         <div class="form-group">
