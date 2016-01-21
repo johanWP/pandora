@@ -44,7 +44,7 @@ class User extends Model implements AuthenticatableContract,
                             'company_id',
                             'securityLevel',
                             'active',
-                            'current_company'
+                            'current_company_id'
                             ];
 
     protected $dates = ['deleted_at'];
