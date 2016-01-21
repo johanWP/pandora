@@ -31,7 +31,7 @@
  <!-- End activo checkbox -->
 
 
-            {!! Form::hidden('company_id', Auth::user()->company_id, ['class' => 'form-control']) !!}
+            {{--{!! Form::hidden('company_id', Auth::user()->company_id, ['class' => 'form-control']) !!}--}}
 
 <!-- Begin Submit button -->
     <div class="form-group">

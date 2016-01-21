@@ -63,7 +63,7 @@ class ImportController extends Controller
                         'barcode' => $article['barcode'],
                         'fav' =>$article['fav'],
                         'serializable' => $serializable,
-                        'company_id' => Auth::user()->company_id,
+                        'company_id' => Auth::user()->current_company_id,
                         'active' => $article['activo']
                     ]
                 );

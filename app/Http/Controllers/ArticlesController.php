@@ -20,7 +20,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::where('company_id', Auth::user()->company_id)
+        $articles = Article::where('company_id', Auth::user()->current_company_id)
                         ->orderBy('name', 'asc')->paginate(10);
         return view('articles.index', compact('articles'));
     }
@@ -45,7 +45,7 @@ class ArticlesController extends Controller
     public function store(Request $request)
     {
         $article = new Article($request->all());
-        $article->company_id = Auth::user()->company_id;
+        $article->company_id = Auth::user()->current_company_id;
         Article::create($article->toArray());
 
         session()->flash('flash_message', 'Artículo creado correctamente.');

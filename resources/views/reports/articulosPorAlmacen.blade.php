@@ -7,7 +7,7 @@
 @section('content')
 <div class="row">
   <div class="col-sm-10">
-    <h1>Inventario por Almacén!</h1>
+    <h1>Inventario por Almacén</h1>
   </div>
   <div class=""><br/>
     <a class="btn btn-primary" href="#"><i class="fa fa-file-excel-o fa-fw"></i> Exportar</a>
