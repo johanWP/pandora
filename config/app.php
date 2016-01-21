@@ -146,12 +146,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-<<<<<<< HEAD
 	Spatie\Backup\BackupServiceProvider::class
-=======
-        Spatie\Backup\BackupServiceProvider::class,
-
->>>>>>> 818af8c7e10380a6721214bd28827e9ecbad6847
     ],
 
     /*
