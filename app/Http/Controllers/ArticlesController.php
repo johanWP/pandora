@@ -89,6 +89,13 @@ class ArticlesController extends Controller
      */
     public function update($id, ArticleRequest $request)
     {
+        if (is_null($request['active']))
+        {
+            $act = 0;
+        } else {
+            $act = $request['active'];
+        }
+
         $article = Article::findOrFail($id);
         $article->update($request->all());
 
