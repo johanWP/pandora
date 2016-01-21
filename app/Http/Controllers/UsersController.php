@@ -54,7 +54,6 @@ class UsersController extends Controller
             return Redirect::to('usuarios/create')->withInput();
 
         }
-//        dd($request['active']);
         if (is_null($request['active']))
         {
             $act = 0;
@@ -62,16 +61,15 @@ class UsersController extends Controller
             $act = $request['active'];
         }
 
-        $company_id = Auth::user()->current_company_id;
         $user = User::create([
-                'username'  => $request['username'],
-                'firstName' => $request['firstName'],
-                'lastName'  => $request['lastName'],
-                'email'     => $request['email'],
-                'securityLevel'  => $request['securityLevel'],
-                'company_id'=> $company_id,
-                'password'  => bcrypt($request['password']),
-                'active'    => $act
+                'username'      => $request['username'],
+                'firstName'     => $request['firstName'],
+                'lastName'      => $request['lastName'],
+                'email'         => $request['email'],
+                'securityLevel' => $request['securityLevel'],
+                'company_id'    => Auth::user()->current_company_id,
+                'password'      => bcrypt($request['password']),
+                'active'        => $act
             ]);
 
 //        Asociar las actividades en la tabla pivot activities_users
@@ -127,13 +125,12 @@ class UsersController extends Controller
             $act = $request['active'];
         }
 
-        $company_id = Auth::user()->current_company_id;
         $user->update([
             'firstName'     => $request['firstName'],
             'lastName'      => $request['lastName'],
             'email'         => $request['email'],
-            'securityLevel'         => $request['securityLevel'],
-            'company_id'    => $company_id,
+            'securityLevel' => $request['securityLevel'],
+            'company_id'    => Auth::user()->current_company_id,
             'active'        => $act
         ]);
 
