@@ -22,7 +22,7 @@ class UsersController extends Controller
     public function index()
     {
         //
-        $users = User::where('company_id', Auth::user()->company_id)
+        $users = User::where('company_id', Auth::user()->current_company_id)
                     ->orderBy('firstName', 'asc')->paginate(10);
         return view('users.index', compact('users'));
     }
@@ -62,15 +62,7 @@ class UsersController extends Controller
             $act = $request['active'];
         }
 
-
-//        Si el que hace el insert es un superusuario, puede setear la empresa del usuario creado
-//    a través de la interface
-        $company_id = Auth::user()->company_id;
-        if (Auth::user()->securityLevel == 100)
-        {
-            $company_id = $request['company_id'];
-        }
-
+        $company_id = Auth::user()->current_company_id;
         $user = User::create([
                 'username'  => $request['username'],
                 'firstName' => $request['firstName'],
@@ -84,7 +76,6 @@ class UsersController extends Controller
 
 //        Asociar las actividades en la tabla pivot activities_users
         $user->activities()->attach($request->input('activityList'));
-
 
         session()->flash('flash_message', 'Usuario creado correctamente.');
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
@@ -135,16 +126,8 @@ class UsersController extends Controller
         } else {
             $act = $request['active'];
         }
-//        Si el que hace el update es un superusuario, puede setear la empresa del usuario creado
-//    a través de la interface
-        if (Auth::user()->securityLevel == 100)
-        {
-            $company_id = $request['company_id'];
-        } else
-        {
-            $company_id = Auth::user()->company_id;
-        }
 
+        $company_id = Auth::user()->current_company_id;
         $user->update([
             'firstName'     => $request['firstName'],
             'lastName'      => $request['lastName'],

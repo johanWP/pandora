@@ -13,18 +13,20 @@
 Route::get('/home', 'PagesController@home');
 Route::get('/',  ['middleware'=>'soloInvitados','uses'=>'CustomAuthController@index']);
 Route::get('/login',  ['middleware'=>'soloInvitados','uses'=>'CustomAuthController@index']);
-
 Route::get('escritorio', ['middleware' => 'soloUsuarios','uses'=>'DefaultController@dashboard']);
 Route::get('api/warehousesList', 'jsonController@warehousesList');
 Route::get('api/warehousesByType', 'jsonController@warehousesByType');
 Route::get('api/warehousesByActivity/{id}', 'jsonController@warehousesActivity');
 Route::get('api/warehousesByActivity', 'jsonController@warehousesByActivity');  // este es el nuevo
 Route::get('api/warehouseDetail/{id}', 'jsonController@warehouseDetail');
-
 Route::get('api/inventory/{warehouse_id}', 'jsonController@articlesAvailable');
 Route::get('api/articles/serial', 'jsonController@articlesSerial');
 Route::get('search/autocomplete/{table}', 'SearchController@autocomplete');
 Route::get('search/name2Id', 'SearchController@name2Id');
+
+Route::get('/ajustes', 'SettingsController@showSettings');
+Route::get('/ajustes/cambiarEmpresa', 'SettingsController@cambiarEmpresa');
+
 Route::get('articulos/import', 'ImportController@articles');
 Route::post('articulos/import', 'ImportController@importArticles');
 Route::get('movimientos/porAprobar', 'ApproveController@viewAll');

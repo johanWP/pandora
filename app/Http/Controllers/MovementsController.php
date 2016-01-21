@@ -24,13 +24,13 @@ class MovementsController extends Controller
      */
     public function index()
     {
-
+//      1) Busco todos los almacenes de la empresa que tiene seleccionada el usuario
         $arrayW = DB::table('warehouses')
                     ->select('id')
-                    ->where('company_id', Auth::user()->company_id)
+                    ->where('company_id', Auth::user()->current_company_id)
                     ->get();
         $arrayW = collect($arrayW);
-//        dd($arrayW->lists('id')->toArray());
+//      2) Busco los movimientos de esos almacenes
         $movements = Movement::whereIn('status_id', ['1', '2'])
                             ->whereIn('origin_id', $arrayW->lists('id')->toArray())
                             ->orderBy('id', 'desc')

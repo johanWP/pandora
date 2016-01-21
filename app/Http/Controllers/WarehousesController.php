@@ -21,8 +21,9 @@ class WarehousesController extends Controller
      */
     public function index()
     {
-        $warehouses = Warehouse::where('company_id', Auth::user()->company_id)
-                            ->orderBy('name', 'asc')->paginate(10);
+        $warehouses = Warehouse::where('company_id', Auth::user()->current_company_id)->
+                            where('type_id', '<>', 1)->
+                            orderBy('name', 'asc')->paginate(10);
         return view('warehouses.index', compact('warehouses'));
     }
 
@@ -49,9 +50,8 @@ class WarehousesController extends Controller
      */
     public function store(CreateWarehouseRequest $request)
     {
-//        dd($request->input());
         $w = new Warehouse($request->all());
-        $w->company_id = Auth::user()->company_id;
+        $w->company_id = Auth::user()->current_company_id;
         Warehouse::create($w->toArray());
         session()->flash('flash_message', 'Almacén creado correctamente.');
         return Redirect::to('almacenes');

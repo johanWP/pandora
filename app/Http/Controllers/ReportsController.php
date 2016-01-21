@@ -40,22 +40,15 @@ class ReportsController extends Controller
 
     /**
      * Devuelve un listado de articulos
-     * Si el usuario logueado pertenece a una empresa parent, el listado incluye los articulos de todas
-     * las empresas
+     * Si el usuario logueado pertenece a una empresa parent, el listado devulve la lista de
+     * articulos de current_company
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function articles()
     {
-        if(Auth::user()->company->parent==0) {
-            $articles = Article::select('product_code', 'name', 'active', 'barcode')
-                ->where('company_id', '=', Auth::user()->company->id)
-                ->orderBy('name')
-                ->get();
-        } else {
-            $articles = Article::select('product_code', 'name', 'active', 'barcode')
-                ->orderBy('name')
-                ->get();
-        }
+            $articles = Article::where('company_id', Auth::user()->current_company_id)->
+                            orderBy('name')->
+                            get();
         return view('reports.articles', compact('articles'));
     }
 
@@ -205,11 +198,13 @@ class ReportsController extends Controller
     {
         $companies = Company::lists('name', 'id');
 
-//       Traigo todos los almacenes que pertenecen a la compañía del usuario
+//       1) Traigo todos los almacenes que pertenecen a la compañía del usuario
         $arrayW = collect(DB::table('warehouses')->
                 select('id')->
-                where('company_id', Auth::user()->company_id)->
+                where('company_id', Auth::user()->current_company_id)->
                 get());
+//      2) Traigo el campo "ticket" de los movimientos sobre los almacenes seleccionados
+//        para pre cargar el dropdown
         $tickets = Movement::select('ticket')->
                         distinct()->
                         whereIn('origin_id', $arrayW->lists('id')->toArray())->
@@ -228,12 +223,13 @@ class ReportsController extends Controller
 
         if($request->rdTicket == 'all')
         {
-//       Traigo todos los almacenes que pertenecen a la compañía del usuario
+//      1) Traigo todos los almacenes (que no han sido borrados) que pertenecen a la compañía seleccionada
             $arrayW = collect(DB::table('warehouses')->
                             select('id')->
-                            where('company_id', Auth::user()->company_id)->
+                            whereNull('deleted_at')->
+                            where('company_id', $request->companyList)->
                             get());
-
+//      2) Traigo todos los movimientos sobre esos almacenes, ordenados por ticket
             $movements = Movement::whereIn('origin_id', $arrayW->lists('id')->toArray())->
                         where('created_at', '>=', $desde)->
                         where('created_at', '<=', $hasta)->
@@ -257,13 +253,14 @@ class ReportsController extends Controller
 //       Traigo todos los almacenes que pertenecen a la compañía del usuario
         $arrayW = collect(DB::table('warehouses')->
                             select('id')->
-                            where('company_id', Auth::user()->company_id)->
+                            where('company_id', Auth::user()->current_company_id)->
                             get());
-
+//      Traigo todos los usuarios que no han sido borrados, y que pertenecen a la empresa seleccionada por el usuario
+//        para precargar el dropdown
         $users = DB::table('users')->
                         select(DB::raw('concat(firstName, " ", lastName) as name, id'))->
                         whereNull('deleted_at')->
-                        where('company_id', Auth::user()->company_id)->
+                        where('company_id', Auth::user()->current_company_id)->
                         lists('name', 'id');
 
         return view('reports.movimientosPorUsuarioForm', compact('companies', 'users'));
@@ -277,12 +274,13 @@ class ReportsController extends Controller
 
         if($request->rdUser == 'all')
         {
-//       Traigo todos los almacenes que pertenecen a la compañía del usuario
+//       Traigo todos los almacenes (que no han sido borrados) que pertenecen a la compañía seleccionada por usuario
             $arrayW = collect(DB::table('warehouses')->
                     select('id')->
-                    where('company_id', Auth::user()->company_id)->
+                    whereNull('deleted_at')->
+                    where('company_id', $request->companyList)->
                     get());
-
+//       Traigo todos los movimientos sobre los almacenes seleccionados
             $movements = Movement::whereIn('origin_id', $arrayW->lists('id')->toArray())->
                     where('created_at', '>=', $desde)->
                     where('created_at', '<=', $hasta)->
@@ -296,7 +294,6 @@ class ReportsController extends Controller
                     orderBy('id', 'desc')->
                     get();
         }
-//        dd($movements);
         return view('reports.movimientosPorUsuario', compact('movements'));
     }
 }
