@@ -33,6 +33,7 @@ class CustomUpdateUserRequest extends Request
             'firstName'  => 'required|min:3|max:255',
             'lastName'  => 'required|min:3|max:255',
             'email' => 'required|email|max:255',
+            'securityLevel' => 'required|numeric'
 
         ];
     }

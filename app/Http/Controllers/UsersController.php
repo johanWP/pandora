@@ -125,7 +125,7 @@ class UsersController extends Controller
         } else {
             $act = $request['active'];
         }
-
+//dd($request->all());
         $user->update([
             'firstName'     => $request['firstName'],
             'lastName'      => $request['lastName'],
@@ -135,7 +135,7 @@ class UsersController extends Controller
             'current_company_id'    => Auth::user()->current_company_id,
             'active'        => $act
         ]);
-
+//dd($user);
 //        Asociar las actividades en la tabla pivot activities_users
         if ($request->input('activityList') != null)
         {
