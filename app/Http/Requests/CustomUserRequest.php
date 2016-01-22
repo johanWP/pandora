@@ -39,7 +39,6 @@ class CustomUserRequest extends Request
             'email' => 'required|email|max:255',
             'password' => 'required|confirmed|min:6',
             'securityLevel' => 'required|numeric'
-
         ];
     }
 }
