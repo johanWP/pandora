@@ -54,11 +54,13 @@
                     <a href="{{ action('WarehousesController@edit', $warehouse->id) }}" class="btn btn-default"><i class="fa fa-pencil fa-fw"></i> Editar</a>
                   </td>
                   <td>
+{{--
                   @if ($warehouse->type_id != 1)
                     <a href="#modalConfirm" id="btnDelete" class="btn btn-danger" data-toggle="modal" data-name="{{ $warehouse->name}}" data-deleteMe="{{ $warehouse->id }}">
                       <i class="fa fa-trash fa-fw"></i> Eliminar
                     </a>
                   @endif
+--}}
                   </td>
                 </tr>
 			@endforeach

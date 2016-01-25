@@ -76,7 +76,8 @@ class User extends Model implements AuthenticatableContract,
         $warehouses = DB::table('warehouses')
             ->whereIn('activity_id', $activities)
             ->where('active', '=', '1')
-            ->where('company_id', '=', $this->company_id)
+            ->where('company_id', '=', $this->current_company_id)
+            ->whereNull('deleted_at')
             ->orderBy('name')
             ->get();
 

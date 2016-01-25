@@ -104,8 +104,8 @@ class Warehouse extends Model
                     $total = $movIn->totalIn;
                 }
 
+                if($total >0)
 
-                if ($total>0)
                 {
                     $result[$art->id] = [
                         'id' => $art->id,
@@ -117,6 +117,7 @@ class Warehouse extends Model
                         'cantidad' => $total
                     ];
                 }
+
 
             }   // fin del foreach($in as $movIn)
 
