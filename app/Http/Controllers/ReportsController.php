@@ -23,7 +23,7 @@ class ReportsController extends Controller
     public function excelArticles()
     {
 
-        Excel::create('Laravel Excel', function($excel) {
+        Excel::create('Maestro de Artículos', function($excel) {
 
             $excel->sheet('Articulos', function($sheet) {
 
@@ -71,7 +71,6 @@ class ReportsController extends Controller
      */
     public function articulosPorAlmacen(Request $request)
     {
-//        dd($request->all());
         $company_id = $request->companyList;
         if ($request->rdOrigin == 'all')
         {
@@ -96,19 +95,53 @@ class ReportsController extends Controller
             $result[$warehouses->id] = [
                 'id' => $warehouses->id,
                 'name' => $warehouses->name,
-
                 'description' => $warehouses->description,
                 'inventory' => $warehouses->inventory
             ];
         }
-//        $warehouses = Warehouse::all();
-
-//        $result = $warehouses;
-//        dd($result);
         return view ('reports.articulosPorAlmacen', compact('result'));
 
     }
 
+    public function excelArticulosPorAlmacen($id)
+    {
+        if ($id != 'all')
+        {
+
+            $report = Excel::create('Auditoría de Almacén ', function($excel) use($id)  {
+
+                $excel->sheet('Articulos', function($sheet) use ($id) {
+                    $name = Auth::user()->firstName.' '.Auth::user()->lastName;
+                    $warehouse = Warehouse::findOrFail($id);
+                    $sheet->fromArray($warehouse->inventory);
+                    $sheet->row(1, array(
+                        'id', 'Nombre', 'Favorito', 'Código de Producto', 'Serializable', 'Cantidad'
+                    ));
+                    $sheet->prependRow(1, array(
+                        'Auditado por:', $name,
+                        'Fecha: ', \Carbon\Carbon::now('America/Argentina/Buenos_Aires'),
+                        ));
+                    $sheet->prependRow(1, array('Auditoría de '.$warehouse->name));
+
+                    $sheet->cells('A1', function($cells)
+                    {
+                        $cells->setFontSize(18);
+                        $cells->setFontWeight('bold');
+                    });
+                    $sheet->cells('A2:F2', function($cells)
+                    {
+                        $cells->setFontSize(16);
+                        $cells->setFontWeight('bold');
+                    });
+                    $sheet->cells('A3:F3', function($cells)
+                    {
+                        $cells->setFontSize(14);
+                    });
+                });
+            })->export('xlsx');
+        }
+
+    }
     public function showListadoCumplimientoDeMaterial()
     {
         $companies = Company::lists('name', 'id');

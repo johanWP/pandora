@@ -29,14 +29,6 @@ Restablecer Contraseña
     {!! csrf_field() !!}
     <input type="hidden" name="token" value="{{ $token }}">
 
-    @if (count($errors) > 0)
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
-
     <div class="form-group">
         <label for="email">Email</label>
         <input type="email" name="email" class="form-control" value="{{ old('email') }}">

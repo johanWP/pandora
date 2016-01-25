@@ -35,6 +35,7 @@
 			  <th><h3>Desde</h3></th>
 			  <th><b> &nbsp;</b></th>
 			  <th><h3>Hacia</h3></th>
+			  <th><h3>Ticket</h3></th>
 			  <th class="text-center"><h3>Acciones</h3></th>
 
 			</tr>
@@ -65,6 +66,11 @@
                   <td>
                     <p class="text-left">
                       {{ $movement->destination->name}}
+                    </p>
+                  </td>
+                  <td>
+                    <p class="text-left">
+                      {{ $movement->ticket}}
                     </p>
                   </td>
                   <td class="text-center">
