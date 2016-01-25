@@ -143,7 +143,6 @@ class ReportsController extends Controller
                             }
                         }
                     }
-//                    dd($data);
                     $sheet->fromArray($data);
                     $sheet->setColumnFormat(array(
                         'A' => '@',
