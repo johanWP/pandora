@@ -153,17 +153,19 @@ Nuevo Movimiento
                 for(i=1; i < numPanels; i++)
                 {
                     valorActual = $('#article_id'+i).val();
-                    for (j=2; j < numPanels; j++)
+                    for (j=i+1; j < numPanels; j++)
                     {
-                        valorSiguiente = $('#article_id'+j).val();
-                        if (valorActual == valorSiguiente)
-                        {
-                            $('#divArticlePanel'+i).addClass('has-error');
-                            $('#divArticlePanel'+j).addClass('has-error');
-                            valid = false;
-                            mensaje = mensaje + 'Los articulos '+i+' y '+j+' son iguales. <br />';
-                            $('#divMsg').html(mensaje).slideDown('slow');
-                        }
+                        
+                            valorSiguiente = $('#article_id'+j).val();
+                            if (valorActual == valorSiguiente)
+                            {
+                                $('#divArticlePanel'+i).addClass('has-error');
+                                $('#divArticlePanel'+j).addClass('has-error');
+                                valid = false;
+                                mensaje = mensaje + 'Los articulos '+i+' y '+j+' son iguales. <br />';
+                                $('#divMsg').html(mensaje).slideDown('slow');
+                            }
+
                     }
                 }
             }
@@ -176,6 +178,8 @@ Nuevo Movimiento
                 {
                     $('#divArticlePanel'+i).addClass('has-error');
                     valid= false;
+                    mensaje = mensaje + 'Todos los articulos deben tener una cantidad especificada. <br />';
+                    $('#divMsg').html(mensaje).slideDown('slow');
 
                 }
             }
