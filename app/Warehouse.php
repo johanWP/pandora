@@ -107,16 +107,18 @@ class Warehouse extends Model
 //                    $seriales = $this->buscarSeriales($movOut->article_id);
 //                }
 //
-                $result[$art->id] = [
-                    'id' => $art->id,
-                    'name' => $art->name,
-                    'fav' => $art->fav,
-                    'product_code' => $art->product_code,
-                    'serializable' => $art->serializable,
-                    'seriales' => $this->buscarSeriales($art),
-                    'cantidad' => $total
-                ];
-
+                if($total >0)
+                {
+                    $result[$art->id] = [
+                        'id' => $art->id,
+                        'name' => $art->name,
+                        'fav' => $art->fav,
+                        'product_code' => $art->product_code,
+                        'serializable' => $art->serializable,
+                        'seriales' => $this->buscarSeriales($art),
+                        'cantidad' => $total
+                    ];
+                }
             }   // fin del foreach($in as $movIn)
 
         } else
