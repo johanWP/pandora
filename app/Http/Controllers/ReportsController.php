@@ -107,18 +107,54 @@ class ReportsController extends Controller
     {
         if ($id != 'all')
         {
-
             $report = Excel::create('Auditoría de Almacén ', function($excel) use($id)  {
 
                 $excel->sheet('Articulos', function($sheet) use ($id) {
+                    $data = Array();
                     $name = Auth::user()->firstName.' '.Auth::user()->lastName;
                     $warehouse = Warehouse::findOrFail($id);
-                    $sheet->fromArray($warehouse->inventory);
-                    $sheet->row(1, array(
-                        'id', 'Nombre', 'Favorito', 'Código de Producto', 'Serializable', 'Cantidad'
+                    $data[] = [
+                        'Código',
+                        'Nombre',
+                        'Cantidad',
+                        'Serial'
+                    ];
+                    foreach($warehouse->inventory as $articulo)
+                    {
+
+                        if($articulo['serializable']==0)
+                        {
+                            $data[] = [
+                                $articulo['product_code'],
+                                $articulo['name'],
+                                $articulo['cantidad'],
+                                '--'
+                            ];
+                        } else
+                        {
+                            foreach($articulo['seriales'] as $item)
+                            {
+                                $data[] = [
+                                    $articulo['product_code'],
+                                    $articulo['name'],
+                                    '1',
+                                    $item->serial
+                                ];
+                            }
+                        }
+                    }
+//                    dd($data);
+                    $sheet->fromArray($data);
+                    $sheet->setColumnFormat(array(
+                        'A' => '@',
+                        'B' => '@',
+                        'C' => '0',
+                        'C' => '@',
                     ));
                     $sheet->prependRow(1, array(
                         'Auditado por:', $name,
+                        ));
+                    $sheet->prependRow(1, array(
                         'Fecha: ', \Carbon\Carbon::now('America/Argentina/Buenos_Aires'),
                         ));
                     $sheet->prependRow(1, array('Auditoría de '.$warehouse->name));
@@ -128,15 +164,20 @@ class ReportsController extends Controller
                         $cells->setFontSize(18);
                         $cells->setFontWeight('bold');
                     });
-                    $sheet->cells('A2:F2', function($cells)
+                    $sheet->cells('A2:F3', function($cells)
                     {
                         $cells->setFontSize(16);
                         $cells->setFontWeight('bold');
                     });
-                    $sheet->cells('A3:F3', function($cells)
+                    $sheet->cells('A4:F4', function($cells)
                     {
                         $cells->setFontSize(14);
                     });
+                    $sheet->cells('A5:D5', function($cells)
+                    {
+                        $cells->setFontWeight('bold');
+                    });
+
                 });
             })->export('xlsx');
         }
