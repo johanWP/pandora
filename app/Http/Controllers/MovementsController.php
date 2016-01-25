@@ -129,10 +129,10 @@ class MovementsController extends Controller
                     'remito'        => $request['remito'],
                     'article_id'    => $request['article_id'.$i],
                     'quantity'      => $request['quantity'.$i],
+                    'note'          => $request['note'.$i],
                     'origin_id'     => $request['origin_id'],
                     'destination_id'=> $request['destination_id'],
                     'ticket'        => $request['ticket'],
-                    'note'          => $request['note'],
                     'serial'        => $serial,
                     'status_id'     => $status_id,
                     'user_id'       => Auth::user()->id
@@ -143,6 +143,7 @@ class MovementsController extends Controller
             {
 //            Guarda el objeto en la base de datos
                 Movement::create($mov->toArray());
+
             } else
             {
                 $conErrores .= '<li>'.$mov->article->name.'</li>s';

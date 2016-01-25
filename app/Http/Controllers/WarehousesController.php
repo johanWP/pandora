@@ -95,8 +95,27 @@ class WarehousesController extends Controller
      */
     public function update(CreateWarehouseRequest $request, $id)
     {
+//        dd($request->all());
+
+
         $warehouse = Warehouse::findOrFail($id);
-        $warehouse->update($request->all());
+//        $warehouse->update($request->all());
+        if($request->active==1)
+        {
+            $active=1;
+        } else
+        {
+            $active=0;
+        }
+        $warehouse->update(
+                [
+                    'name'  => $request->name,
+                    'description'  => $request->description,
+                    'activity_id'  => $request->activity_id,
+                    'type_id'  => $request->type_id,
+                    'active'  => $active
+                ]);
+
         session()->flash('flash_message', 'Almacén Actualizado correctamente.');
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
 //        session()->flash('flash_message_important', true);

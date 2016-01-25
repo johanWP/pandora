@@ -76,29 +76,28 @@
 
 <!-- Begin serial textfield -->
         <div class="form-group">
-            {!! Form::label('serial1', 'Serial:', ['id'=>'serialLabel1']) !!}
+            {!! Form::label('serial1', 'MAC:', ['id'=>'serialLabel1']) !!}
             {!! Form::text('serial1', null, ['class' => 'form-control', 'id'=>'serial1']) !!}
         </div>
 <!-- End serial textfield -->
-
 <!-- Begin serial select -->
         <div class="form-group">
-            {!! Form::label('serialListLabel1', 'Serial:', ['id'=>'serialListLabel1']) !!}
+            {!! Form::label('serialListLabel1', 'MAC:', ['id'=>'serialListLabel1']) !!}
             {!! Form::select('serialList1', [], null, ['id'=>'serialList1','class' => 'form-control','placeholder' => 'Seleccione...']) !!}
         </div>
 <!-- End serial select -->
+<!-- Begin note textfield -->
+        <div class="form-group">
+            {!! Form::label('note1', 'Notas / Observaciones:') !!}
+            {!! Form::text('note1', null, ['class' => 'form-control', 'placeholder' => 'Opcional', 'id'=>'note1']) !!}
+        </div>
+<!-- End note textfield -->
         <button class="btn btn-default" type="button" id="btnAddPanel1" name="btnAddPanel1">Agregar Otro Artículo</button>
     </div>
 </div>
 {{--FIN DEL PANEL DE ARTICULO--}}
 </div>
-<!-- Begin note textfield -->
-        <div class="form-group">
-            {!! Form::label('note', 'Notas / Observaciones:') !!}
-            {!! Form::text('note', null, ['class' => 'form-control', 'placeholder' => 'Opcional']) !!}
-        </div>
-<!-- End note textfield -->
-{!! Form::text('numArticles', null, ['class' => 'form-control', 'id' => 'numArticles']) !!}
+{!! Form::hidden('numArticles', 1, ['class' => 'form-control', 'id' => 'numArticles']) !!}
 <!-- Begin Submit button -->
     <div class="form-group">
             {!! Form::submit($submitButtonText, ['class' => 'btn btn-primary form-control', 'id'=>'btnSubmit']) !!}

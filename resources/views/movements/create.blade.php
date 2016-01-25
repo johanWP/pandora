@@ -155,7 +155,7 @@ Nuevo Movimiento
                     valorActual = $('#article_id'+i).val();
                     for (j=i+1; j < numPanels; j++)
                     {
-                        
+
                             valorSiguiente = $('#article_id'+j).val();
                             if (valorActual == valorSiguiente)
                             {
@@ -263,12 +263,16 @@ Nuevo Movimiento
                         '<input class="form-control" id="quantity'+ i +'" name="quantity'+ i +'" type="number">' +
                     '</div>' +
                     '<div class="form-group">' +
-                        '<label for="serial'+ i +'" id="serialLabel'+ i +'" style="display: none">Serial:</label>' +
+                        '<label for="serial'+ i +'" id="serialLabel'+ i +'" style="display: none">MAC:</label>' +
                         '<input class="form-control" id="serial'+ i +'" name="serial'+ i +'" type="text" style="display: none;">' +
                     '</div>' +
                     '<div class="form-group">' +
-                        '<label for="serialListLabel'+ i +'" id="serialListLabel'+ i +'" style="display: none">Serial:</label>' +
+                        '<label for="serialListLabel'+ i +'" id="serialListLabel'+ i +'" style="display: none">MAC:</label>' +
                         '<select id="serialList'+ i +'" class="form-control" name="serialList'+ i +'" style="display: none;"></select>' +
+                    '</div>' +
+                    '<div class="form-group">' +
+                        '<label for="note'+ i +'" id="noteLabel'+ i +'">Nota:</label>' +
+                        '<input class="form-control" placeholder="Opcional" name="note'+i+'" type="text" id="note'+i+'">' +
                     '</div>' +
                     '<button class="btn btn-default" type="button" id="btnAddPanel'+ i +'" name="btn'+ i +'">Agregar Otro Artículo</button> ' +
                     ' <button class="btn btn-danger" type="button" id="btnRemovePanel'+ i +'" name="btnRemove'+ i +'">Eliminar</button>'+

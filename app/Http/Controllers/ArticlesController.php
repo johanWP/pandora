@@ -89,15 +89,28 @@ class ArticlesController extends Controller
      */
     public function update($id, ArticleRequest $request)
     {
-        if (is_null($request['active']))
+//        dd($request->all());
+        if ($request->active==1)
         {
-            $act = 0;
+            $act = 1;
         } else {
-            $act = $request['active'];
+            $act = 0;
+        }
+        if ($request->serializable==1)
+        {
+            $serializable = 1;
+        } else {
+            $serializable = 0;
         }
 
         $article = Article::findOrFail($id);
-        $article->update($request->all());
+        $article->update([
+                'name'  => $request->name,
+                'barcode'  => $request->barcode,
+                'product_code'  => $request->product_code,
+                'serializable'  => $serializable,
+                'active'  => $act
+        ]);
 
         session()->flash('flash_message', 'El artículo se actualizó.');
         return redirect('articulos');

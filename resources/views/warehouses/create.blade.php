@@ -10,7 +10,7 @@
     @include('errors.list')
 
     {!! Form::open(['url' => 'almacenes']) !!}
-    @include('warehouses.form', ['submitButtonText' => 'Incluir Nuevo Almacén'])
+    @include('warehouses.form', ['submitButtonText' => 'Incluir Nuevo Almacén', 'active'=>'1'])
     {!! Form::close() !!}
 
 @endsection

@@ -10,7 +10,7 @@
     @include('errors.list')
 
     {!! Form::open(['url' => 'usuarios']) !!}
-    @include('users.form', ['submitButtonText' => 'Incluir Nuevo Usuario'])
+    @include('users.form', ['submitButtonText' => 'Incluir Nuevo Usuario', 'active' => 1])
     {!! Form::close() !!}
 
 @endsection

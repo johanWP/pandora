@@ -12,6 +12,6 @@
     @include('errors.list')
 
     {!! Form::open(['url' => 'articulos']) !!}
-        @include('articles.form', ['submitButtonText' => 'Incluir nuevo artículo'])
+        @include('articles.form', ['submitButtonText' => 'Incluir nuevo artículo', 'active'=>1, 'serializable'=>0])
     {!! Form::close() !!}
 @endsection

@@ -25,7 +25,7 @@
 <!-- Begin checkbox activo -->
          <div class="form-group">
              {!! Form::label('active', 'Marque si el almacén está activo &nbsp;') !!}
-             {!! Form::checkbox('active',1, false, ['class' => '']) !!}
+             {!! Form::checkbox('active',1, $active) !!}
 
          </div>
  <!-- End activo checkbox -->
