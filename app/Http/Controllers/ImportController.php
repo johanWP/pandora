@@ -25,9 +25,9 @@ class ImportController extends Controller
 
         if ($result) {
             $i = $this->insertArticles($name);
-            session()->flash('flash_message', 'Se importaron correctamente '.$i.' artículos');
+            session()->flash('flash_message', 'Se importaron correctamente los artículos nuevos.');
         } else {
-            session()->flash('flash_message_danger', 'Ha ocurrido un error. Intentelo de nuevo más tarde o reporte el error..');
+            session()->flash('flash_message_danger', 'Ha ocurrido un error. Intentelo de nuevo más tarde o reporte el error.');
         }
 
         session()->flash('flash_message_important', true);
@@ -43,32 +43,41 @@ class ImportController extends Controller
     {
         $i=0;
         $filename = 'storage/app/'.$filename;
-        Excel::load($filename, function($reader) use ($i){
+        Excel::load($filename, function($reader)  use ($i)
+        {
             $results = $reader->get();
 
             foreach ($results as $article)
             {
-                if (is_null($article['serializable']))
-                {
-                    $serializable=0;
+                $NoEstaEnLaBD = is_null(Article::where('product_code',$article['codigo'])->first());
+
+                if ($NoEstaEnLaBD)
+                { // si el articulo se encuentra en la base de datos
+                    if (is_null($article['serializable'])) {
+                        $serializable = 0;
+                    } else {
+                        $serializable = $article['serializable'];
+                    }
+                    $a = Article::create(
+                        [
+                            'product_code' => $article['codigo'],
+                            'unit' => $article['ub'],
+                            'name' => $article['descripcion'],
+                            'barcode' => $article['barcode'],
+                            'fav' => $article['fav'],
+                            'serializable' => $serializable,
+                            'company_id' => Auth::user()->current_company_id,
+                            'active' => $article['activo']
+                        ]
+                    );
+                    $i++;
                 } else
-                {
-                    $serializable = $article['serializable'];
+                {   // si el codigo no  se encuentra en la base de datos
+
                 }
-                $a = Article::create(
-                    [
-                        'product_code' => $article['codigo'],
-                        'unit' => $article['ub'],
-                        'name' => $article['descripcion'],
-                        'barcode' => $article['barcode'],
-                        'fav' =>$article['fav'],
-                        'serializable' => $serializable,
-                        'company_id' => Auth::user()->current_company_id,
-                        'active' => $article['activo']
-                    ]
-                );
-                $i++;
+
             }
+
         });  // Fin del Excel::load
         return $i;
     }
