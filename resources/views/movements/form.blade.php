@@ -1,17 +1,12 @@
 <div class="row">
+    <div class="alert alert-danger" id="divMsg" style="display: none"></div>
+</div>
+<div class="row">
     <!-- Begin Company textfield -->
     <div class="form-group">
 
-    {!! Form::label('companyList', 'Empresas:') !!}
-    @if(Auth::user()->company->parent==0)
-{{--Si el usuario no es de una empresa parente, le preselecciono la empresa--}}
-
-        {!! Form::text('company', Auth::user()->company->name, ['class' => 'form-control', 'readonly']) !!}
-        {!! Form::hidden('companyList', Auth::user()->company->id) !!}
-    @else
-{{--Si el usuario es de una empresa parent, le muestro un dropdown para seleccionar la empresa--}}
-        {!! Form::select('companyList[]', $companies , null, ['class' => 'form-control', 'id'=>'companyList', 'placeholder'=>'Seleccione...']) !!}
-    @endif
+        {!! Form::label('company', 'Empresas:') !!}
+        {!! Form::text('company', Auth::user()->currentCompany->name, ['class' => 'form-control', 'readonly']) !!}
 
     </div>
     <!-- End Company textfield -->
@@ -47,35 +42,6 @@
         </div>
 <!-- End origin_id select -->
 
-<!-- Begin article_id select -->
-        <div class="form-group">
-            {!! Form::label('article_id', 'Artículo:') !!}
-            {!! Form::select('article_id', ['' => 'Seleccione el artículo...'], null, ['id'=>'article_id', 'class' => 'form-control', 'disabled' => 'disabled']) !!}
-        </div>
-<!-- End origin_id select -->
-
-<!-- Begin quantity textfield -->
-        <div class="form-group">
-            {!! Form::label('quantity', 'Cantidad:') !!}
-            <p id="cantidad" class="help-block">Cantidad Disponible: <span  id="maxQ"></span></p>
-            {!! Form::number('quantity', null, ['class' => 'form-control', 'id' =>'quantity']) !!}
-        </div>
-<!-- End quantity textfield -->
-
-<!-- Begin serial textfield -->
-        <div class="form-group">
-            {!! Form::label('serial', 'Serial:', ['id'=>'serialLabel']) !!}
-            {!! Form::text('serial', null, ['class' => 'form-control', 'id'=>'serial']) !!}
-        </div>
-<!-- End serial textfield -->
-
-<!-- Begin serial select -->
-        <div class="form-group">
-            {!! Form::label('serialListLabel', 'Serial:', ['id'=>'serialListLabel']) !!}
-            {!! Form::select('serialList', [], null, ['id'=>'serialList','class' => 'form-control','placeholder' => 'Seleccione...']) !!}
-        </div>
-<!-- End serial select -->
-
 <!-- Begin destination_id select -->
         <div class="form-group">
             {!! Form::label('destination_id', 'Almacén de Destino:') !!}
@@ -89,16 +55,51 @@
             {!! Form::text('ticket', null, ['class' => 'form-control']) !!}
         </div>
 <!-- End ticket textfield -->
+<div id="divArticles">{{--COMIENZA PANEL DE ARTICULO--}}
+<div class="panel panel-default" id="divArticlePanel1">
+    <div class="panel-body">
 
+<!-- Begin article_id select -->
+        <div class="form-group">
+            {!! Form::label('article_id1', 'Artículo:') !!}
+            {!! Form::select('article_id1', ['' => 'Seleccione el artículo...'], null, ['id'=>'article_id1', 'class' => 'form-control', 'disabled' => 'disabled']) !!}
+        </div>
+<!-- End origin_id select -->
+
+<!-- Begin quantity textfield -->
+        <div class="form-group">
+            {!! Form::label('quantity1', 'Cantidad:') !!}
+            <p id="cantidad" class="help-block">Cantidad Disponible: <span  id="maxQ1"></span></p>
+            {!! Form::number('quantity1', null, ['class' => 'form-control', 'id' =>'quantity1']) !!}
+        </div>
+<!-- End quantity textfield -->
+
+<!-- Begin serial textfield -->
+        <div class="form-group">
+            {!! Form::label('serial1', 'MAC:', ['id'=>'serialLabel1']) !!}
+            {!! Form::text('serial1', null, ['class' => 'form-control', 'id'=>'serial1']) !!}
+        </div>
+<!-- End serial textfield -->
+<!-- Begin serial select -->
+        <div class="form-group">
+            {!! Form::label('serialListLabel1', 'MAC:', ['id'=>'serialListLabel1']) !!}
+            {!! Form::select('serialList1', [], null, ['id'=>'serialList1','class' => 'form-control','placeholder' => 'Seleccione...']) !!}
+        </div>
+<!-- End serial select -->
 <!-- Begin note textfield -->
         <div class="form-group">
-            {!! Form::label('note', 'Notas / Observaciones:') !!}
-            {!! Form::text('note', null, ['class' => 'form-control', 'placeholder' => 'Opcional']) !!}
+            {!! Form::label('note1', 'Notas / Observaciones:') !!}
+            {!! Form::text('note1', null, ['class' => 'form-control', 'placeholder' => 'Opcional', 'id'=>'note1']) !!}
         </div>
 <!-- End note textfield -->
-
+        <button class="btn btn-default" type="button" id="btnAddPanel1" name="btnAddPanel1">Agregar Otro Artículo</button>
+    </div>
+</div>
+{{--FIN DEL PANEL DE ARTICULO--}}
+</div>
+{!! Form::hidden('numArticles', 1, ['class' => 'form-control', 'id' => 'numArticles']) !!}
 <!-- Begin Submit button -->
     <div class="form-group">
-            {!! Form::submit($submitButtonText, ['class' => 'btn btn-primary form-control', 'id' => 'btnSubmit']) !!}
+            {!! Form::submit($submitButtonText, ['class' => 'btn btn-primary form-control', 'id'=>'btnSubmit']) !!}
     </div>
 <!-- End Submit Button -->

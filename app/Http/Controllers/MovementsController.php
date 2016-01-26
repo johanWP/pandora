@@ -24,17 +24,28 @@ class MovementsController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->securityLevel > 20)
+        {
 //      1) Busco todos los almacenes de la empresa que tiene seleccionada el usuario
-        $arrayW = DB::table('warehouses')
-                    ->select('id')
-                    ->where('company_id', Auth::user()->current_company_id)
-                    ->get();
-        $arrayW = collect($arrayW);
+            $arrayW = DB::table('warehouses')
+                ->select('id')
+                ->where('company_id', Auth::user()->current_company_id)
+                ->get();
+            $arrayW = collect($arrayW);
 //      2) Busco los movimientos de esos almacenes
-        $movements = Movement::whereIn('status_id', ['1', '2'])
-                            ->whereIn('origin_id', $arrayW->lists('id')->toArray())
-                            ->orderBy('id', 'desc')
-                            ->paginate(10);
+            $movements = Movement::whereIn('status_id', ['1', '2'])->
+                whereIn('origin_id', $arrayW->lists('id')->toArray())->
+                orderBy('id', 'desc')->
+                paginate(10);
+        } else
+        {
+//      Si es un técnico, Busco los movimientos solo de ese usuario
+            $movements = Movement::whereIn('status_id', ['1', '2'])->
+                where('user_id', Auth::user()->user_id)->
+                orderBy('id', 'desc')->
+                paginate(10);
+        }
+
         return view('movements.index', compact('movements'));
     }
 
@@ -45,7 +56,7 @@ class MovementsController extends Controller
      */
     public function create()
     {
-
+/*
         if (Auth::user()->company->parent == 0)
         {
             $companies = [
@@ -56,14 +67,14 @@ class MovementsController extends Controller
         {
             $companies = Company::lists('name', 'id');
         }
-/*
+
         $activities = DB::table('activities')
             ->select('id', 'name')
             ->orderBy('name')
             ->get();
 */
         $activities = Auth::user()->activities;
-        return view('movements.create', compact('companies', 'activities'));
+        return view('movements.create', compact('activities'));
     }
 
     public function alta()
@@ -92,7 +103,9 @@ class MovementsController extends Controller
      */
     public function store(CreateMovementRequest $request)
     {
-//        dd($request->all());
+        $i =1;
+        $arrMov = Array();
+        $conErrores = '';
         if(Auth::user()->securityLevel>=20)
         {
             $status_id = 1;     // Aprobado
@@ -101,49 +114,53 @@ class MovementsController extends Controller
             $status_id = 2;     // Por Aprobar
         }
 
-        if($request->serialList != '')
+        for ($i=1; $i <= $request['numArticles']; $i++)
         {
-            $serial = $request->serialList;
+            if($request['serialList'.$i] != '')
+            {
+                $serial = $request['serialList'.$i];
+            } else
+            {
+                $serial = $request['serial'.$i];
+            }
+//        Crea un objeto Movement pero no lo guarda en la base de datos
+            $mov = new Movement(
+                [
+                    'remito'        => $request['remito'],
+                    'article_id'    => $request['article_id'.$i],
+                    'quantity'      => $request['quantity'.$i],
+                    'note'          => $request['note'.$i],
+                    'origin_id'     => $request['origin_id'],
+                    'destination_id'=> $request['destination_id'],
+                    'ticket'        => $request['ticket'],
+                    'serial'        => $serial,
+                    'status_id'     => $status_id,
+                    'user_id'       => Auth::user()->id
+                ]
+            );
+            $valid = $this->validateMov($mov);
+            if ($valid == '')
+            {
+//            Guarda el objeto en la base de datos
+                Movement::create($mov->toArray());
+
+            } else
+            {
+                $conErrores .= '<li>'.$mov->article->name.'</li>s';
+            }
+        }
+
+        if ($conErrores == '')
+        {
+            session()->flash('flash_message', 'Todos los movimientos se registraron correctamente.');
+            return Redirect::to('movimientos');
         } else
         {
-            $serial = $request->serial;
-        }
-        $mov = new Movement(
-            [
-                'remito' => $request->remito,
-                'article_id' => $request->article_id,
-                'serial' => $serial,
-                'origin_id' => $request->origin_id,
-                'destination_id' => $request->destination_id,
-                'user_id' => Auth::user()->id,
-                'status_id' => $status_id,
-                'quantity' => $request->quantity,
-                'ticket' => $request->ticket,
-                'note' => $request->note
-            ]
-        );
-
-        /*
-                $mov = new Movement($request->all());
-                $mov->user_id = Auth::user()->id;
-                $mov->status_id = $status_id;
-        */
-//dd($mov);
-        $valid = $this->validateMov($mov);
-        //dd($valid);
-        if ($valid != '')
-        {
-            session()->flash('flash_message_danger', 'Movimiento no ha sido registrado.' . $valid);
+            $conErrores = '<ul>'.$conErrores.'</ul>';
+            session()->flash('flash_message_danger', 'Algunos movimientos no han sido registrados.' . $conErrores);
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
             session()->flash('flash_message_important', true);
             return Redirect::to('movimientos/create')->withInput();
-        } else
-        {
-            Movement::create($mov->toArray());
-            session()->flash('flash_message', 'Movimiento registrado correctamente.');
-//        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
-//            session()->flash('flash_message_important', true);
-            return Redirect::to('movimientos');
         }
 
 
@@ -158,7 +175,6 @@ class MovementsController extends Controller
     public function show($id)
     {
         $movement = Movement::findOrFail($id);
-//        dd($movement);
         if($movement->approved_by !=null)
         {
             $approved = User::find($movement->approved_by);
@@ -192,7 +208,7 @@ class MovementsController extends Controller
     {
         if(Auth::user()->securityLevel >= 20) {
             $mov = Movement::findOrFail($id);
-            $x =$mov->update([
+            $mov->update([
                 'approved_by'       => Auth::user()->id,
                 'status_id'     => 1,
             ]);
@@ -274,10 +290,6 @@ class MovementsController extends Controller
         {
             $msg .= '<li>Los almacenes de origen y destino son de líneas de negocios diferentes</li>';
         }
-        if (($m->origin->type_id == 1) && ($m->destination->type_id == 1))
-        {
-            $msg .= '<li>Los almacenes de origen y destino son de tipo "Sistema"</li>';
-        }
 /*
         if ($m->origin->active != 1)
         {
@@ -296,7 +308,6 @@ class MovementsController extends Controller
         if(($m->article->serializable==1) AND ($m->serial!='') AND ($m->origin->type_id != 1))
         {
             $lastMovement = $this->lastMovement($m->serial);
-            //dd($lastMovement);
             if($lastMovement->destination_id != $m->origin_id)
             {
                 $msg .= '<li>El artículo no se encuentra en el almacén '. $m->origin->name .'.

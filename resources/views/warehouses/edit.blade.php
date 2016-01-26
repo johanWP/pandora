@@ -11,9 +11,11 @@ Editar Almacén: {{ $warehouse->name }}
     <!--  Incluir el parcial que lista los errores -->
 
     @include('errors.list')
-
+<?php
+$active = $warehouse->active
+?>
     {!! Form::model($warehouse, ['method' => 'PATCH', 'url' => 'almacenes/' . $warehouse->id]) !!}
-        @include('warehouses.form', ['submitButtonText' => 'Guardar Cambios'])
+        @include('warehouses.form', ['submitButtonText' => 'Guardar Cambios', 'active' => $active])
     {!! Form::close() !!}
 
 @endsection

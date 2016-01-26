@@ -21,7 +21,7 @@
     <!-- Begin checkbox serializable -->
              <div class="form-group">
                  {!! Form::label('serializable', 'Marque si el artículo es serializable &nbsp;') !!}
-                 {!! Form::checkbox('serializable',1, false, ['class' => '']) !!}
+                 {!! Form::checkbox('serializable',1, $serializable) !!}
 
              </div>
      <!-- End serializable checkbox -->
@@ -29,7 +29,7 @@
     <!-- Begin checkbox activo -->
              <div class="form-group">
                  {!! Form::label('active', 'Marque si el artículo está activo &nbsp;') !!}
-                 {!! Form::checkbox('active',1, false, ['class' => '']) !!}
+                 {!! Form::checkbox('active',1, $active) !!}
 
              </div>
      <!-- End activo checkbox -->

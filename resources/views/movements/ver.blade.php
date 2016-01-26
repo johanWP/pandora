@@ -59,6 +59,10 @@
             <th>Fecha de creación</th>
             <td>{{ $movement->created_at }}</td>
          </tr>
+         <tr>
+            <th>Notas / Observaciones</th>
+            <td>{{ $movement->note }}</td>
+         </tr>
       </tbody>
     </table>
   </div>

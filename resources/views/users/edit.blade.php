@@ -11,9 +11,11 @@ Editar Usuario: {{ $user->firstName }} {{ $user->lastName }}
     <!--  Incluir el parcial que lista los errores -->
 
     @include('errors.list')
-
+<?php
+$active = $user->active;
+?>
     {!! Form::model($user, ['method' => 'PATCH', 'url' => 'usuarios/' . $user->id]) !!}
-        @include('users.form', ['submitButtonText' => 'Guardar Cambios'])
+        @include('users.form', ['submitButtonText' => 'Guardar Cambios', 'active' => $active])
     {!! Form::close() !!}
 
 @endsection

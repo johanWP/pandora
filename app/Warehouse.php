@@ -104,8 +104,8 @@ class Warehouse extends Model
                     $total = $movIn->totalIn;
                 }
 
+                if($total >0)
 
-                if ($total>0)
                 {
                     $result[$art->id] = [
                         'id' => $art->id,
@@ -118,13 +118,13 @@ class Warehouse extends Model
                     ];
                 }
 
+
             }   // fin del foreach($in as $movIn)
 
         } else
         {
 //            Si es un almacen de sistema, devuevo lista de articulos activos
 //              que incluye articulos de todas las compañias si el usuario pertenece a una empresa parent
-//dd(Auth::user()->company->parent);
             if(Auth::user()->company->parent==1)
             {
                 $all = DB::table('articles')

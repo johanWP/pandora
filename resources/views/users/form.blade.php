@@ -46,7 +46,7 @@
     <!-- Begin checkbox active -->
             <div class="form-group">
                 <label> Marque si el usuario está activo
-                {!! Form::checkbox('active', 1, ['class' => '']) !!}
+                {!! Form::checkbox('active', 1, $active) !!}
                 </label>
             </div>
     <!-- End active textfield -->
