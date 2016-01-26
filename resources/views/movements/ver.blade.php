@@ -42,6 +42,14 @@
             <th>Realizado por</th>
             <td>{{ $movement->user->firstName }} {{ $movement->user->lastName }}</td>
          </tr>
+         <tr>
+            <th>Ticket</th>
+            <td>{{ $movement->ticket }}</td>
+         </tr>
+         <tr>
+            <th>Remito</th>
+            <td>{{ $movement->remito }}</td>
+         </tr>
       @if ($movement->approved_by != 0)
          <tr>
             <th>Aprobado por</th>
