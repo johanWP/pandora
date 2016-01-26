@@ -10,3 +10,5 @@ Homestead.json
 *.png
 *.sql
 .TODO
+
+config/mail.php
