@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-class RedirectIfNotGerente
+class RedirectIfNotSupervisor
 {
     /**
      * Handle an incoming request.
@@ -20,7 +20,7 @@ class RedirectIfNotGerente
             session()->flash('flash_message_danger', 'El sistema sólo es accesible para usuarios registrados.');
             return redirect('/login');
         } else {
-            if (Auth::user()->securityLevel < 40)
+            if (Auth::user()->securityLevel < 20)
             {
                 session()->flash('flash_message_danger', 'Usted no tiene permisos para acceder a este página.');
                 return redirect('/escritorio');

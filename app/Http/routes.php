@@ -11,28 +11,29 @@
 |
 */
 Route::get('/home', 'PagesController@home');
-Route::get('/',  ['middleware'=>'soloInvitados','uses'=>'CustomAuthController@index']);
-Route::get('/login',  ['middleware'=>'soloInvitados','uses'=>'CustomAuthController@index']);
-Route::get('escritorio', ['middleware' => 'soloUsuarios','uses'=>'DefaultController@dashboard']);
-Route::get('api/warehousesList', 'jsonController@warehousesList');
-Route::get('api/warehousesByType', 'jsonController@warehousesByType');
-Route::get('api/warehousesByActivity/{id}', 'jsonController@warehousesActivity');
-Route::get('api/warehousesByActivity', 'jsonController@warehousesByActivity');  // este es el nuevo
-Route::get('api/warehouseDetail/{id}', 'jsonController@warehouseDetail');
-Route::get('api/inventory/{warehouse_id}', 'jsonController@articlesAvailable');
-Route::get('api/articles/serial', 'jsonController@articlesSerial');
-Route::get('search/autocomplete/{table}', 'SearchController@autocomplete');
-Route::get('search/name2Id', 'SearchController@name2Id');
+Route::get('/',         ['middleware'=>'soloInvitados','uses'=>'CustomAuthController@index']);
+Route::get('/login',    ['middleware'=>'soloInvitados','uses'=>'CustomAuthController@index']);
+Route::get('escritorio',            ['middleware' => 'soloUsuarios','uses'=>'DefaultController@dashboard']);
+Route::get('api/warehousesList',    ['middleware' => 'soloUsuarios','uses'=>'jsonController@warehousesList']);
+Route::get('api/warehousesByType',  ['middleware' => 'soloUsuarios','uses'=>'jsonController@warehousesByType']);
+//Route::get('api/warehousesByActivity/{id}', ['middleware' => 'soloUsuarios','uses'=>'jsonController@warehousesActivity']);
+Route::get('api/warehousesByActivity',      ['middleware' => 'soloUsuarios','uses'=>'jsonController@warehousesByActivity']);  // este es el nuevo
+Route::get('api/warehouseDetail/{id}',      ['middleware' => 'soloUsuarios','uses'=>'jsonController@warehouseDetail']);
+Route::get('api/inventory/{warehouse_id}',  ['middleware' => 'soloUsuarios','uses'=>'jsonController@articlesAvailable']);
+Route::get('api/articles/serial',           ['middleware' => 'soloUsuarios','uses'=>'jsonController@articlesSerial']);
+Route::get('search/autocomplete/{table}',   ['middleware' => 'soloUsuarios','uses'=>'SearchController@autocomplete']);
+Route::get('search/name2Id',                ['middleware' => 'soloUsuarios','uses'=>'SearchController@name2Id']);
 
-Route::get('/ajustes', 'SettingsController@showSettings');
-Route::get('/ajustes/cambiarEmpresa', 'SettingsController@cambiarEmpresa');
+Route::get('/ajustes', ['middleware' => 'soloUsuarios','uses'=>'SettingsController@showSettings']);
+Route::post('/ajustes/cambiarEmpresa', ['middleware' => 'soloUsuarios','uses'=>'SettingsController@cambiarEmpresa']);
 
-Route::get('articulos/import', 'ImportController@articles');
-Route::post('articulos/import', 'ImportController@importArticles');
-Route::get('movimientos/porAprobar', 'ApproveController@viewAll');
-Route::post('movimientos/aprobar', 'ApproveController@approveMovement');
-Route::post('movimientos/rechazar', 'ApproveController@rejectMovement');
-Route::get('movimientos/alta', 'MovementsController@alta');
+Route::get('articulos/import', ['middleware' => 'soloDirector','uses'=>'ImportController@articles']);
+Route::post('articulos/import', ['middleware' => 'soloDirector','uses'=>'ImportController@importArticles']);
+Route::get('movimientos/porAprobar', ['middleware' => 'soloSupervisor','uses'=>'ApproveController@viewAll']);
+Route::post('movimientos/aprobar', ['middleware' => 'soloSupervisor','uses'=>'ApproveController@approveMovement']);
+Route::post('movimientos/rechazar', ['middleware' => 'soloSupervisor','uses'=>'ApproveController@rejectMovement']);
+//Route::get('movimientos/alta', 'MovementsController@alta');
+
 // Password reset link request routes...
 Route::get('password/email', 'Auth\PasswordController@getEmail');
 Route::post('password/email', 'Auth\PasswordController@postEmail');
@@ -42,20 +43,18 @@ Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 
-Route::get('reportes/articulos/', 'ReportsController@articles');
-Route::get('reportes/articulos/all', 'ReportsController@excelArticles');
-Route::get('reportes/articulosPorAlmacen', 'ReportsController@showArticulosPorAlmacen');
-Route::post('reportes/articulosPorAlmacen', 'ReportsController@articulosPorAlmacen');
-Route::get('reportes/excelArticulosPorAlmacen/{id}', 'ReportsController@excelArticulosPorAlmacen');
+Route::get('reportes/articulos/', ['middleware'=>'soloJefe','uses'=>'ReportsController@articles']);
+Route::get('reportes/articulos/all', ['middleware'=>'soloJefe','uses'=>'ReportsController@excelArticles']);
+Route::get('reportes/articulosPorAlmacen', ['middleware' => 'soloUsuarios','uses'=>'ReportsController@showArticulosPorAlmacen']);
+Route::post('reportes/articulosPorAlmacen', ['middleware'=>'soloJefe','uses'=>'ReportsController@articulosPorAlmacen']);
+Route::get('reportes/excelArticulosPorAlmacen/{id}', ['middleware'=>'soloJefe','uses'=>'ReportsController@excelArticulosPorAlmacen']);
 
-Route::get('reportes/movimientosPorAlmacen', 'ReportsController@showMovimientosPorAlmacen');
-Route::post('reportes/movimientosPorAlmacen', 'ReportsController@movimientosPorAlmacen');
-Route::get('reportes/listadoCumplimientoDeMaterial', 'ReportsController@showListadoCumplimientoDeMaterial');
-Route::post('reportes/listadoCumplimientoDeMaterial', 'ReportsController@ListadoCumplimientoDeMaterial');
-Route::get('reportes/movimientosPorTicket', 'ReportsController@showMovimientosPorTicket');
-Route::post('reportes/movimientosPorTicket', 'ReportsController@movimientosPorTicket');
-Route::get('reportes/movimientosPorUsuario', 'ReportsController@showMovimientosPorUsuario');
-Route::post('reportes/movimientosPorUsuario', 'ReportsController@movimientosPorUsuario');
+Route::get('reportes/movimientosPorAlmacen', ['middleware' => 'soloUsuarios','uses'=>'ReportsController@showMovimientosPorAlmacen']);
+Route::post('reportes/movimientosPorAlmacen', ['middleware'=>'soloJefe','uses'=>'ReportsController@movimientosPorAlmacen']);
+Route::get('reportes/movimientosPorTicket', ['middleware' => 'soloUsuarios','uses'=>'ReportsController@showMovimientosPorTicket']);
+Route::post('reportes/movimientosPorTicket', ['middleware'=>'soloJefe','uses'=>'ReportsController@movimientosPorTicket']);
+Route::get('reportes/movimientosPorUsuario', ['middleware' => 'soloUsuarios','uses'=>'ReportsController@showMovimientosPorUsuario']);
+Route::post('reportes/movimientosPorUsuario', ['middleware'=>'soloJefe','uses'=>'ReportsController@movimientosPorUsuario']);
 
 /*Route::get('movimientos/alta', function () {
     $warehouseList = Array();

@@ -29,7 +29,10 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'soloDirector' => \App\Http\Middleware\RedirectIfNotGerente::class,
         'soloGerente' => \App\Http\Middleware\RedirectIfNotGerente::class,
+        'soloJefe' => \App\Http\Middleware\RedirectIfNotJefe::class,
+        'soloSupervisor' => \App\Http\Middleware\RedirectIfNotJefe::class,
         'soloUsuarios' => \App\Http\Middleware\RedirectIfNotLoggedIn::class,
         'soloInvitados' => \App\Http\Middleware\RedirectIfUserIsLogged::class,
     ];

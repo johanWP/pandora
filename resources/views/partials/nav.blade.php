@@ -134,9 +134,13 @@
                     <li>
                         <a href="{!!URL::to('/articulos')!!}"><i class='fa fa-list-ol fa-fw'></i> Ver Listados</a>
                     </li>
+
+                @if (Auth::user()->securityLevel >= 50)
                     <li>
                         <a href="{!!URL::to('/articulos/import')!!}"><i class='fa fa-cloud-upload fa-fw'></i> Importar</a>
                     </li>
+                @endif
+
                 </ul>
             </li>
 @endif
