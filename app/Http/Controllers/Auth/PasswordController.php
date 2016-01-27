@@ -66,7 +66,6 @@ class PasswordController extends Controller
                 });
             } else
             {
-
                 $response = Password::INVALID_USER;
             }
         }
