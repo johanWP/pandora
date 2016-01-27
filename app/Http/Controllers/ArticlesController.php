@@ -105,19 +105,11 @@ class ArticlesController extends Controller
 //dd($request->all());
         $article = Article::findOrFail($id);
         $article->update([
-<<<<<<< HEAD
-            'name' => $request['name'],
-            'barcode'  => $request['barcode'],
-            'product_code'  => $request['product_code'],
-            'serializable'  => $request['serializable'],
-            'active'  => $request['active']
-=======
                 'name'  => $request->name,
                 'barcode'  => $request->barcode,
                 'product_code'  => $request->product_code,
                 'serializable'  => $serializable,
                 'active'  => $act
->>>>>>> Development
         ]);
 
         session()->flash('flash_message', 'El artículo se actualizó.');
