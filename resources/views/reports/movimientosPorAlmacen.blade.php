@@ -37,7 +37,7 @@
 			<tbody>
 			@foreach($movements as $movement)
                 <tr>
-                  <td class="col-sm-1">
+                  <td>
                     <p class="text-left">
 
                       @if ($movement->status_id == '1')
@@ -51,17 +51,17 @@
                       @endif
                     </p>
                   </td>
-                  <td class="col-sm-1">
+                  <td>
                     <p class="text-left">
                       {{ $movement->quantity}}
                     </p>
                   </td>
-                  <td class="col-sm-4">
+                  <td>
                     <p class="text-left">
                       {{ $movement->article->name}}
                     </p>
                   </td>
-                  <td class="col-sm-2">
+                  <td>
                     <p class="text-left">
                       {{ $movement->origin->name}}
                     </p>
@@ -76,8 +76,8 @@
                       {{ $movement->destination->name}}
                     </p>
                   </td>
-                    <td class="col-sm-2">
-                        <p class="text-left">
+                    <td>
+                        <p  class="text-center">
                             {{ $movement->ticket}}
                         </p>
                     </td>

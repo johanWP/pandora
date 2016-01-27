@@ -81,7 +81,13 @@ class Movement extends Model
     public function setTicketAttribute($value)
     {
         //preg_replace("/[^A-Za-z0-9 ]/", '', $string);
-        $this->attributes['ticket'] = strtoupper($value);
+        if ($this->attributes['ticket']=='')
+        {
+            $this->attributes['ticket'] = 'Sin Ticket';
+        } else
+        {
+            $this->attributes['ticket'] = strtoupper($value);
+        }
     }
 
     /**

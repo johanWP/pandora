@@ -114,6 +114,17 @@
 
         var company_id = $('#companyList').val();
 
+        $('#companyList').change(function()
+        {
+
+            if ( $(this).val() !='')
+            {
+                $('input[type="radio"][name="rdTicket"]').attr('disabled', false);
+            } else
+            {
+                $('input[type="radio"][name="rdTicket"]').attr('disabled', 'disabled');
+            }
+        });
         if ( company_id !='')
         {
             $('input[type="radio"][name="rdTicket"]').attr('disabled', false);
