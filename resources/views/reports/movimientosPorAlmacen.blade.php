@@ -23,13 +23,14 @@
 		<table class="table table-striped">
 			<thead>
 			<tr>
-			  <th>Status</th>
-			  <th>Cant.</th>
-			  <th>Artículo</th>
-			  <th><h3>Desde</h3></th>
-			  <th><b> &nbsp;</b></th>
-			  <th><h3>Hacia</h3></th>
-			  <th class="text-center"><h3>Acciones</h3></th>
+			  <th class="text-center">Status</th>
+			  <th class="text-center">Cant.</th>
+			  <th class="text-center">Artículo</th>
+			  <th class="text-center">Desde</th>
+			  <th>&nbsp;</th>
+			  <th class="text-center">Hacia</th>
+			  <th class="text-center">Ticket</th>
+			  <th class="text-center">Acciones</th>
 
 			</tr>
 			</thead>
@@ -75,6 +76,11 @@
                       {{ $movement->destination->name}}
                     </p>
                   </td>
+                    <td class="col-sm-2">
+                        <p class="text-left">
+                            {{ $movement->ticket}}
+                        </p>
+                    </td>
                   <td class="text-center">
                     <a href="/movimientos/{{ $movement->id }}" id="btnVer" class="btn btn-default">
                       <i class="fa fa-eye fa-2x"></i>

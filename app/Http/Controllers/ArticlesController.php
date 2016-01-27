@@ -21,7 +21,7 @@ class ArticlesController extends Controller
     public function index()
     {
         $articles = Article::where('company_id', Auth::user()->current_company_id)
-                        ->orderBy('name', 'asc')->paginate(10);
+                        ->orderBy('name', 'asc')->paginate(20);
         return view('articles.index', compact('articles'));
     }
 
@@ -96,20 +96,26 @@ class ArticlesController extends Controller
         } else {
             $act = 0;
         }
+        if ($request->fav==1)
+        {
+            $fav = 1;
+        } else {
+            $fav = 0;
+        }
         if ($request->serializable==1)
         {
             $serializable = 1;
         } else {
             $serializable = 0;
         }
-//dd($request->all());
         $article = Article::findOrFail($id);
         $article->update([
                 'name'  => $request->name,
                 'barcode'  => $request->barcode,
                 'product_code'  => $request->product_code,
                 'serializable'  => $serializable,
-                'active'  => $act
+                'active'  => $act,
+                'fav'  => $fav
         ]);
 
         session()->flash('flash_message', 'El artículo se actualizó.');
