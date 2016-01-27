@@ -369,4 +369,18 @@ class ReportsController extends Controller
         }
         return view('reports.movimientosPorUsuario', compact('movements'));
     }
+
+    public function buscarEquipo($serial)
+    {
+        $movements = Movement::where('serial', $serial)->
+                    orderBy('id', 'desc')->
+                    paginate(20);
+        $title = 'Últimos movimientos de MAC '.$serial;
+        return view('movements.index', compact('movements', 'title'));
+    }
+
+    public function showBuscarEquipo()
+    {
+        return view('reports.buscarEquipoForm');
+    }
 }

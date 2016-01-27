@@ -45,8 +45,8 @@ class MovementsController extends Controller
                 orderBy('id', 'desc')->
                 paginate(10);
         }
-
-        return view('movements.index', compact('movements'));
+        $title = 'Últimos Movimientos';
+        return view('movements.index', compact('movements', 'title'));
     }
 
     /**

@@ -22,6 +22,7 @@ Route::get('api/warehouseDetail/{id}',      ['middleware' => 'soloUsuarios','use
 Route::get('api/inventory/{warehouse_id}',  ['middleware' => 'soloUsuarios','uses'=>'jsonController@articlesAvailable']);
 Route::get('api/articles/serial',           ['middleware' => 'soloUsuarios','uses'=>'jsonController@articlesSerial']);
 Route::get('search/autocomplete/{table}',   ['middleware' => 'soloUsuarios','uses'=>'SearchController@autocomplete']);
+Route::get('search/autocompleteBuscarEquipo',['middleware' => 'soloUsuarios','uses'=>'SearchController@autocompleteBuscarEquipo']);
 Route::get('search/name2Id',                ['middleware' => 'soloUsuarios','uses'=>'SearchController@name2Id']);
 
 Route::get('/ajustes', ['middleware' => 'soloUsuarios','uses'=>'SettingsController@showSettings']);
@@ -45,7 +46,7 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 Route::get('reportes/articulos/',           ['middleware'=>'soloJefe','uses'=>'ReportsController@articles']);
 Route::get('reportes/articulos/all',        ['middleware'=>'soloJefe','uses'=>'ReportsController@excelArticles']);
-Route::get('reportes/articulosPorAlmacen',  ['middleware' => 'soloUsuarios','uses'=>'ReportsController@showArticulosPorAlmacen']);
+Route::get('reportes/articulosPorAlmacen',  ['middleware'=>'soloUsuarios','uses'=>'ReportsController@showArticulosPorAlmacen']);
 Route::post('reportes/articulosPorAlmacen', ['middleware'=>'soloJefe','uses'=>'ReportsController@articulosPorAlmacen']);
 Route::get('reportes/excelArticulosPorAlmacen/{id}', ['middleware'=>'soloJefe','uses'=>'ReportsController@excelArticulosPorAlmacen']);
 
@@ -55,6 +56,8 @@ Route::get('reportes/movimientosPorTicket',     ['middleware' => 'soloUsuarios',
 Route::post('reportes/movimientosPorTicket',    ['middleware'=>'soloJefe','uses'=>'ReportsController@movimientosPorTicket']);
 Route::get('reportes/movimientosPorUsuario',    ['middleware' => 'soloUsuarios','uses'=>'ReportsController@showMovimientosPorUsuario']);
 Route::post('reportes/movimientosPorUsuario',   ['middleware'=>'soloJefe','uses'=>'ReportsController@movimientosPorUsuario']);
+Route::get('reportes/buscarEquipo',             ['middleware'=>'soloJefe','uses'=>'ReportsController@showBuscarEquipo']);
+Route::get('reportes/buscarEquipo/{serial}',    ['middleware'=>'soloJefe','uses'=>'ReportsController@buscarEquipo']);
 
 /*Route::get('movimientos/alta', function () {
     $warehouseList = Array();
