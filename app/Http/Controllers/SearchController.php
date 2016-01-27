@@ -69,6 +69,9 @@ class SearchController extends Controller
         return $id;
     }
 
+    /**Devuelve una lista en formato JSON de los seriales que han tenido movimientos
+     * @return array
+     */
     public function autocompleteBuscarEquipo()
     {
         $term = Input::get('term');
