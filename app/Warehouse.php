@@ -125,21 +125,22 @@ class Warehouse extends Model
         {
 //            Si es un almacen de sistema, devuevo lista de articulos activos
 //              que incluye articulos de todas las compañias si el usuario pertenece a una empresa parent
-            if(Auth::user()->company->parent==1)
-            {
-                $all = DB::table('articles')
-                    ->select('id', 'name', 'serializable', 'fav')
-                    ->where('active', '=', 1)
-                    ->orderBy('name', 'asc')
-                    ->get();
-            } else {
+//            if(Auth::user()->company->parent==1)
+//            {
+//                $all = DB::table('articles')
+//                    ->select('id', 'name', 'serializable', 'fav')
+//                    ->where('active', '=', 1)
+//                    ->where('company_id', '=', Auth::user()->current_company_id)
+//                    ->orderBy('name', 'asc')
+//                    ->get();
+//            } else {
                 $all = DB::table('articles')
                     ->select('id', 'name', 'serializable', 'fav')
                     ->where('active', '=', 1)
                     ->where('company_id', '=', Auth::user()->current_company_id)
                     ->orderBy('name', 'asc')
                     ->get();
-            }
+//            }
 
             foreach ($all as $art)
             {
