@@ -1,4 +1,4 @@
-@extends('blank')
+@extends('generic')
 
 @section('title')
 Usuario Inactivo

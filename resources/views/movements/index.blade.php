@@ -1,13 +1,13 @@
 @extends('master')
 
 @section('title')
-    Últimos Movimientos
+    {{ $title }}
 @endsection
 
 @section('content')
 <div class="row">
   <div class="col-sm-10">
-    <h1>Últimos Movimientos</h1>
+    <h1>{{ $title }}</h1>
   </div>
   <div class=""><br/>
     <a class="btn btn-primary" href="{{ action('MovementsController@create') }}"><i class="fa fa-plus fa-fw"></i> Crear Nuevo</a>
@@ -15,15 +15,6 @@
 </div>
 
     <hr/>
-
-{{--
-<div class="row">
-  <div class="col-sm-5 vcenter">
-    <input type="text" placeholder="Buscador"> <input class="btn btn-default" type="submit" value="Buscar">
-  </div>
-</div>
---}}
-
 <div class="row">
 @if($movements->count() > 0)
 	<div class="table-responsive">
@@ -32,10 +23,10 @@
 			<tr>
 			  <th>Cant.</th>
 			  <th>Artículo</th>
-			  <th><h3>Desde</h3></th>
-			  <th><b> &nbsp;</b></th>
-			  <th><h3>Hacia</h3></th>
-			  <th><h3>Ticket</h3></th>
+			  <th>Desde</th>
+			  <th>&nbsp;</th>
+			  <th>Hacia</th>
+			  <th>Ticket</th>
 			  <th class="text-center"><h3>Acciones</h3></th>
 
 			</tr>

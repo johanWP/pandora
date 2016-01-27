@@ -67,4 +67,18 @@ class SearchController extends Controller
 
         return $id;
     }
+
+    public function autocompleteBuscarEquipo()
+    {
+        $term = Input::get('term');
+        $results = array();
+        $queries = DB::table('Movements')
+            ->where('serial', 'LIKE', '%' . $term . '%')
+            ->take(10)->get();
+        foreach ($queries as $query)
+        {
+            $results[] = [ 'id' => $query->id, 'value' => $query->serial];
+        }
+        return ($results);
+    }
 }

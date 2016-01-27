@@ -11,6 +11,7 @@
         </div>
     </div>
     <hr/>
+  @if (Auth::user()->company->parent==1)
     {!! Form::open(['url' => '/ajustes/company', 'id' => 'frmCompany']) !!}
     <div class="row">
         <div class="col-sm-12" id="divMsjCompany"></div>
@@ -26,6 +27,8 @@
     </div>
     {!! Form::close() !!}
     <hr/>
+  @endif
+  <a href="/escritorio" class="btn btn-default"><i class="fa fa-chevron-left"></i> Volver al Escritorio</a>
 @endsection
 
 @section('scripts')
@@ -57,7 +60,7 @@
                 if (valid)
                 {
                     $.ajax({
-                        method: "GET",
+                        method: "POST",
                         url: "/ajustes/cambiarEmpresa",
                         data:  $('#frmCompany').serialize()
                     })
