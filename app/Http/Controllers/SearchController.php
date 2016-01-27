@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Movement;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -72,8 +73,7 @@ class SearchController extends Controller
     {
         $term = Input::get('term');
         $results = array();
-        $queries = DB::table('Movements')
-            ->where('serial', 'LIKE', '%' . $term . '%')
+        $queries = Movement::where('serial', 'LIKE', '%' . $term . '%')
             ->take(10)->get();
         foreach ($queries as $query)
         {
