@@ -1,61 +1,107 @@
+<div class="row">
+    <div class="alert alert-danger" id="divMsg" style="display: none"></div>
+</div>
+<div class="row">
+    <!-- Begin Company textfield -->
+    <div class="form-group">
+
+        {!! Form::label('company', 'Empresas:') !!}
+        {!! Form::text('company', Auth::user()->currentCompany->name, ['class' => 'form-control', 'readonly']) !!}
+        {!! Form::hidden('company_id', Auth::user()->current_company_id, ['class' => 'form-control', 'id'=>'company_id']) !!}
+
+    </div>
+    <!-- End Company textfield -->
+</div>
+
+<!-- Begin activity textfield -->
+<div class="row">
+    <div class="col-sm-12" id="divActivity">
+        <label>Actividad:</label>
+        <br/>
+        @foreach($activities as $activity)
+            <label class="radio-inline">
+                <input type="radio" name="rdActivity" id="activity_{{ $activity->id }}" value="{{ $activity->id }}">
+                {{ $activity->name }}
+            </label>
+
+        @endforeach
+
+    </div>
+</div>
+<hr />
+<!-- End activity textfield -->
 <!-- Begin remito textfield -->
-        <div class="form-group">
-            {!! Form::label('remito', 'Remito:') !!}
-            {!! Form::text('remito', null, ['class' => 'form-control', 'placeholder' => 'Opcional']) !!}
-        </div>
+<div class="form-group">
+    {!! Form::label('remito', 'Remito:') !!}
+    {!! Form::text('remito', null, ['class' => 'form-control', 'placeholder' => 'Opcional', 'id'=>'remito']) !!}
+</div>
 <!-- End remito textfield -->
 <!-- Begin origin_id select -->
-        <div class="form-group">
-            {!! Form::label('origin_id', 'Almacén de Origen:') !!}
-            {!! Form::select('origin_id', $warehouseList, null, ['class' => 'form-control','placeholder' => 'Seleccione el origen...']) !!}
-        </div>
+<div class="form-group">
+    {!! Form::label('origin_id', 'Almacén de Origen:') !!}
+    {!! Form::select('origin_id', [], null, ['class' => 'form-control','placeholder' => 'Seleccione el origen...', 'id'=>'origin_id']) !!}
+</div>
 <!-- End origin_id select -->
-
-<!-- Begin quantity textfield -->
-        <div class="form-group">
-            {!! Form::label('quantity', 'Cantidad:') !!}
-            <p>Cantidad Disponible: <span class="help-blok" id="maxQ"></span></p>
-            {!! Form::number('quantity', null, ['class' => 'form-control', 'id' =>'quantity']) !!}
-        </div>
-<!-- End quantity textfield -->
-
-<!-- Begin article_id select -->
-        <div class="form-group">
-            {!! Form::label('article_id', 'Artículo:') !!}
-            {!! Form::select('article_id', ['' => 'Seleccione el artículo...'], null, ['id'=>'article_id', 'class' => 'form-control']) !!}
-        </div>
-<!-- End origin_id select -->
-
-<!-- Begin serial textfield -->
-        <div class="form-group">
-            {!! Form::label('serial', 'Serial:') !!}
-            {!! Form::text('serial', null, ['class' => 'form-control', 'placeholder' => 'Opcional']) !!}
-        </div>
-<!-- End serial textfield -->
 
 <!-- Begin destination_id select -->
-        <div class="form-group">
-            {!! Form::label('destination_id', 'Almacén de Destino:') !!}
-            {!! Form::select('destination_id', $warehouseList, null, ['class' => 'form-control','placeholder' => 'Seleccione el destino...']) !!}
-        </div>
+<div class="form-group">
+    {!! Form::label('destination_id', 'Almacén de Destino:') !!}
+    {!! Form::select('destination_id', [], null, ['class' => 'form-control','placeholder' => 'Seleccione el destino...']) !!}
+</div>
 <!-- End origin_id select -->
 
 <!-- Begin ticket textfield -->
-        <div class="form-group">
-            {!! Form::label('ticket', 'Ticket:') !!}
-            {!! Form::text('ticket', null, ['class' => 'form-control']) !!}
-        </div>
+<div class="form-group">
+    {!! Form::label('ticket', 'Ticket:') !!}
+    {!! Form::text('ticket', null, ['class' => 'form-control']) !!}
+</div>
 <!-- End ticket textfield -->
+<div id="divArticles">{{--COMIENZA PANEL DE ARTICULO--}}
+    <div class="panel panel-default" id="divArticlePanel1">
+        <div class="panel-body">
 
-<!-- Begin note textfield -->
-        <div class="form-group">
-            {!! Form::label('note', 'Notas / Observaciones:') !!}
-            {!! Form::text('note', null, ['class' => 'form-control', 'placeholder' => 'Opcional']) !!}
+            <!-- Begin article_id select -->
+            <div class="form-group">
+                {!! Form::label('autocomplete1', 'Artículo:') !!}
+                {!! Form::text('autocomplete1', null, ['class' => 'form-control',  'id'=>'autocomplete1']) !!}
+                {!! Form::hidden('article_id1', null, ['id'=>'article_id1']) !!}
+            </div>
+            <!-- End origin_id select -->
+
+            <!-- Begin quantity textfield -->
+            <div class="form-group">
+                {!! Form::label('quantity1', 'Cantidad:') !!}
+                {{--<p id="cantidad" class="help-block">Cantidad Disponible: <span  id="maxQ1"></span></p>--}}
+                {!! Form::number('quantity1', null, ['class' => 'form-control', 'id' =>'quantity1']) !!}
+            </div>
+            <!-- End quantity textfield -->
+
+            <!-- Begin serial textfield -->
+            <div class="form-group">
+                {!! Form::label('serial1', 'MAC:', ['id'=>'serialLabel1']) !!}
+                {!! Form::text('serial1', null, ['class' => 'form-control', 'id'=>'serial1']) !!}
+            </div>
+            <!-- End serial textfield -->
+            <!-- Begin serial select -->
+            <div class="form-group">
+                {!! Form::label('serialListLabel1', 'MAC:', ['id'=>'serialListLabel1']) !!}
+                {!! Form::select('serialList1', [], null, ['id'=>'serialList1','class' => 'form-control','placeholder' => 'Seleccione...']) !!}
+            </div>
+            <!-- End serial select -->
+            <!-- Begin note textfield -->
+            <div class="form-group">
+                {!! Form::label('note1', 'Notas / Observaciones:') !!}
+                {!! Form::text('note1', null, ['class' => 'form-control', 'placeholder' => 'Opcional', 'id'=>'note1']) !!}
+            </div>
+            <!-- End note textfield -->
+            <button class="btn btn-default" type="button" id="btnAddPanel1" name="btnAddPanel1">Agregar Otro Artículo</button>
         </div>
-<!-- End note textfield -->
-
-<!-- Begin Submit button -->
-    <div class="form-group">
-            {!! Form::submit($submitButtonText, ['class' => 'btn btn-primary form-control']) !!}
     </div>
+    {{--FIN DEL PANEL DE ARTICULO--}}
+</div>
+{!! Form::hidden('numArticles', 1, ['class' => 'form-control', 'id' => 'numArticles']) !!}
+        <!-- Begin Submit button -->
+<div class="form-group">
+    {!! Form::submit($submitButtonText, ['class' => 'btn btn-primary form-control', 'id'=>'btnSubmit']) !!}
+</div>
 <!-- End Submit Button -->

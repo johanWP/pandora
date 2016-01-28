@@ -33,7 +33,8 @@ Route::post('articulos/import', ['middleware' => 'soloDirector','uses'=>'ImportC
 Route::get('movimientos/porAprobar', ['middleware' => 'soloSupervisor','uses'=>'ApproveController@viewAll']);
 Route::post('movimientos/aprobar', ['middleware' => 'soloSupervisor','uses'=>'ApproveController@approveMovement']);
 Route::post('movimientos/rechazar', ['middleware' => 'soloSupervisor','uses'=>'ApproveController@rejectMovement']);
-//Route::get('movimientos/alta', 'MovementsController@alta');
+Route::get('movimientos/alta', ['middleware' => 'soloUsuarios','uses'=>'MovementsController@showAlta']);
+Route::post('movimientos/alta', ['middleware' => 'soloUsuarios','uses'=>'MovementsController@alta']);
 
 // Password reset link request routes...
 Route::get('password/email', 'Auth\PasswordController@getEmail');

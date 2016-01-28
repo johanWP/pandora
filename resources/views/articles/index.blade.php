@@ -74,7 +74,7 @@ $(function()
   {
       $( "#q" ).autocomplete(
       {
-          source: "search/autocomplete/articles",
+          source: "/search/autocomplete/articles",
           minLength: 3,
           select: function(event, ui)
           {
