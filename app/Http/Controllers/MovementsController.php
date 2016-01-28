@@ -113,7 +113,14 @@ class MovementsController extends Controller
         {
             $status_id = 2;     // Por Aprobar
         }
-
+        $sinTicket = is_null($request['ticket']);
+        if ($sinTicket)
+        {
+            $ticket = 'SIN_TICKET';
+        } else
+        {
+            $ticket = $request['ticket'];
+        }
         for ($i=1; $i <= $request['numArticles']; $i++)
         {
             if($request['serialList'.$i] != '')
@@ -132,7 +139,7 @@ class MovementsController extends Controller
                     'note'          => $request['note'.$i],
                     'origin_id'     => $request['origin_id'],
                     'destination_id'=> $request['destination_id'],
-                    'ticket'        => $request['ticket'],
+                    'ticket'        => $ticket,
                     'serial'        => $serial,
                     'status_id'     => $status_id,
                     'user_id'       => Auth::user()->id

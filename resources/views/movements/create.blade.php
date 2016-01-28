@@ -35,20 +35,22 @@ Nuevo Movimiento
             $('#serialListLabel1').hide();
             $('#divMsg').hide();
             var rdActivity = $("#frm input[type='radio'][name='rdActivity']");
-
+            var companyList =  $('#companyList');
+            var company_id = $('#company_id').val();
+            var activity_id;
             var count = rdActivity.length;
+
             if(count == 1 )
             {
                 $("#frm input[type='radio'][name='rdActivity']:first").attr('checked', true);
-                loadWarehouses();
+                activity_id = $("#frm input[type='radio'][name='rdActivity']:checked").val();
+                loadWarehouses(company_id, activity_id);
             }
-            rdActivity.change(function()
+
+            $("#frm input[type='radio'][name='rdActivity']").change(function()
             {
-                var company_id = $('#companyList').val();
-                if(company_id != '')
-                {
-                  loadWarehouses();
-                }
+                activity_id = $("#frm input[type='radio'][name='rdActivity']:checked").val();
+                  loadWarehouses(company_id, activity_id);
             });
 
             $('#origin_id').change(function()
@@ -183,7 +185,6 @@ Nuevo Movimiento
                     valid= false;
                     mensaje = mensaje + 'Todos los articulos deben tener una cantidad especificada. <br />';
                     $('#divMsg').html(mensaje).slideDown('slow');
-
                 }
             }
             return  valid;
@@ -200,18 +201,11 @@ Nuevo Movimiento
 
         };
 
-        function loadWarehouses()
+        function loadWarehouses(company, activity)
         {
-//            alert('2');
-            var activity_id = "";
-            var company_id = $('#companyList').val();
-            var rdActivity = $("input[type='radio'][name='rdActivity']:checked");
-            if (rdActivity.length > 0)
-            {
-                activity_id = rdActivity.val();
                 var request = $.ajax({
                   url: "/api/warehousesByActivity/",
-                  data: {company_id: company_id, rdActivity: activity_id},
+                  data: {company_id: company, rdActivity: activity},
                   method: "GET",
                   dataType: "json"
                 });
@@ -246,7 +240,6 @@ Nuevo Movimiento
                 {
                     alert( "Error al cargar los almacenes: " + textStatus );
                 });
-            }
 
 
         }

@@ -7,6 +7,7 @@
 
         {!! Form::label('company', 'Empresas:') !!}
         {!! Form::text('company', Auth::user()->currentCompany->name, ['class' => 'form-control', 'readonly']) !!}
+        {!! Form::hidden('company_id', Auth::user()->current_company_id, ['class' => 'form-control', 'id'=>'company_id']) !!}
 
     </div>
     <!-- End Company textfield -->
