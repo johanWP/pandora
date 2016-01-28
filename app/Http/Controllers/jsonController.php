@@ -85,7 +85,6 @@ class jsonController extends Controller
      */
     public function warehousesByActivity(Request $request)
     {
-//        $company_id = $request->company_id;
         $warehouses = Warehouse::where('company_id', $request->company_id)
                                 ->where('activity_id', $request->rdActivity)
                                 ->where('active', '1')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Warehouse;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\CreateMovementRequest;
@@ -41,10 +42,11 @@ class MovementsController extends Controller
         {
 //      Si es un técnico, Busco los movimientos solo de ese usuario
             $movements = Movement::whereIn('status_id', ['1', '2'])->
-                where('user_id', Auth::user()->user_id)->
+                where('user_id', Auth::user()->id)->
                 orderBy('id', 'desc')->
                 paginate(10);
         }
+
         $title = 'Últimos Movimientos';
         return view('movements.index', compact('movements', 'title'));
     }
@@ -77,24 +79,18 @@ class MovementsController extends Controller
         return view('movements.create', compact('activities'));
     }
 
-    public function alta()
+    public function showAlta()
     {
-
-        if (Auth::user()->company->parent == 0)
-        {
-            $companies = [
-                'id' => Auth::user()->company->id,
-                'name' => Auth::user()->company->name
-            ];
-        } else
-        {
-            $companies = Company::lists('name', 'id');
-        }
         $activities = Auth::user()->activities;
-        return view('movements.alta', compact('companies', 'activities'));
+        return view('movements.alta', compact('activities'));
     }
 
-
+    public function alta(Request $request)
+    {
+        dd($request->all());
+        $title = 'Últimos Movimientos';
+        return view('movements.index', $title);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -112,14 +108,6 @@ class MovementsController extends Controller
         } else
         {
             $status_id = 2;     // Por Aprobar
-        }
-        $sinTicket = is_null($request['ticket']);
-        if ($sinTicket)
-        {
-            $ticket = 'SIN_TICKET';
-        } else
-        {
-            $ticket = $request['ticket'];
         }
         for ($i=1; $i <= $request['numArticles']; $i++)
         {
@@ -139,7 +127,7 @@ class MovementsController extends Controller
                     'note'          => $request['note'.$i],
                     'origin_id'     => $request['origin_id'],
                     'destination_id'=> $request['destination_id'],
-                    'ticket'        => $ticket,
+                    'ticket'        => $request['ticket'],
                     'serial'        => $serial,
                     'status_id'     => $status_id,
                     'user_id'       => Auth::user()->id

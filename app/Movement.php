@@ -84,6 +84,15 @@ class Movement extends Model
             $this->attributes['ticket'] = strtoupper($value);
     }
 
+    /**Poner el Serial en mayuscula antes de insertarlo
+     * @param $value
+     */
+    public function setSerialAttribute($value)
+    {
+        //preg_replace("/[^A-Za-z0-9 ]/", '', $string);
+            $this->attributes['serial'] = strtoupper($value);
+    }
+
     /**
      * @param $value
      */
