@@ -23,6 +23,7 @@
                 {!! Form::text('email', null, ['class' => 'form-control']) !!}
             </div>
     <!-- End email textfield -->
+{{--
 
     <!-- Begin password textfield -->
             <div class="form-group">
@@ -37,6 +38,7 @@
             </div>
     <!-- End password_confirmation textfield -->
 
+--}}
     <!-- Begin  textfield -->
             <div class="form-group">
                 {!! Form::label('activityList', 'Actividades:') !!}

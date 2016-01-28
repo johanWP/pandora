@@ -53,7 +53,7 @@
                     <tbody>
                     @endif
                     <tr class="{{ $movement->id }}">
-                        <td class="col-sm-1">
+                        <td>
                             <p class="text-center">
 
                                 @if ($movement->status_id == '1')
@@ -67,17 +67,17 @@
                                 @endif
                             </p>
                         </td>
-                        <td class="col-sm-1">
+                        <td>
                             <p class="text-left">
                                 {{ $movement->quantity}}
                             </p>
                         </td>
-                        <td class="col-sm-4">
+                        <td>
                             <p class="text-left">
                                 {{ $movement->article->name}}
                             </p>
                         </td>
-                        <td class="col-sm-2">
+                        <td>
                             <p class="text-left">
                                 {{ $movement->origin->name}}
                             </p>

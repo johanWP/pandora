@@ -14,6 +14,7 @@ class Article extends Model
         'serializable',
         'barcode',
         'active',
+        'fav',
         'company_id',
         'product_code'
     ];

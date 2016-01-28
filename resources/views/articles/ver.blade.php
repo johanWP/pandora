@@ -45,6 +45,16 @@
             @endif
             </td>
          </tr>
+         <tr>
+            <th>Favorito</th>
+            <td>
+            @if ($article->fav == 0)
+                No
+            @else
+                Si
+            @endif
+            </td>
+         </tr>
       </tbody>
     </table>
   </div>

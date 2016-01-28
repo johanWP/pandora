@@ -33,6 +33,13 @@
 
              </div>
      <!-- End activo checkbox -->
+    <!-- Begin checkbox fav -->
+             <div class="form-group">
+                 {!! Form::label('fav', 'Marque si el artículo es un favorito &nbsp;') !!}
+                 {!! Form::checkbox('fav',1, $fav) !!}
+
+             </div>
+     <!-- End activo checkbox -->
      <!-- Begin Submit button -->
          <div class="form-group">
                  {!! Form::submit($submitButtonText, ['class' => 'btn btn-primary form-control']) !!}

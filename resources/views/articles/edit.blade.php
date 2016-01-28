@@ -14,8 +14,9 @@
 <?php
 $active = $article->active;
 $serializable = $article->serializable;
+$fav = $article->fav;
 ?>
     {!! Form::model($article, ['method' => 'PATCH', 'url' => 'articulos/' . $article->id]) !!}
-        @include('articles.form', ['submitButtonText' => 'Actualizar este Artículo', 'active'=>$active, 'serializable'=>$serializable])
+        @include('articles.form', ['submitButtonText' => 'Actualizar este Artículo', 'active'=>$active, 'serializable'=>$serializable,'fav'=>$fav])
     {!! Form::close() !!}
 @endsection

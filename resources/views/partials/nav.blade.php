@@ -162,9 +162,11 @@
                     <li>
                         <a href="{!!URL::to('/reportes/movimientosPorTicket')!!}"><i class='fa fa-ticket fa-fw'></i> Movimientos por Ticket</a>
                     </li>
+{{--
                     <li>
                         <a href="{!!URL::to('/reportes/movimientosPorUsuario')!!}"><i class='fa fa-users fa-fw'></i> Movimientos por Usuario</a>
                     </li>
+--}}
                     <li>
                         <a href="{!!URL::to('/reportes/buscarEquipo')!!}"><i class='fa fa-search fa-fw'></i> Buscar Equipo por MAC</a>
                     </li>

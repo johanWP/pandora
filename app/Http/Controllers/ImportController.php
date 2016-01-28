@@ -49,7 +49,11 @@ class ImportController extends Controller
 
             foreach ($results as $article)
             {
-                $NoEstaEnLaBD = is_null(Article::where('product_code',$article['codigo'])->first());
+//                dd($article);
+                $NoEstaEnLaBD = is_null(
+                                Article::where('product_code',$article['codigo'])->
+                                where('company_id', Auth::user()->current_company_id)->
+                                first());
 
                 if ($NoEstaEnLaBD)
                 { // si el articulo se encuentra en la base de datos

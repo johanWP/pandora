@@ -69,7 +69,7 @@ class UsersController extends Controller
                 'securityLevel' => $request['securityLevel'],
                 'company_id'    => Auth::user()->current_company_id,
                 'current_company_id'    => Auth::user()->current_company_id,
-                'password'      => bcrypt($request['password']),
+                'password'      => bcrypt('unStringAlAzar'),
                 'active'        => $act
             ]);
 
