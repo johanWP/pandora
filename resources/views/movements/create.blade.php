@@ -148,6 +148,8 @@ Nuevo Movimiento
             $('#divMsg').html('').hide();
 
 //  VALIDO QUE NO HAYA ARTICULOS REPETIDOS
+/*
+
             if(numPanels >1)
             {
                 for(i=1; i < numPanels; i++)
@@ -170,6 +172,7 @@ Nuevo Movimiento
                 }
             }
 
+*/
 //  VALIDO QUE TODOS LOS ARTICULOS TENGAN UNA CANTIDAD
             for (i=1; i<= numPanels; i++)
             {
