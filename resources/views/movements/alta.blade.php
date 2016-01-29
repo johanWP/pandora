@@ -158,6 +158,7 @@
             .click(function()
             {
                 $(this).val('');
+                $('#article_id'+num).val('');
             });
         }
 
@@ -169,14 +170,14 @@
             $('#article_name'+num).val(ui.item.value);
             if(ui.item.serializable == 1)
             {
-                $('#serial'+num).show();
+                $('#serial'+num).show().focus();
                 $('#serialLabel'+num).show();
                 $('#quantity'+num).val('1').attr('readonly', 'readonly')
             } else
             {
                 $('#serial'+num).hide();
                 $('#serialLabel'+num).hide();
-                $('#quantity'+num).val('').attr('readonly', false)
+                $('#quantity'+num).val('').attr('readonly', false).focus();
             }
             $('#btnDetalle').attr('href','/articulos/'+ ui.item.id)
                     .attr('disabled', false);
@@ -200,7 +201,7 @@
                     '<div class="form-group">' +
                     '<label for="article_id'+ i +'">Artículo:</label>' +
                     '<input class="form-control" id="autocomplete'+ i +'" name="autocomplete'+ i +'" type="text">' +
-                    '<input id="article_id'+ i +'" name="article_id'+ i +'" type="hidden">'+
+                    '<input id="article_id'+ i +'" name="article_id'+ i +'" type="text">'+
                     '</div>' +
                     '<div class="form-group"><label for="quantity">Cantidad:</label>' +
                     '<p id="cantidad'+ i +'" class="help-block">Cantidad Disponible: <span  id="maxQ'+ i +'"></span></p>' +
@@ -228,7 +229,7 @@
             $('.btn-default').on('click',addPanel);
             $('.btn-danger').on('click',removePanel);
             bindAutocomplete(i);
-            $('#autocomplete'+j).attr('readonly', 'readonly');
+//            $('#autocomplete'+j).attr('readonly', 'readonly');
 //            showSerialText();
         }
 

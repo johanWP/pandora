@@ -99,6 +99,7 @@ class MovementsController extends Controller
      */
     public function store(CreateMovementRequest $request)
     {
+        dd($request->all());
         $i =1;
         $arrMov = Array();
         $conErrores = '';
@@ -111,38 +112,41 @@ class MovementsController extends Controller
         }
         for ($i=1; $i <= $request['numArticles']; $i++)
         {
-            if($request['serialList'.$i] != '')
-            {
-                $serial = $request['serialList'.$i];
-            } else
-            {
-                $serial = $request['serial'.$i];
-            }
-//        Crea un objeto Movement pero no lo guarda en la base de datos
-            $mov = new Movement(
-                [
-                    'remito'        => $request['remito'],
-                    'article_id'    => $request['article_id'.$i],
-                    'quantity'      => $request['quantity'.$i],
-                    'note'          => $request['note'.$i],
-                    'origin_id'     => $request['origin_id'],
-                    'destination_id'=> $request['destination_id'],
-                    'ticket'        => $request['ticket'],
-                    'serial'        => $serial,
-                    'status_id'     => $status_id,
-                    'user_id'       => Auth::user()->id
-                ]
-            );
-            $valid = $this->validateMov($mov);
-            if ($valid == '')
-            {
-//            Guarda el objeto en la base de datos
-                Movement::create($mov->toArray());
 
-            } else
+            if ($request['article_id' . $i] !='')
             {
-                $conErrores .= '<li>'.$mov->article->name.'</li>s';
+                if ($request['serialList' . $i] != '') {
+                    $serial = $request['serialList' . $i];
+                } else {
+                    $serial = $request['serial' . $i];
+                }
+                //        Crea un objeto Movement pero no lo guarda en la base de datos
+                $mov = new Movement(
+                    [
+                        'remito' => $request['remito'],
+                        'article_id' => $request['article_id' . $i],
+                        'quantity' => $request['quantity' . $i],
+                        'note' => $request['note' . $i],
+                        'origin_id' => $request['origin_id'],
+                        'destination_id' => $request['destination_id'],
+                        'ticket' => $request['ticket'],
+                        'serial' => $serial,
+                        'status_id' => $status_id,
+                        'user_id' => Auth::user()->id
+                    ]
+                );
+                $valid = $this->validateMov($mov);
+                if ($valid == '')
+                {
+                    //            Guarda el objeto en la base de datos
+                    Movement::create($mov->toArray());
+
+                } else
+                {
+                    $conErrores .= '<li>'.$mov->article->name.'</li>s';
+                }
             }
+
         }
 
         if ($conErrores == '')
