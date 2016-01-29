@@ -1,238 +1,496 @@
 @extends('master')
 
 @section('title')
-Ingreso de Artículos
+    Ingreso / Recupero de Artículos
 @endsection
 
 @section('content')
-    <h1>Ingreso de Artículos</h1>
+    <h1>Ingreso / Recupero de Artículos</h1>
     <hr/>
     <!--  Incluir el parcial que lista los errores -->
 
     @include('errors.list')
 
-    {!! Form::open(['url' => 'movimientos', 'id' => 'frm']) !!}
-    @include('movements.form', ['submitButtonText' => 'Registrar Ingreso de Productos'])
+    {!! Form::open(['url' => 'movimientos', 'id'=>'frm']) !!}
+    @include('movements.altaForm', ['submitButtonText' => 'Registrar nuevo movimiento'])
 
     {!! Form::close() !!}
 
 @endsection
 
 @section('scripts')
-
+    {{--    <link rel="stylesheet" href="jquery-ui.min.css">
+        <script src="external/jquery/jquery.js"></script>--}}
+    <script src="/js/jquery-ui.min.js"></script>
     <script>
+        var warehouses;
         var inventario;
+        var origin_type;
         $( document ).ready(function()
         {
-            @if (Auth::user()->securityLevel < 20)
-                $('h1').html('Recuperación de Equipos');
-            @endif
+            var articleCount =1;
+            $('#serial1').hide();
+            $('#serialList1').hide();
+            $('#serialLabel1').hide();
+            $('#serialListLabel1').hide();
+            $('#divMsg').hide();
+            var rdActivity = $("#frm input[type='radio'][name='rdActivity']");
+            var company_id = $('#company_id').val();
+            var activity_id;
+            var count = rdActivity.length;
 
-            $('#serialLabel').hide();
-            $('#serial').hide();
-            $('#cantidad').hide();
-            $('#serialListLabel').hide();
-            $('#serialList').hide();
-            var warehouses;
-            var count = $("#frm input[type='radio']").length;
             if(count == 1 )
             {
                 $("#frm input[type='radio'][name='rdActivity']:first").attr('checked', true);
-                loadOrigin();
+                activity_id = $("#frm input[type='radio'][name='rdActivity']:checked").val();
+                loadWarehouses(company_id, activity_id);
             }
 
             $("#frm input[type='radio'][name='rdActivity']").change(function()
             {
-                loadDestination_id();
-                var activity_id = "";
-                var rdActivity = $("input[type='radio'][name='rdActivity']:checked");
-                if (rdActivity.length > 0) {
-                    activity_id = rdActivity.val();
-                }
-                var company_id = $('#companyList').val();
-                //        Cargar unicamente los almacenes  de sistemas en el dropdown de origen
-                if (company_id !='')
-                {
-                    loadOrigin();
-                }
-
+                activity_id = $("#frm input[type='radio'][name='rdActivity']:checked").val();
+                loadWarehouses(company_id, activity_id);
             });
-
 
             $('#origin_id').change(function()
             {
-                var $warehouse_id = $(this).val();
+                removeAllPanels();
+                $('#maxQ1').html('');
+                $('#frm div').removeClass('has-error');
+                var origin_id = $(this).val();
+                for (var i in warehouses)
+                {
+                    // busco los detalles del warehouse seleccionado en una variable que guardé en el ajax request
+                    if(warehouses[i].id == origin_id)
+                    {
+                        origin_type= warehouses[i].type_id;
+                    }
+                }
+                $('#serialLabel1').hide();
+                $('#serial1').hide();
+                $('#serialListLabel1').hide();
+                $('#serialList1').hide();
+                $('#quantity1').val('')
+                        .attr('readonly', false);
+
                 var request = $.ajax({
-                  url: "/api/inventory/" + $warehouse_id,
-                  method: "GET",
-                  dataType: "json"
+                    url: "/api/inventory/" + origin_id,
+                    method: "GET",
+                    dataType: "json"
                 });
 
-                request.done(function( result )
-                {
+                request.done(function( result ) {
                     var allArticles = $('<optgroup>');
                     allArticles.attr('label', 'Todos los Artículos');
                     var favArticles = $('<optgroup>');
                     favArticles.attr('label', 'Favoritos');
 
                     inventario = result;
-                    for(var k in result)
-                    {
+                    for(var k in result) {
                         allArticles.append($('<option>')
-                                        .text(result[k].name)
-                                        .attr('value', result[k].id));
+                                .text(result[k].name)
+                                .attr('value', result[k].id));
                         if (result[k].fav ==1)
                         {
                             favArticles.append($('<option>')
-                                        .text(result[k].name)
-                                        .attr('value', result[k].id));
+                                    .text(result[k].name)
+                                    .attr('value', result[k].id));
                         }
                     }
-                    $('#article_id').empty()
-                                    .append($('<option>')
+                    $('#article_id1').empty()
+                            .append($('<option>')
                                     .text('Seleccione el artículo...')
                                     .attr('value', ''))
-                                    .append(favArticles)
-                                    .append(allArticles).
-                                    attr('disabled', false);
+                            .append(favArticles)
+                            .append(allArticles)
+                            .attr('disabled', false);
 
-                    var sel = $('#origin_id').val();
-//                    var selectedWarehouse = warehouses[sel];
-//                    sortDropDownListByText('article_id');
+//                    var sel = $('#origin_id').val();
+
                 }); /* Fin del .done */
 
                 request.fail(function( jqXHR, textStatus ) {
-                  alert( "Fallo cargando los articulos: " + textStatus );
+                    alert( "Fallo cargando los articulos: " + textStatus );
                 });
-
 
             }); /* Fin del .change() */
 
-            $('#article_id').change(function ()
-            {
 
-                var text = $('#article_id option:selected').text();
-                var selected_id = $(this).val();
-                var serializable = false;
-                var cantidad = 0;
-//                if(inventario[text].serializable == 1)
-                for (var i in inventario)
+            $('#article_id1').change(showSerialText);
+            $('#btnAddPanel1').click(function()
+            {
+//                var numItems = $('.panel').length +1;
+                addPanel();
+                $(this).attr('disabled', 'disabled')
+            });
+
+            $('#btnSubmit').click(function(event)
+            {
+                var numPanels = $('.panel').length;
+                event.preventDefault();
+                $('#numArticles').val(numPanels);
+                valid = validate();
+                if (valid)
                 {
-                    if (inventario[i].id == selected_id)
+                    $('#frm').submit();
+                }
+            });
+
+            bindAutocomplete(articleCount);
+//            bindAddNewPanel(articleCount);
+            sortDropDownListByText('origin_id');
+            sortDropDownListByText('destination_id');
+
+
+        });  // Fin del document.ready()
+
+        function bindAutocomplete (num)
+        {
+            $( "#autocomplete"+num ).autocomplete(
+            {
+                source: "/search/autocomplete/articles",
+                minLength: 3,
+                select: function (event, ui)
+                {
+                    selectArticle(event, ui, num)
+                }
+            })
+            .click(function()
+            {
+                $(this).val('');
+                $('#article_id'+num).val('');
+            });
+        }
+
+        function selectArticle (event, ui, num)
+        {
+
+            $('#autocomplete'+num).val(ui.item.value);
+            $('#article_id'+num).val(ui.item.id);
+            $('#article_name'+num).val(ui.item.value);
+            if(ui.item.serializable == 1)
+            {
+                $('#serial'+num).show().focus();
+                $('#serialLabel'+num).show();
+                $('#quantity'+num).val('1').attr('readonly', 'readonly')
+            } else
+            {
+                $('#serial'+num).hide();
+                $('#serialLabel'+num).hide();
+                $('#quantity'+num).val('').attr('readonly', false).focus();
+            }
+            $('#btnDetalle').attr('href','/articulos/'+ ui.item.id)
+                    .attr('disabled', false);
+        }  // fin del select
+
+        function removePanel()
+        {
+            var i;
+            $(this).closest('.panel').remove();
+            i = $('.panel').length
+            $('#btnAddPanel'+i).attr('disabled', false);
+            $('#btnRemovePanel'+i).attr('disabled', false);
+            $('#autocomplete'+i).attr('readonly', false);
+        }
+
+        function addPanel()
+        {
+            var i = $('.panel').length +1;
+            var j = i -1;
+            var panelHTML = '<div class="panel panel-default" id="divArticlePanel'+ i +'"><div class="panel-body">' +
+                    '<div class="form-group">' +
+                    '<label for="article_id'+ i +'">Artículo:</label>' +
+                    '<input class="form-control" id="autocomplete'+ i +'" name="autocomplete'+ i +'" type="text">' +
+                    '<input id="article_id'+ i +'" name="article_id'+ i +'" type="text">'+
+                    '</div>' +
+                    '<div class="form-group"><label for="quantity">Cantidad:</label>' +
+                    '<p id="cantidad'+ i +'" class="help-block">Cantidad Disponible: <span  id="maxQ'+ i +'"></span></p>' +
+                    '<input class="form-control" id="quantity'+ i +'" name="quantity'+ i +'" type="number">' +
+                    '</div>' +
+                    '<div class="form-group">' +
+                    '<label for="serial'+ i +'" id="serialLabel'+ i +'" style="display: none">MAC:</label>' +
+                    '<input class="form-control" id="serial'+ i +'" name="serial'+ i +'" type="text" style="display: none;">' +
+                    '</div>' +
+                    '<div class="form-group">' +
+                    '<label for="serialListLabel'+ i +'" id="serialListLabel'+ i +'" style="display: none">MAC:</label>' +
+                    '<select id="serialList'+ i +'" class="form-control" name="serialList'+ i +'" style="display: none;"></select>' +
+                    '</div>' +
+                    '<div class="form-group">' +
+                    '<label for="note'+ i +'" id="noteLabel'+ i +'">Nota:</label>' +
+                    '<input class="form-control" placeholder="Opcional" name="note'+i+'" type="text" id="note'+i+'">' +
+                    '</div>' +
+                    '<button class="btn btn-default" type="button" id="btnAddPanel'+ i +'" name="btn'+ i +'">Agregar Otro Artículo</button> ' +
+                    ' <button class="btn btn-danger" type="button" id="btnRemovePanel'+ i +'" name="btnRemove'+ i +'">Eliminar</button>'+
+                    '</div>' +
+                    '</div>';
+            $('#divArticles').append(panelHTML);
+            $(this).attr('disabled', 'disabled');
+            $('#btnRemovePanel'+j).attr('disabled', 'disabled');
+            $('.btn-default').on('click',addPanel);
+            $('.btn-danger').on('click',removePanel);
+            bindAutocomplete(i);
+//            $('#autocomplete'+j).attr('readonly', 'readonly');
+//            showSerialText();
+        }
+
+
+        function validate()
+        {
+            var valid = true; var i=1;
+            var valorActual =''; var mensaje ='';
+            var valorSiguiente;
+            var numPanels = $('.panel').length;
+            $('#frm div').removeClass('has-error');
+            $('#divMsg').html('').hide();
+
+//  VALIDO QUE NO HAYA ARTICULOS REPETIDOS
+            /*
+
+             if(numPanels >1)
+             {
+             for(i=1; i < numPanels; i++)
+             {
+             valorActual = $('#article_id'+i).val();
+             for (j=i+1; j < numPanels; j++)
+             {
+
+             valorSiguiente = $('#article_id'+j).val();
+             if (valorActual == valorSiguiente)
+             {
+             $('#divArticlePanel'+i).addClass('has-error');
+             $('#divArticlePanel'+j).addClass('has-error');
+             valid = false;
+             mensaje = mensaje + 'Los articulos '+i+' y '+j+' son iguales. <br />';
+             $('#divMsg').html(mensaje).slideDown('slow');
+             }
+
+             }
+             }
+             }
+
+             */
+//  VALIDO QUE TODOS LOS ARTICULOS TENGAN UNA CANTIDAD
+            for (i=1; i<= numPanels; i++)
+            {
+                cantidad = $('#quantity'+i).val();
+                if (cantidad=='' || cantidad==0)
+                {
+                    $('#divArticlePanel'+i).addClass('has-error');
+                    valid= false;
+                    mensaje = mensaje + 'Todos los articulos deben tener una cantidad especificada. <br />';
+                    $('#divMsg').html(mensaje).slideDown('slow');
+                }
+            }
+            return  valid;
+        }
+
+        function sortDropDownListByText(selectId)
+        {
+            var foption = $('#'+ selectId + ' option:first');
+            var soptions = $('#'+ selectId + ' option:not(:first)').sort(function(a, b)
+            {
+                return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+            });
+            $('#' + selectId).html(soptions).prepend(foption);
+
+        };
+
+        /*****************************************/
+        function loadWarehouses(company, activity)
+        {
+            var request = $.ajax({
+                url: "/api/warehousesByActivity/",
+                data: {company_id: company, rdActivity: activity},
+                method: "GET",
+                dataType: "json"
+            });
+
+            request.done(function( result )
+            {
+                warehouses = result;
+
+                $('#origin_id').empty()
+                        .append($('<option>')
+                                .text('Seleccione el origen...')
+                                .attr('value', ''));
+                $('#destination_id').empty()
+                        .append($('<option>')
+                                .text('Seleccione el destino...')
+                                .attr('value', ''));
+                for(var k in result) {
+                    if(result[k].type_id=='1')
                     {
-                        serializable = inventario[i].serializable;
-                        cantidad = inventario[i].quantity;
+                        $('#origin_id').append($('<option>')
+                                .text(result[k].name)
+                                .attr('value', result[k].id));
+                    } else {
+                        $('#destination_id').append($('<option>')
+                                .text(result[k].name)
+                                .attr('value', result[k].id));
                     }
                 }
-//                alert(serializable);
-                if(serializable=='1')
-                {
-                    $('#serialLabel').show();
-                    $('#serial').show();
-                    $('#quantity').val('1')
-                                .attr('readonly', true);
-                } else
-                {
-                     $('#serialLabel').hide();
-                     $('#serial').hide();
-                     $('#quantity').val('')
-                                .attr('readonly', false);
-                }
+            });
+
+            request.fail(function( jqXHR, textStatus )
+            {
+                alert( "Error al cargar los almacenes: " + textStatus );
+            });
+
+
+        }
+
+        /*****************************************/
+        function loadOrigin(company, activity)
+        {
+            var request = $.ajax({
+                url: "/api/warehousesByActivity/",
+                data: {company_id: company, rdActivity: activity},
+                method: "GET",
+                dataType: "json"
+            });
+
+            request.done(function( result )
+            {
+
+
+                    $('#origin_id').empty()
+                            .append($('<option>')
+                                    .text('Seleccione el origen...')
+                                    .attr('value', ''));
+                    for(var k in result) {
+                        $('#origin_id').append($('<option>')
+                                .text(result[k].name)
+                                .attr('value', result[k].id));
+                    }
+
+                    $('#destination_id').empty()
+                            .append($('<option>')
+                                    .text('Seleccione el destino...')
+                                    .attr('value', ''));
+                    for(var k in result) {
+                        $('#destination_id').append($('<option>')
+                                .text(result[k].name)
+                                .attr('value', result[k].id));
+                    }
 
             });
 
-            sortDropDownListByText('destination_id');
-        });  // Fin del document.ready()
+            request.fail(function( jqXHR, textStatus )
+            {
+                alert( "Error al cargar los almacenes: " + textStatus );
+            });
 
-function sortDropDownListByText(selectId) {
-    var foption = $('#'+ selectId + ' option:first');
-    var soptions = $('#'+ selectId + ' option:not(:first)').sort(function(a, b) {
-       return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
-    });
-    $('#' + selectId).html(soptions).prepend(foption);
 
-};
-
-function loadDestination_id()
-{
-
-    $('#destination_id').empty()
-                    .append($('<option>')
-                    .text('Seleccione el destino...')
-                    .attr('value', ''));
-
-//                var activity_id = ;
-    var activity_id = "";
-    var rdActivity = $("input[type='radio'][name='rdActivity']:checked");
-    if (rdActivity.length > 0) {
-        activity_id = rdActivity.val();
-    }
-
-    var company_id = $('#companyList').val();
-    if(company_id != '')
-    {
-        var request = $.ajax({
-          url: "/api/warehousesByActivity/",
-          data: {company_id: company_id, rdActivity: activity_id},
-          method: "GET",
-          dataType: "json"
-        });
-
-        request.done(function( result ) {
-            $('#destination_id').empty()
-                            .append($('<option>')
-                            .text('Seleccione el artículo...')
-                            .attr('value', ''));
-            for(var k in result) {
-                $('#destination_id').append($('<option>')
-                                .text(result[k].name)
-                                .attr('value', result[k].id));
-            }
-
-        });
-
-        request.fail(function( jqXHR, textStatus ) {
-            alert( "Error al cargar los almacenes destino: " + textStatus );
-        });
-    }
- }
-
-function loadOrigin()
-{
-    var activity_id = "";
-    var rdActivity = $("input[type='radio'][name='rdActivity']:checked");
-    if (rdActivity.length > 0) {
-        activity_id = rdActivity.val();
-    }
-    var company_id = $('#companyList').val();
-
-    var origin = $.ajax({
-
-        url: "/api/warehousesByType",
-        data: {company_id: company_id, rdActivity: activity_id, type_id: '1'},
-        method: "GET",
-        dataType: "json"
-    });
-
-    origin.done(function (result)
-    {
-        warehouses = result;
-        $('#origin_id').empty()
-                .append($('<option>')
-                        .text('Seleccione el origen...')
-                        .attr('value', ''));
-        for (var k in result) {
-            $('#origin_id').append($('<option>')
-                    .text(result[k].name)
-                    .attr('value', result[k].id));
         }
 
-    });  //  Fin del request.done
 
-    origin.fail(function (jqXHR, textStatus)
-    {
-        alert("Fallo cargando los almacenes de origen: " + textStatus);
-    }); // Fin del request.fail
-}
+
+
+        function loadArticles(result, dropdown)
+        {
+            var allArticles = $('<optgroup>');
+            allArticles.attr('label', 'Todos los Artículos');
+            var favArticles = $('<optgroup>');
+            favArticles.attr('label', 'Favoritos');
+
+            for(var k in result) {
+                allArticles.append($('<option>')
+                        .text(result[k].name)
+                        .attr('value', result[k].id));
+                if (result[k].fav ==1)
+                {
+                    favArticles.append($('<option>')
+                            .text(result[k].name)
+                            .attr('value', result[k].id));
+                }
+            }
+            $('#'+dropdown).empty()
+                    .append($('<option>')
+                            .text('Seleccione el artículo...')
+                            .attr('value', ''))
+                    .append(favArticles)
+                    .append(allArticles)
+                    .attr('disabled', false);
+        }
+
+        /*
+         Decide si mostrar textbox o dropdown en caso de que el articulo sea serializable
+         */
+        function showSerialText()
+        {
+            var cant =0;
+            var serializable = 0;
+            var selected_id = $(this).val();
+            var serial;
+            var panelCount = $('.panel').length;
+            for (var i in inventario)
+            {
+                if (inventario[i].id == selected_id)
+                {
+                    serializable = inventario[i].serializable;
+                    cant = inventario[i].cantidad;
+                    if(serializable=='1')
+                    {
+                        $('#quantity'+panelCount).val('1')
+                                .attr('readonly', true);
+
+                        if (origin_type != '1') // el articulo es serializable y el almacen _NO_ es de sistema
+                        {
+                            $('#serialList'+panelCount).empty()
+                                    .append($('<option>')
+                                            .text('Seleccione...')
+                                            .attr('value', ''));
+
+                            for (j in inventario[i].seriales)
+                            {
+                                serial = inventario[i].seriales[j].serial;
+                                $('#serialList'+panelCount).append($('<option>')
+                                        .text(serial)
+                                        .attr('value', serial));
+                            }
+                            $('#serialListLabel'+panelCount).show();
+                            $('#serialList'+panelCount).show();
+
+                        } else // el articulo es serializable y el almacen es de sistema
+                        {
+                            $('#serialLabel'+panelCount).show();
+                            $('#serial'+panelCount).show();
+                        }
+                    } else  // el articulo no es serializable
+                    {
+                        $('#serialLabel'+panelCount).hide();
+                        $('#serial'+panelCount).hide();
+                        $('#serialListLabel'+panelCount).hide();
+                        $('#serialList'+panelCount).hide();
+                        $('#quantity'+panelCount).val('')
+                                .attr('readonly', false);
+                    }
+                }
+            }
+            $('#maxQ'+panelCount).html(cant);
+
+        }
+        /*
+         *   Borra todos los panels para agregar articulos excepto el original
+         * */
+        function removeAllPanels()
+        {
+            var panelCount = $('.panel').length;
+
+            if(panelCount>1)
+            {
+                for (i=2; i <= panelCount; i++)
+                {
+                    $('#divArticlePanel'+i).remove();
+                }
+            }
+        }
     </script>
+@endsection
+
+@section('css')
+    <link rel="stylesheet" href="/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="/css/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="/css/jquery-ui.theme.min.css">
+
 @endsection

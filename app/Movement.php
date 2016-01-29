@@ -81,13 +81,16 @@ class Movement extends Model
     public function setTicketAttribute($value)
     {
         //preg_replace("/[^A-Za-z0-9 ]/", '', $string);
-        if ($this->attributes['ticket']=='')
-        {
-            $this->attributes['ticket'] = 'Sin Ticket';
-        } else
-        {
             $this->attributes['ticket'] = strtoupper($value);
-        }
+    }
+
+    /**Poner el Serial en mayuscula antes de insertarlo
+     * @param $value
+     */
+    public function setSerialAttribute($value)
+    {
+        //preg_replace("/[^A-Za-z0-9 ]/", '', $string);
+            $this->attributes['serial'] = strtoupper($value);
     }
 
     /**

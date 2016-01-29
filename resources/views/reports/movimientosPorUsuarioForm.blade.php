@@ -115,6 +115,16 @@
                 $('input[type="radio"][name="rdUser"]').attr('disabled', false);
 
             }
+            $('#companyList').change(function()
+            {
+                if ( $('#companyList').val() !='')
+                {
+                    $('input[type="radio"][name="rdUser"]').attr('disabled', false);
+                } else
+                {
+                    $('input[type="radio"][name="rdUser"]').attr('disabled', 'disabled');
+                }
+            });
             $('#fechaHasta').datepicker({ maxDate: 'today'})
                     .change(function()
                     {
