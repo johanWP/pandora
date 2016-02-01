@@ -55,6 +55,7 @@
             $('#origin_id').change(function()
             {
                 removeAllPanels();
+
                 $('#maxQ1').html('');
                 $('#frm div').removeClass('has-error');
                 var origin_id = $(this).val();
@@ -66,6 +67,7 @@
                         origin_type= warehouses[i].type_id;
                     }
                 }
+                $('#btnAddPanel1').attr('disabled', false);
                 $('#serialLabel1').hide();
                 $('#serial1').hide();
                 $('#serialListLabel1').hide();
@@ -226,8 +228,10 @@
             $('#divArticles').append(panelHTML);
             $(this).attr('disabled', 'disabled');
             $('#btnRemovePanel'+j).attr('disabled', 'disabled');
-            $('.btn-default').on('click',addPanel);
-            $('.btn-danger').on('click',removePanel);
+            $('#btnAddPanel'+ i).on('click',addPanel);
+//            $('.btn-default').on('click',addPanel);
+            $('#btnRemovePanel'+i).on('click',removePanel);
+//            $('.btn-danger').on('click',removePanel);
             bindAutocomplete(i);
 //            $('#autocomplete'+j).attr('readonly', 'readonly');
 //            showSerialText();
