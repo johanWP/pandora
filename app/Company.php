@@ -15,16 +15,6 @@ class Company extends Model
     ];
 
     protected $dates = ['deleted_at'];
-    /**
-     * Devuelve los articulos creados por usuarios de esta empresa
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function articles()
-    {
-        return $this->hasMany('App\Article');
-
-    }
 
     /**
      * Devuelve los usuarios de la empresa

@@ -100,7 +100,7 @@ class MovementsController extends Controller
      */
     public function store(CreateMovementRequest $request)
     {
-        dd($request->all());
+//        dd($request->all());
         $i =1;
         $arrMov = Array();
         $conErrores = '';
@@ -229,7 +229,6 @@ class MovementsController extends Controller
      */
     public function destroy($id)
     {
-        $mov = Movement::findOrFail($id);
         if(Auth::user()->securityLevel >= 20) {
             $mov = Movement::findOrFail($id);
             $mov->update([

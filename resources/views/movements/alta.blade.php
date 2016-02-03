@@ -135,6 +135,9 @@
                 if (valid)
                 {
                     $('#frm').submit();
+                } else
+                {
+                    $('body').scrollTop(0);
                 }
             });
 
@@ -203,10 +206,9 @@
                     '<div class="form-group">' +
                     '<label for="article_id'+ i +'">Artículo:</label>' +
                     '<input class="form-control" id="autocomplete'+ i +'" name="autocomplete'+ i +'" type="text">' +
-                    '<input id="article_id'+ i +'" name="article_id'+ i +'" type="text">'+
+                    '<input id="article_id'+ i +'" name="article_id'+ i +'" type="hidden">'+
                     '</div>' +
                     '<div class="form-group"><label for="quantity">Cantidad:</label>' +
-                    '<p id="cantidad'+ i +'" class="help-block">Cantidad Disponible: <span  id="maxQ'+ i +'"></span></p>' +
                     '<input class="form-control" id="quantity'+ i +'" name="quantity'+ i +'" type="number">' +
                     '</div>' +
                     '<div class="form-group">' +

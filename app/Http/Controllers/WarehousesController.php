@@ -108,11 +108,7 @@ class WarehousesController extends Controller
      */
     public function update(CreateWarehouseRequest $request, $id)
     {
-//        dd($request->all());
-
-
         $warehouse = Warehouse::findOrFail($id);
-//        $warehouse->update($request->all());
         if($request->active==1)
         {
             $active=1;

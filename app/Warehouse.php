@@ -143,7 +143,6 @@ class Warehouse extends Model
                 $all = DB::table('articles')
                     ->select('id', 'name', 'serializable', 'fav')
                     ->where('active', '=', 1)
-                    ->where('company_id', '=', Auth::user()->current_company_id)
                     ->orderBy('name', 'asc')
                     ->get();
 //            }

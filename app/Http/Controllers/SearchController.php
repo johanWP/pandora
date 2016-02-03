@@ -14,9 +14,12 @@ use Illuminate\Http\Response;
 
 class SearchController extends Controller
 {
+    /** Sirve para todos los buscadores (Articulos, Usuarios, Almacenes...)
+     * @param $table: la tabla donde se va a hacwer la busqueda
+     * @return array un json que se imprime para consumirse con AJAX
+     */
     public function autocomplete($table)
     {
-
         $term = Input::get('term');
 
         $results = array();
@@ -36,15 +39,13 @@ class SearchController extends Controller
             }
         } elseif($table == 'articles')
         {
-            $queries = DB::table($table)
-                ->where('company_id', '=', Auth::user()->current_company_id)
-                ->where(function ($query)
+            $queries = DB::table($table) ->where(function ($query)
                 {
                     $term = Input::get('term');
                     $query->where('product_code', 'LIKE', '%' . $term . '%')
                         ->orWhere('name', 'LIKE', '%' . $term . '%');
-                })
-                ->take(10)->get();
+                })->
+               take(10)->get();
             foreach ($queries as $query) {
                 $results[] = [
                         'id' => $query->id,
@@ -54,10 +55,8 @@ class SearchController extends Controller
             }
         } else
         {
-            $queries = DB::table($table)
-                ->where('company_id', '=', Auth::user()->current_company_id)
-                ->where('name', 'LIKE', '%' . $term . '%')
-                ->take(10)->get();
+            $queries = DB::table($table)->where('name', 'LIKE', '%' . $term . '%')->
+                take(10)->get();
             foreach ($queries as $query)
             {
                 $results[] = [ 'id' => $query->id, 'value' => $query->name];
@@ -72,8 +71,6 @@ class SearchController extends Controller
     {
         $table = Input::get('object');
         $name = Input::get('name');
-
-
         $query = DB::table($table)->select('id')
             ->where('name', '=', $name)
             ->first();
