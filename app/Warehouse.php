@@ -54,7 +54,13 @@ class Warehouse extends Model
         return $this->belongsTo('App\Activity');
     }
 
+    public function users()
+    {
+        return $this->belongsToMany('App\User')->withTimestamps();
+    }
     /**
+     * Devuelve un arreglo con los articulos que están en un almacén con sus cantidades,
+     * si el almacen es de sistema devuelve la lista completa de articulos
      * @return array
      */
     public function getInventoryAttribute()
@@ -169,6 +175,12 @@ class Warehouse extends Model
         return $result;
     }
 
+    /**
+     * Recibe el ID de un articulo y devuelve arreglo con los seriales de ese articulo que se encuentran
+     * en el almacén actual
+     * @param $art
+     * @return array
+     */
     private function buscarSeriales($art)
     {
         // status 1: Aprobado, Status 2: por aprobar

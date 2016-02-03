@@ -18,6 +18,7 @@ use PhpParser\Node\Expr\Cast\Array_;
 
 class MovementsController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *

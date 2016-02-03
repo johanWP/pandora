@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Warehouse;
 use Illuminate\Http\Request;
 use App\Http\Requests\CustomUserRequest;
 use App\Http\Requests\CustomUpdateUserRequest;
@@ -35,7 +36,23 @@ class UsersController extends Controller
     public function create()
     {
         $activities = Activity::lists('name', 'id');
-        return view('users.create', compact('activities'));
+        if (Auth::user()->currentCompany->parent==1)
+        {
+            $warehouses = Warehouse::lists('name', 'id');
+        } else
+        {
+            $warehouses = Warehouse::where('company_id', Auth::user()->current_company_id)->
+            get()->
+            lists('name', 'id');
+        }
+        $securityLevel = [
+                        '10' => 'Técnico',
+                        '20' => 'Supervisor',
+                        '30' => 'Jefe',
+                        '40' => 'Gerente',
+                        '50' => 'Director',
+                        ];
+        return view('users.create', compact('activities', 'warehouses', 'securityLevel'));
     }
 
     /**
@@ -76,6 +93,9 @@ class UsersController extends Controller
 //        Asociar las actividades en la tabla pivot activities_users
         $user->activities()->attach($request->input('activityList'));
 
+//        Asociar las actividades en la tabla pivot activities_users
+        $user->warehouses()->attach($request->input('warehousesList'));
+
         session()->flash('flash_message', 'Usuario creado correctamente.');
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
 //        session()->flash('flash_message_important', true);
@@ -106,7 +126,29 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
 
         $activities = Activity::lists('name', 'id');
-        return view('users.edit', compact('user', 'activities'));
+/*        $warehouses = Warehouse::where('company_id', Auth::user()->current_company_id)->
+                        get()->
+                        lists('name', 'id');*/
+//        $warehouses = Warehouse::where('company_id', Auth::user()->current_company_id)->
+//        get()->
+//        lists('name', 'id');
+        if (Auth::user()->currentCompany->parent==1)
+        {
+            $warehouses = Warehouse::lists('name', 'id');
+        } else
+        {
+            $warehouses = Warehouse::where('company_id', Auth::user()->current_company_id)->
+            get()->
+            lists('name', 'id');
+        }
+        $securityLevel = [
+            '10' => 'Técnico',
+            '20' => 'Supervisor',
+            '30' => 'Jefe',
+            '40' => 'Gerente',
+            '50' => 'Director',
+        ];
+        return view('users.edit', compact('user', 'activities', 'warehouses', 'securityLevel'));
     }
 
     /**
@@ -125,7 +167,7 @@ class UsersController extends Controller
         } else {
             $act = $request['active'];
         }
-//dd($request->all());
+
         $user->update([
             'firstName'     => $request['firstName'],
             'lastName'      => $request['lastName'],
@@ -135,7 +177,7 @@ class UsersController extends Controller
             'current_company_id'    => Auth::user()->current_company_id,
             'active'        => $act
         ]);
-//dd($user);
+
 //        Asociar las actividades en la tabla pivot activities_users
         if ($request->input('activityList') != null)
         {
@@ -143,6 +185,14 @@ class UsersController extends Controller
         } else
         {
             $user->activities()->detach();
+        }
+
+        if ($request->input('warehouseList') != null)
+        {
+            $user->warehouses()->sync($request->input('warehouseList'));
+        } else
+        {
+            $user->warehouses()->detach();
         }
 
 

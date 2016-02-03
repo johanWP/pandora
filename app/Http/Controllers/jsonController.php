@@ -60,7 +60,9 @@ class jsonController extends Controller
    }
     public function warehousesActivity($id)
     {
+/*
         $result = Array();
+
         if(Auth::user()->activities != '')
         {
             $warehouses = Auth::user()->warehouseList;
@@ -76,6 +78,7 @@ class jsonController extends Controller
 
             return ($result);
         }
+        */
    }
 
     /**
@@ -85,13 +88,18 @@ class jsonController extends Controller
      */
     public function warehousesByActivity(Request $request)
     {
+/*
         $warehouses = Warehouse::where('company_id', $request->company_id)
                                 ->where('activity_id', $request->rdActivity)
                                 ->where('active', '1')
                                 ->orderBy('name')
                                 ->get();
-
-//        dd($warehouses);
+*/
+        $activity_id = (int)$request->rdActivity;
+        $company_id = (int)$request->company_id;
+//        $activity_id = $activity_id;
+//        dd($activity_id);
+        $warehouses = Auth::user()->warehouses->where('activity_id', $activity_id)->where('company_id', $company_id);
         return $warehouses;
     }
     /**

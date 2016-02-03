@@ -39,12 +39,19 @@
     <!-- End password_confirmation textfield -->
 
 --}}
-    <!-- Begin  textfield -->
+    <!-- Begin  ActivityList -->
             <div class="form-group">
                 {!! Form::label('activityList', 'Actividades:') !!}
                 {!! Form::select('activityList[]', $activities , null, ['class' => 'form-control', 'multiple', 'id'=>'activityList']) !!}
             </div>
-    <!-- End  textfield -->
+    <!-- End  ActivityList -->
+    <!-- Begin  WarehouseList -->
+            <div class="form-group">
+                {!! Form::label('warehouseList', 'Almacenes Permitidos:') !!}
+                {!! Form::select('warehouseList[]', $warehouses , null, ['class' => 'form-control', 'multiple', 'id'=>'warehouseList']) !!}
+            </div>
+    <!-- End  WarehouseList -->
+
     <!-- Begin checkbox active -->
             <div class="form-group">
                 <label> Marque si el usuario está activo
@@ -52,25 +59,22 @@
                 </label>
             </div>
     <!-- End active textfield -->
-    @if(Auth::user()->securityLevel == 100)
-    <!-- Begin company_id textfield -->
-            <div class="form-group">
-                {!! Form::label('company_id', 'Company ID:') !!}
-                {!! Form::text('company_id', 1, ['class' => 'form-control']) !!}
-            </div>
-    <!-- End company_id textfield -->
-    @endif
     <!-- Begin Submit button -->
 <!-- Begin security_level textfield -->
         <div class="form-group">
-            <select id="securityLevel" class="form-control" name="securityLevel">
-              <option value="" selected="selected">Seleccione el rol del usuario...</option>
-              <option value="10">Técnico</option>
-              <option value="20">Supervisor</option>
-              <option value="30">Jefe</option>
-              <option value="40">Gerente</option>
-              <option value="50">Director</option>
-            </select>
+            {!! Form::select('securityLevel', $securityLevel , null, ['class' => 'form-control', 'id'=>'securityLevel']) !!}
+
+            {{--
+                        <select id="securityLevel" class="form-control" name="securityLevel">
+                          <option value="" selected="selected">Seleccione el rol del usuario...</option>
+                          <option value="10">Técnico</option>
+                          <option value="20">Supervisor</option>
+                          <option value="30">Jefe</option>
+                          <option value="40">Gerente</option>
+                          <option value="50">Director</option>
+                        </select>
+            --}}
+
         </div>
 <!-- End security_level textfield -->
         <div class="form-group">
@@ -84,7 +88,10 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1-rc.1/js/select2.min.js"></script>
     <script>
       $('#activityList').select2({
-        'placeholder'   :   'Clic para seleccionar una actividad'
+        'placeholder'   :   'Clic para asignar actividades'
+      });
+      $('#warehouseList').select2({
+        'placeholder'   :   'Clic para asignar almacenes'
       });
     </script>
 @endsection

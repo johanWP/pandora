@@ -71,6 +71,7 @@ class User extends Model implements AuthenticatableContract,
      */
     public function getWarehouseListAttribute()
     {
+/*
         $result='';
         $activities = $this->activities()->lists('id')->toArray();
         $warehouses = DB::table('warehouses')
@@ -93,8 +94,9 @@ class User extends Model implements AuthenticatableContract,
         }
 
         return $result;
-
-
+        */
+        return $this->warehouses->lists('id')->all();;
+//        return $this->warehouses->where('company_id', $this->current_company_id)->lists('id')->all();
 
     }
 
@@ -123,6 +125,10 @@ class User extends Model implements AuthenticatableContract,
         return $this->belongsToMany('App\Activity')->withTimestamps();
     }
 
+    public function warehouses()
+    {
+        return $this->belongsToMany('App\Warehouse')->withTimestamps();
+    }
     public function getCurrentCompanyAttribute()
     {
         $company = \App\Company::findOrFail($this->current_company_id);

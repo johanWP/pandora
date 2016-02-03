@@ -11,7 +11,6 @@
 <div class="row">
   <div class="table-responsive">
     <table class="table table-striped">
-      <caption>Datos del perfil</caption>
       <tbody>
          <tr>
             <th>Activo</th>
@@ -43,17 +42,20 @@
             <th>Empresa</th>
             <td>{{ $user->company->name }}</td>
          </tr>
+{{--
          <tr>
             <th>ID Empleado</th>
             <td>{{ $user->employee_id }}</td>
          </tr>
+--}}
       </tbody>
     </table>
   </div>
 </div>
-@unless($user->activities->isEmpty())
+
    <div class="row">
-     <div>
+   @unless($user->activities->isEmpty())
+     <div class="col-sm-6">
         <h3>Actividades Permitidas</h3>
         <ul>
         @foreach($user->activities as $activity)
@@ -61,12 +63,24 @@
         @endforeach
         </ul>
      </div>
+   @endunless
+   @unless($user->warehouses->isEmpty())
+       <div class="col-sm-6">
+           <h3>Almacenes Permitidos</h3>
+           <ul>
+               @foreach($user->warehouses as $warehouse)
+                   <li>{{ $warehouse->name }}</li>
+               @endforeach
+           </ul>
+       </div>
+   @endunless
    </div>
-@endunless
 
+@if (Auth::user()->securityLevel >= 40 )
 <!-- Begin Submit button -->
     <div class="form-group">
             <a class="btn btn-primary" href="{{  $user->id . '/edit' }}">Editar</a>
     </div>
 <!-- End Submit Button -->
+@endif
 @endsection
