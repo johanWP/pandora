@@ -23,7 +23,6 @@
             <th>Código del Producto</th>
             <th>Nombre</th>
             <th>Activo</th>
-            <th>Código de Barras</th>
          </tr>
       </thead>
             @foreach($articles as $article)
@@ -31,7 +30,6 @@
                   <td>{{ $article->product_code }}</td>
                   <td>{{ $article->name }}</td>
                   <td>{{ $article->active }}</td>
-                  <td>{{ $article->barcode }}</td>
                </tr>
             @endforeach
     </table>

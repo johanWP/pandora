@@ -6,7 +6,6 @@ namespace App;
 use Illuminate\Auth\Authenticatable;
 use Auth;
 use DB;
-use App\Warehouse;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;

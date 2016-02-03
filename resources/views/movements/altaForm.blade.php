@@ -64,7 +64,7 @@
             <div class="form-group">
                 {!! Form::label('autocomplete1', 'Artículo:') !!}
                 {!! Form::text('autocomplete1', null, ['class' => 'form-control',  'id'=>'autocomplete1']) !!}
-                {!! Form::text('article_id1', null, ['id'=>'article_id1']) !!}
+                {!! Form::hidden('article_id1', null, ['id'=>'article_id1']) !!}
             </div>
             <!-- End origin_id select -->
 

@@ -20,14 +20,7 @@ class Article extends Model
     ];
 
     protected $dates = ['deleted_at'];
-    /**
-     * Un Articulo pertenece a una (y solo una) empresa
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function company()
-    {
-        return $this->belongsTo('App\Company');
-    }
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
