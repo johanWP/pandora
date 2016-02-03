@@ -144,7 +144,8 @@ class MovementsController extends Controller
 
                 } else
                 {
-                    $conErrores .= '<li>'.$mov->article->name.'</li>s';
+                    $conErrores .= $valid;
+//                    $conErrores .= '<li>'.$mov->article->name.'</li>';
                 }
             }
 
@@ -304,9 +305,11 @@ class MovementsController extends Controller
             $msg .= '<li>Debe incluir el serial del artículo</li>';
         }
 
-        if(($m->article->serializable==1) AND ($m->serial!='') AND ($m->origin->type_id != 1))
+//        if(($m->article->serializable==1) AND ($m->serial!='') AND ($m->origin->type_id != 1))
+        if(($m->article->serializable==1) AND ($m->serial!=''))
         {
             $lastMovement = $this->lastMovement($m->serial);
+            // LastMovment devuelve el ultimo movimiento APROBADO
             if($lastMovement->destination_id != $m->origin_id)
             {
                 $msg .= '<li>El artículo no se encuentra en el almacén '. $m->origin->name .'.
@@ -314,10 +317,9 @@ class MovementsController extends Controller
             }
         }
 
-
         if ($msg != '')
         {
-            $msg = '<ul>' . $msg . '</ul>';
+            $msg = '<ul>' . trim($msg) . '</ul>';
         }
         return $msg;
     }

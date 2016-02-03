@@ -111,7 +111,6 @@ class Warehouse extends Model
                 }
 
                 if($total >0)
-
                 {
                     $result[$art->id] = [
                         'id' => $art->id,
