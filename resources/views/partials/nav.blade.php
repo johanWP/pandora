@@ -169,11 +169,6 @@
                     <li>
                         <a href="{!!URL::to('/reportes/buscarEquipo')!!}"><i class='fa fa-search fa-fw'></i> Buscar Equipo por MAC</a>
                     </li>
-{{--
-                    <li>
-                        <a href="{!!URL::to('/reportes/listadoCumplimientoDeMaterial')!!}"><i class='fa fa-truck fa-fw'></i> Cumplimiento de Material</a>
-                    </li>
---}}
                 </ul>
             </li>
 @endif

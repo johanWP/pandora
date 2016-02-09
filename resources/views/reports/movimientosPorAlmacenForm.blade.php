@@ -190,8 +190,6 @@
 
 
                 sortDropDownListByText('destination_id');
-//                $('#origin').attr('disabled', false);
-//                $('#destination').attr('disabled', false);
 
             });/* Fin del .done */
 

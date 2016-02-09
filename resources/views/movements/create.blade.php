@@ -288,7 +288,6 @@ Nuevo Movimiento
             loadArticles(inventario, 'article_id'+i);
 
             $('#article_id'+i).on('change', showSerialText);
-//            showSerialText();
         }
 
         function removePanel()
