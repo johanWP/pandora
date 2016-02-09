@@ -172,6 +172,7 @@
                 </ul>
             </li>
 @endif
+@if (Auth::user()->securityLevel >= 50)
             <li>
                 <a href="#"><i class="fa fa-cogs fa-fw"></i> Configuración<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -180,6 +181,7 @@
                     </li>
                 </ul>
             </li>
+@endif
         </ul>
     </div>
 </div>
