@@ -142,7 +142,7 @@ class MovementsController extends Controller
                     //            Guarda el objeto en la base de datos
                     Movement::create($mov->toArray());
 
-                } else
+                } elseif(!strstr($conErrores, $valid))
                 {
                     $conErrores .= $valid;
 //                    $conErrores .= '<li>'.$mov->article->name.'</li>';
@@ -261,20 +261,10 @@ class MovementsController extends Controller
         {
             $msg .= '<li>El almacén de destino se encuentra inactivo.</li>';
         }
-/*    REVISAR ESTA REGLA
-        if((Auth::user()->securityLevel < 20) AND ($m->destination->type_id == 1))
-        {
-            $msg .= '<li>Usted no puede hacer movimientos hacia este tipo de almacén.</li>';
-        }
-*/
         if (($m->origin->type_id == 2) AND ($m->destination->type_id == 2))
         {
             $msg .= '<li>Los movimientos entre almacenes móviles no están permitidos.</li>';
         }
-/*        if(($m->origin->type_id == 2) AND ($m->destination->type_id == 2))
-        {
-            $msg .= '<li>No se puede realizar un movimiento entre dos almacenes móviles</li>';
-        }*/
 
         if (($m->origin->type_id == 1) AND ($m->destination->type_id == 1))
         {
@@ -285,42 +275,25 @@ class MovementsController extends Controller
             $msg .= '<li>Los almacenes de origen y destinos son iguales</li>';
         }
 
-
         if ($m->origin->activity_id != $m->destination->activity_id)
         {
-            $msg .= '<li>Los almacenes de origen y destino son de líneas de negocios diferentes</li>';
+            $msg .= '<li>Los almacenes de origen y destino son de actividades diferentes</li>';
         }
-/*
-        if ($m->origin->active != 1)
-        {
-            $msg .= '<li>El almacén de origen no se encuentra activo.</li>';
-        }
-        if ($m->destination->active != 1)
-        {
-            $msg .= '<li>El almacén de destino no se encuentra activo.</li>';
-        }
-*/
         if(($m->article->serializable == 1) && ($m->serial == ''))
         {
-            $msg .= '<li>Debe incluir el serial del artículo</li>';
+            $msg .= '<li>Debe incluir el serial del '.$m->article->name.'</li>';
         }
 
-//        if(($m->article->serializable==1) AND ($m->serial!='') AND ($m->origin->type_id != 1))
-        if(($m->article->serializable==1) AND ($m->serial!=''))
+        if(($m->article->serializable==1) AND ($m->serial!='') AND ($m->origin->type_id != 1))
         {
             $lastMovement = $this->lastMovement($m->serial);
-            // LastMovment devuelve el ultimo movimiento APROBADO
-            if($lastMovement->destination_id != $m->origin_id)
+            if(($lastMovement->destination_id != $m->origin_id) && ($lastMovement->destination->type_id!=1))
             {
                 $msg .= '<li>El artículo no se encuentra en el almacén '. $m->origin->name .'.
                          Verifique el serial del equipo.</li>';
             }
         }
 
-        if ($msg != '')
-        {
-            $msg = '<ul>' . trim($msg) . '</ul>';
-        }
         return $msg;
     }
 

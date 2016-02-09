@@ -108,11 +108,10 @@
                     <li>
                         <a href="{!!URL::to('/movimientos/create')!!}"><i class='fa fa-plus'></i> Nuevo Movimiento</a>
                     </li>
-{{--
                     <li>
-                        <a href="{!!URL::to('/movimientos/alta')!!}"><i class='fa fa-arrow-circle-up'></i> Alta de artículos</a>
+                        <a href="{!!URL::to('/movimientos/alta')!!}"><i class='fa fa-arrow-circle-up'></i> Ingreso/Recupero de Artículos</a>
                     </li>
---}}
+
 @if (Auth::user()->securityLevel >= 20)
                     <li>
                         <a href="{!!URL::to('/movimientos/porAprobar')!!}"><i class='fa fa-check'></i> Pendientes por Aprobar</a>
@@ -178,6 +177,14 @@
                 </ul>
             </li>
 @endif
+            <li>
+                <a href="#"><i class="fa fa-cogs fa-fw"></i> Configuración<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="{!!URL::to('/ajustes/actualizarArticulosActivos')!!}"><i class='fa fa-shield fa-fw'></i> Actualizar Artículos Activos</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 </div>

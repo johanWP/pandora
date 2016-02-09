@@ -218,10 +218,14 @@ Nuevo Movimiento
                                     .append($('<option>')
                                     .text('Seleccione el origen...')
                                     .attr('value', ''));
-                    for(var k in result) {
-                        $('#origin_id').append($('<option>')
+                    for(var k in result)
+                    {
+                        if(result[k].active==1)
+                        {
+                            $('#origin_id').append($('<option>')
                                         .text(result[k].name)
                                         .attr('value', result[k].id));
+                        }
                     }
 
                     $('#destination_id').empty()
@@ -229,9 +233,11 @@ Nuevo Movimiento
                                     .text('Seleccione el destino...')
                                     .attr('value', ''));
                     for(var k in result) {
-                        $('#destination_id').append($('<option>')
-                                        .text(result[k].name)
-                                        .attr('value', result[k].id));
+                        if(result[k].active==1) {
+                            $('#destination_id').append($('<option>')
+                                    .text(result[k].name)
+                                    .attr('value', result[k].id));
+                        }
                     }
 
                 });

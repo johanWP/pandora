@@ -111,12 +111,7 @@
     <div class='col-sm-6' id="divFechaDesde">
         <label>Desde:</label>
         <div class="form-group">
-            <div class='input-group date'>
-                <input type='text' class="form-control"  id='fechaDesde' name='fechaDesde' readonly />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
+            <input type='text' class="form-control"  id='fechaDesde' name='fechaDesde' readonly />
         </div>
     </div>
     <!-- End fechaDesde textfield -->
@@ -124,12 +119,7 @@
     <div class='col-sm-6' id="divFechaHasta">
         <label>Hasta:</label>
         <div class="form-group">
-            <div class='input-group date'>
-                <input type='text' class="form-control"  id='fechaHasta' name='fechaHasta' readonly/>
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
+            <input type='text' class="form-control"  id='fechaHasta' name='fechaHasta' readonly/>
         </div>
     </div>
     <!-- End fechaHasta textfield -->

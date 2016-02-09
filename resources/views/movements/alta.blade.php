@@ -99,14 +99,14 @@
                                     .attr('value', result[k].id));
                         }
                     }
-                    $('#article_id1').empty()
-                            .append($('<option>')
-                                    .text('Seleccione el artículo...')
-                                    .attr('value', ''))
-                            .append(favArticles)
-                            .append(allArticles)
-                            .attr('disabled', false);
-
+//                    $('#article_id1').empty()
+//                            .append($('<option>')
+//                                    .text('Seleccione el artículo...')
+//                                    .attr('value', ''))
+//                            .append(favArticles)
+//                            .append(allArticles)
+//                            .attr('disabled', false);
+//
 //                    var sel = $('#origin_id').val();
 
                 }); /* Fin del .done */
@@ -329,10 +329,14 @@
                         $('#origin_id').append($('<option>')
                                 .text(result[k].name)
                                 .attr('value', result[k].id));
-                    } else {
-                        $('#destination_id').append($('<option>')
-                                .text(result[k].name)
-                                .attr('value', result[k].id));
+                    } else
+                    {
+                        if(result[k].active==1)
+                        {
+                            $('#destination_id').append($('<option>')
+                                    .text(result[k].name)
+                                    .attr('value', result[k].id));
+                        }
                     }
                 }
             });
