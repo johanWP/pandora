@@ -55,6 +55,7 @@
             $('#origin_id').change(function()
             {
                 removeAllPanels();
+
                 $('#maxQ1').html('');
                 $('#frm div').removeClass('has-error');
                 var origin_id = $(this).val();
@@ -66,6 +67,7 @@
                         origin_type= warehouses[i].type_id;
                     }
                 }
+                $('#btnAddPanel1').attr('disabled', false);
                 $('#serialLabel1').hide();
                 $('#serial1').hide();
                 $('#serialListLabel1').hide();
@@ -97,14 +99,14 @@
                                     .attr('value', result[k].id));
                         }
                     }
-                    $('#article_id1').empty()
-                            .append($('<option>')
-                                    .text('Seleccione el artículo...')
-                                    .attr('value', ''))
-                            .append(favArticles)
-                            .append(allArticles)
-                            .attr('disabled', false);
-
+//                    $('#article_id1').empty()
+//                            .append($('<option>')
+//                                    .text('Seleccione el artículo...')
+//                                    .attr('value', ''))
+//                            .append(favArticles)
+//                            .append(allArticles)
+//                            .attr('disabled', false);
+//
 //                    var sel = $('#origin_id').val();
 
                 }); /* Fin del .done */
@@ -133,6 +135,9 @@
                 if (valid)
                 {
                     $('#frm').submit();
+                } else
+                {
+                    $('body').scrollTop(0);
                 }
             });
 
@@ -158,6 +163,7 @@
             .click(function()
             {
                 $(this).val('');
+                $('#article_id'+num).val('');
             });
         }
 
@@ -169,14 +175,14 @@
             $('#article_name'+num).val(ui.item.value);
             if(ui.item.serializable == 1)
             {
-                $('#serial'+num).show();
+                $('#serial'+num).show().focus();
                 $('#serialLabel'+num).show();
                 $('#quantity'+num).val('1').attr('readonly', 'readonly')
             } else
             {
                 $('#serial'+num).hide();
                 $('#serialLabel'+num).hide();
-                $('#quantity'+num).val('').attr('readonly', false)
+                $('#quantity'+num).val('').attr('readonly', false).focus();
             }
             $('#btnDetalle').attr('href','/articulos/'+ ui.item.id)
                     .attr('disabled', false);
@@ -203,7 +209,6 @@
                     '<input id="article_id'+ i +'" name="article_id'+ i +'" type="hidden">'+
                     '</div>' +
                     '<div class="form-group"><label for="quantity">Cantidad:</label>' +
-                    '<p id="cantidad'+ i +'" class="help-block">Cantidad Disponible: <span  id="maxQ'+ i +'"></span></p>' +
                     '<input class="form-control" id="quantity'+ i +'" name="quantity'+ i +'" type="number">' +
                     '</div>' +
                     '<div class="form-group">' +
@@ -225,10 +230,12 @@
             $('#divArticles').append(panelHTML);
             $(this).attr('disabled', 'disabled');
             $('#btnRemovePanel'+j).attr('disabled', 'disabled');
-            $('.btn-default').on('click',addPanel);
-            $('.btn-danger').on('click',removePanel);
+            $('#btnAddPanel'+ i).on('click',addPanel);
+//            $('.btn-default').on('click',addPanel);
+            $('#btnRemovePanel'+i).on('click',removePanel);
+//            $('.btn-danger').on('click',removePanel);
             bindAutocomplete(i);
-            $('#autocomplete'+j).attr('readonly', 'readonly');
+//            $('#autocomplete'+j).attr('readonly', 'readonly');
 //            showSerialText();
         }
 
@@ -322,10 +329,14 @@
                         $('#origin_id').append($('<option>')
                                 .text(result[k].name)
                                 .attr('value', result[k].id));
-                    } else {
-                        $('#destination_id').append($('<option>')
-                                .text(result[k].name)
-                                .attr('value', result[k].id));
+                    } else
+                    {
+                        if(result[k].active==1)
+                        {
+                            $('#destination_id').append($('<option>')
+                                    .text(result[k].name)
+                                    .attr('value', result[k].id));
+                        }
                     }
                 }
             });

@@ -46,17 +46,14 @@ class ImportController extends Controller
         Excel::load($filename, function($reader)  use ($i)
         {
             $results = $reader->get();
-
             foreach ($results as $article)
             {
-//                dd($article);
                 $NoEstaEnLaBD = is_null(
                                 Article::where('product_code',$article['codigo'])->
-                                where('company_id', Auth::user()->current_company_id)->
                                 first());
 
                 if ($NoEstaEnLaBD)
-                { // si el articulo se encuentra en la base de datos
+                { // si el articulo _NO_ se encuentra en la base de datos
                     if (is_null($article['serializable'])) {
                         $serializable = 0;
                     } else {
@@ -70,13 +67,12 @@ class ImportController extends Controller
                             'barcode' => $article['barcode'],
                             'fav' => $article['fav'],
                             'serializable' => $serializable,
-                            'company_id' => Auth::user()->current_company_id,
                             'active' => $article['activo']
                         ]
                     );
                     $i++;
                 } else
-                {   // si el codigo no  se encuentra en la base de datos
+                {   // si el codigo se encuentra en la base de datos
 
                 }
 

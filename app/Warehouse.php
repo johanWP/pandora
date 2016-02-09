@@ -54,7 +54,13 @@ class Warehouse extends Model
         return $this->belongsTo('App\Activity');
     }
 
+    public function users()
+    {
+        return $this->belongsToMany('App\User')->withTimestamps();
+    }
     /**
+     * Devuelve un arreglo con los articulos que están en un almacén con sus cantidades,
+     * si el almacen es de sistema devuelve la lista completa de articulos
      * @return array
      */
     public function getInventoryAttribute()
@@ -105,7 +111,6 @@ class Warehouse extends Model
                 }
 
                 if($total >0)
-
                 {
                     $result[$art->id] = [
                         'id' => $art->id,
@@ -137,7 +142,6 @@ class Warehouse extends Model
                 $all = DB::table('articles')
                     ->select('id', 'name', 'serializable', 'fav')
                     ->where('active', '=', 1)
-                    ->where('company_id', '=', Auth::user()->current_company_id)
                     ->orderBy('name', 'asc')
                     ->get();
 //            }
@@ -169,6 +173,12 @@ class Warehouse extends Model
         return $result;
     }
 
+    /**
+     * Recibe el ID de un articulo y devuelve arreglo con los seriales de ese articulo que se encuentran
+     * en el almacén actual
+     * @param $art
+     * @return array
+     */
     private function buscarSeriales($art)
     {
         // status 1: Aprobado, Status 2: por aprobar

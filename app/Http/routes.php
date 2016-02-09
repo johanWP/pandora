@@ -27,6 +27,8 @@ Route::get('search/name2Id',                ['middleware' => 'soloUsuarios','use
 
 Route::get('/ajustes', ['middleware' => 'soloUsuarios','uses'=>'SettingsController@showSettings']);
 Route::post('/ajustes/cambiarEmpresa', ['middleware' => 'soloUsuarios','uses'=>'SettingsController@cambiarEmpresa']);
+Route::get('/ajustes/actualizarArticulosActivos', ['middleware' => 'soloGerente','uses'=>'SettingsController@showFindInactiveArticles']);
+Route::post('/ajustes/actualizarArticulosActivos', ['middleware' => 'soloGerente','uses'=>'SettingsController@findInactiveArticles']);
 
 Route::get('articulos/import', ['middleware' => 'soloDirector','uses'=>'ImportController@articles']);
 Route::post('articulos/import', ['middleware' => 'soloDirector','uses'=>'ImportController@importArticles']);

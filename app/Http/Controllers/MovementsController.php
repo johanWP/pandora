@@ -18,6 +18,7 @@ use PhpParser\Node\Expr\Cast\Array_;
 
 class MovementsController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -99,6 +100,7 @@ class MovementsController extends Controller
      */
     public function store(CreateMovementRequest $request)
     {
+//        dd($request->all());
         $i =1;
         $arrMov = Array();
         $conErrores = '';
@@ -111,38 +113,42 @@ class MovementsController extends Controller
         }
         for ($i=1; $i <= $request['numArticles']; $i++)
         {
-            if($request['serialList'.$i] != '')
-            {
-                $serial = $request['serialList'.$i];
-            } else
-            {
-                $serial = $request['serial'.$i];
-            }
-//        Crea un objeto Movement pero no lo guarda en la base de datos
-            $mov = new Movement(
-                [
-                    'remito'        => $request['remito'],
-                    'article_id'    => $request['article_id'.$i],
-                    'quantity'      => $request['quantity'.$i],
-                    'note'          => $request['note'.$i],
-                    'origin_id'     => $request['origin_id'],
-                    'destination_id'=> $request['destination_id'],
-                    'ticket'        => $request['ticket'],
-                    'serial'        => $serial,
-                    'status_id'     => $status_id,
-                    'user_id'       => Auth::user()->id
-                ]
-            );
-            $valid = $this->validateMov($mov);
-            if ($valid == '')
-            {
-//            Guarda el objeto en la base de datos
-                Movement::create($mov->toArray());
 
-            } else
+            if ($request['article_id' . $i] !='')
             {
-                $conErrores .= '<li>'.$mov->article->name.'</li>s';
+                if ($request['serialList' . $i] != '') {
+                    $serial = $request['serialList' . $i];
+                } else {
+                    $serial = $request['serial' . $i];
+                }
+                //        Crea un objeto Movement pero no lo guarda en la base de datos
+                $mov = new Movement(
+                    [
+                        'remito' => $request['remito'],
+                        'article_id' => $request['article_id' . $i],
+                        'quantity' => $request['quantity' . $i],
+                        'note' => $request['note' . $i],
+                        'origin_id' => $request['origin_id'],
+                        'destination_id' => $request['destination_id'],
+                        'ticket' => $request['ticket'],
+                        'serial' => $serial,
+                        'status_id' => $status_id,
+                        'user_id' => Auth::user()->id
+                    ]
+                );
+                $valid = $this->validateMov($mov);
+                if ($valid == '')
+                {
+                    //            Guarda el objeto en la base de datos
+                    Movement::create($mov->toArray());
+
+                } elseif(!strstr($conErrores, $valid))
+                {
+                    $conErrores .= $valid;
+//                    $conErrores .= '<li>'.$mov->article->name.'</li>';
+                }
             }
+
         }
 
         if ($conErrores == '')
@@ -224,7 +230,6 @@ class MovementsController extends Controller
      */
     public function destroy($id)
     {
-        $mov = Movement::findOrFail($id);
         if(Auth::user()->securityLevel >= 20) {
             $mov = Movement::findOrFail($id);
             $mov->update([
@@ -256,20 +261,10 @@ class MovementsController extends Controller
         {
             $msg .= '<li>El almacén de destino se encuentra inactivo.</li>';
         }
-/*    REVISAR ESTA REGLA
-        if((Auth::user()->securityLevel < 20) AND ($m->destination->type_id == 1))
-        {
-            $msg .= '<li>Usted no puede hacer movimientos hacia este tipo de almacén.</li>';
-        }
-*/
         if (($m->origin->type_id == 2) AND ($m->destination->type_id == 2))
         {
             $msg .= '<li>Los movimientos entre almacenes móviles no están permitidos.</li>';
         }
-/*        if(($m->origin->type_id == 2) AND ($m->destination->type_id == 2))
-        {
-            $msg .= '<li>No se puede realizar un movimiento entre dos almacenes móviles</li>';
-        }*/
 
         if (($m->origin->type_id == 1) AND ($m->destination->type_id == 1))
         {
@@ -280,41 +275,25 @@ class MovementsController extends Controller
             $msg .= '<li>Los almacenes de origen y destinos son iguales</li>';
         }
 
-
         if ($m->origin->activity_id != $m->destination->activity_id)
         {
-            $msg .= '<li>Los almacenes de origen y destino son de líneas de negocios diferentes</li>';
+            $msg .= '<li>Los almacenes de origen y destino son de actividades diferentes</li>';
         }
-/*
-        if ($m->origin->active != 1)
-        {
-            $msg .= '<li>El almacén de origen no se encuentra activo.</li>';
-        }
-        if ($m->destination->active != 1)
-        {
-            $msg .= '<li>El almacén de destino no se encuentra activo.</li>';
-        }
-*/
         if(($m->article->serializable == 1) && ($m->serial == ''))
         {
-            $msg .= '<li>Debe incluir el serial del artículo</li>';
+            $msg .= '<li>Debe incluir el serial del '.$m->article->name.'</li>';
         }
 
         if(($m->article->serializable==1) AND ($m->serial!='') AND ($m->origin->type_id != 1))
         {
             $lastMovement = $this->lastMovement($m->serial);
-            if($lastMovement->destination_id != $m->origin_id)
+            if(($lastMovement->destination_id != $m->origin_id) && ($lastMovement->destination->type_id!=1))
             {
                 $msg .= '<li>El artículo no se encuentra en el almacén '. $m->origin->name .'.
                          Verifique el serial del equipo.</li>';
             }
         }
 
-
-        if ($msg != '')
-        {
-            $msg = '<ul>' . $msg . '</ul>';
-        }
         return $msg;
     }
 

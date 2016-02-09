@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<h1>Detalle del artículo {{ $article->name }}</h1>
+<h1>{{ $article->name }}</h1>
 <hr/>
 <div class="row">
   <div class="table-responsive">

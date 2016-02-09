@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Article;
+use App\Movement;
 
 class SettingsController extends Controller
 {
@@ -33,5 +35,32 @@ class SettingsController extends Controller
             $response =0;
         }
         return $response;
+    }
+
+    public function showFindInactiveArticles()
+    {
+        return view('settings.findInactiveArticlesForm');
+    }
+
+    public function findInactiveArticles(Request $request)
+    {
+        $desde= date_format(date_create($request->fechaDesde),"Y/m/d H:i:s");
+        $hasta= date_format(date_create($request->fechaHasta),"Y/m/d 23:59:99");
+        $inactivos=0;
+        $active = Movement::select('article_id')->
+                distinct()->
+                where('created_at', '>', $desde)->
+                where('created_at', '<', $hasta)->
+                get();
+        $activos = $active->count();
+        $articles = Article::whereNotIn('id', $active)->get();
+//        dd($articles);
+        foreach($articles as $article)
+        {
+            $inactivos++;
+            $article->update(['active'=>0]);
+//            dd($article);
+        }
+        return view('settings.findInactiveArticles', compact('activos', 'inactivos'));
     }
 }

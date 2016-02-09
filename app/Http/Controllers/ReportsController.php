@@ -28,7 +28,6 @@ class ReportsController extends Controller
             $excel->sheet('Articulos', function($sheet) {
 
                 $articles = Article::select('product_code', 'name', 'active', 'barcode')
-                    ->where('company_id', '=', Auth::user()->company->id)
                     ->orderBy('name')
                     ->get();
 
@@ -46,12 +45,14 @@ class ReportsController extends Controller
      */
     public function articles()
     {
-            $articles = Article::where('company_id', Auth::user()->current_company_id)->
-                            orderBy('name')->
-                            get();
+        $articles = Article::orderBy('name')->get();
         return view('reports.articles', compact('articles'));
     }
 
+    /** Muestra el formulario del reporte de Artículos por Almacén
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showArticulosPorAlmacen()
     {
         $activities = Auth::user()->activities;
@@ -66,14 +67,14 @@ class ReportsController extends Controller
         return view('reports.articulosPorAlmacenForm', compact('activities', 'companies'));
     }
     /**
-     * Devueve la lista de almacenes con el inventario de articulos en cada uno de ellos
+     * Devueve el inventario de articulos en cada uno de los almacenes seleccionados
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function articulosPorAlmacen(Request $request)
     {
         $company_id = $request->companyList;
         if ($request->rdOrigin == 'all')
-        {
+        { // Si quiero ver todos los almacenes
             $warehouses = Warehouse::where('company_id', $company_id)->
                                     where('activity_id', $request->rdActivity)->
                                     where('type_id', '<>', '1')->
@@ -84,13 +85,12 @@ class ReportsController extends Controller
                 $result[$w->id] = [
                     'id' => $w->id,
                     'name' => $w->name,
-
                     'description' => $w->description,
                     'inventory' => $w->inventory
                 ];
             }
         } else
-        {
+        {   // Si quiero ver un almacén en particular
             $warehouses = Warehouse::findOrFail($request->warehouse);
             $result[$warehouses->id] = [
                 'id' => $warehouses->id,
@@ -182,26 +182,6 @@ class ReportsController extends Controller
         }
 
     }
-    public function showListadoCumplimientoDeMaterial()
-    {
-        $companies = Company::lists('name', 'id');
-        $activities = DB::table('activities')
-                        ->select('id', 'name')
-                        ->orderBy('name')
-                        ->get();
-//        $activities = Activity::lists('name', 'id');
-//        dd($activities);
-        $articles = Article::lists('name', 'id');
-        //$warehouses = Warehouse::lists('name', 'id');
-        return view('reports.listadoCumplimientoDeMaterialForm',compact('companies', 'articles', 'activities'));
-    }
-
-    public function listadoCumplimientoDeMaterial(Request $request)
-    {
-        dd($request->all());
-        return view('reports.listadoCumplimientoDeMaterial');
-    }
-
     /**
      * Muestra el formulario para el reporte de movimientos por almacén
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

@@ -20,8 +20,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::where('company_id', Auth::user()->current_company_id)
-                        ->orderBy('name', 'asc')->paginate(20);
+        $articles = Article::orderBy('name', 'asc')->paginate(20);
         return view('articles.index', compact('articles'));
     }
 
@@ -45,11 +44,9 @@ class ArticlesController extends Controller
     public function store(Request $request)
     {
         $article = new Article($request->all());
-        $article->company_id = Auth::user()->current_company_id;
         Article::create($article->toArray());
 
         session()->flash('flash_message', 'Artículo creado correctamente.');
-
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
 //        session()->flash('flash_message_important', true);
         return Redirect::to('articulos');
@@ -137,6 +134,5 @@ class ArticlesController extends Controller
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
 //        session()->flash('flash_message_important', true);
         return redirect('articulos');
-
     }
 }

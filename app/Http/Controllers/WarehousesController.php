@@ -21,9 +21,22 @@ class WarehousesController extends Controller
      */
     public function index()
     {
-        $warehouses = Warehouse::where('company_id', Auth::user()->current_company_id)->
-                            where('type_id', '<>', 1)->
-                            orderBy('name', 'asc')->paginate(10);
+
+        if (Auth::user()->company->parent=1) {
+            if(Auth::user()->securityLevel >=40)
+            {
+                $warehouses = Warehouse::orderBy('name', 'asc')->paginate(20);
+            } else
+            {
+                $warehouses = Warehouse::where('type_id', '<>', 1)->
+                orderBy('name', 'asc')->paginate(10);
+            }
+        } else {
+            $warehouses = Warehouse::where('company_id', Auth::user()->current_company_id)->
+            where('type_id', '<>', 1)->
+            orderBy('name', 'asc')->paginate(10);
+        }
+
         return view('warehouses.index', compact('warehouses'));
     }
 
@@ -95,11 +108,7 @@ class WarehousesController extends Controller
      */
     public function update(CreateWarehouseRequest $request, $id)
     {
-//        dd($request->all());
-
-
         $warehouse = Warehouse::findOrFail($id);
-//        $warehouse->update($request->all());
         if($request->active==1)
         {
             $active=1;
