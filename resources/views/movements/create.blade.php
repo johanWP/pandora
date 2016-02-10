@@ -12,7 +12,7 @@ Nuevo Movimiento
     @include('errors.list')
 
     {!! Form::open(['url' => 'movimientos', 'id'=>'frm']) !!}
-    @include('movements.form', ['submitButtonText' => 'Registrar nuevo movimiento'])
+    @include('movements.form', ['submitButtonText' => 'Registrar nuevo movimiento!'])
 
     {!! Form::close() !!}
 
