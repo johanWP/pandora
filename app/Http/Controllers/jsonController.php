@@ -32,53 +32,12 @@ class jsonController extends Controller
      */
     public function warehousesByType(Request $request)
     {
-       $result = Array();
-/*
-        if(Auth::user()->activities != '')
-        {
-            $warehouses = Auth::user()->warehouseList;
-            if (!empty($warehouses)) {
-                foreach ($warehouses as $w)
-                {
-                   if($w['type_id'] == $id)
-                   {
-                       $result[$w['id']] = $w;
-                   }
-                }
-            }
-
-            return ($result);
-        }
-        */
-
         $warehouses = Warehouse::where('type_id', $request->type_id)
                     ->where('activity_id', $request->rdActivity)
                     ->where('company_id', $request->company_id)
                     ->where('active', '1')
                     ->get();
         return $warehouses;
-   }
-    public function warehousesActivity($id)
-    {
-/*
-        $result = Array();
-
-        if(Auth::user()->activities != '')
-        {
-            $warehouses = Auth::user()->warehouseList;
-            if (!empty($warehouses)) {
-                foreach ($warehouses as $w)
-                {
-                   if($w['activity_id'] == $id)
-                   {
-                       $result[$w['id']] = $w;
-                   }
-                }
-            }
-
-            return ($result);
-        }
-        */
    }
 
     /**
@@ -88,18 +47,26 @@ class jsonController extends Controller
      */
     public function warehousesByActivity(Request $request)
     {
+/*        $warehouses = Auth::user()->
+            warehouses->
+            where('activity_id', $request->rdActivity)->
+            where('company_id', $request->company_id);*/
+
+        $warehouses = Auth::user()->warehouses->filter(function ($item) use($request) {
+            return ($item->activity_id == $request->rdActivity AND $item->company_id == $request->company_id);
+        });
+
+
 /*
-        $warehouses = Warehouse::where('company_id', $request->company_id)
-                                ->where('activity_id', $request->rdActivity)
-                                ->where('active', '1')
-                                ->orderBy('name')
-                                ->get();
-*/
-        $activity_id = (int)$request->rdActivity;
-        $company_id = (int)$request->company_id;
-//        $activity_id = $activity_id;
-//        dd($activity_id);
-        $warehouses = Auth::user()->warehouses->where('activity_id', $activity_id)->where('company_id', $company_id);
+        if($warehouses->count()<1)
+        {
+            // Chequeo dos veces la lista de almacenes porque el query en el servidor no funciona sin convertir
+            // los parámetros a integer
+            $company_id = (int)$request->company_id;
+            $activity_id = (int)$request->rdActivity_id;
+            $warehouses = Auth::user()->warehouses->where('activity_id', $activity_id)->where('company_id', $company_id);
+        }
+        */
         return $warehouses;
     }
     /**
