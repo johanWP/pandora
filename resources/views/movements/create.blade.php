@@ -184,8 +184,24 @@ Nuevo Movimiento
                     valid= false;
                     mensaje = mensaje + 'Todos los articulos deben tener una cantidad especificada. <br />';
                     $('#divMsg').html(mensaje).slideDown('slow');
+                    $('body').scrollTop(0);
                 }
             }
+//  VALIDO QUE NO SE EXCEDA DE CANTIDAD
+            for (i=1; i<= numPanels; i++)
+            {
+                cantidad = $('#quantity'+i).val();
+                max = $('#maxQ'+i).val();
+                if (cantidad > max)
+                {
+                    $('#divArticlePanel'+i).addClass('has-error');
+                    valid= false;
+                    mensaje = mensaje + 'Revise las cantidades de los artículos. <br />';
+                    $('#divMsg').html(mensaje).slideDown('slow');
+                    $('body').scrollTop(0);
+                }
+            }
+
             return  valid;
         }
 

@@ -173,8 +173,8 @@ class UsersController extends Controller
             'lastName'      => $request['lastName'],
             'email'         => $request['email'],
             'securityLevel' => $request['securityLevel'],
-            'company_id'    => Auth::user()->current_company_id,
-            'current_company_id'    => Auth::user()->current_company_id,
+//            'company_id'    => Auth::user()->current_company_id,
+//            'current_company_id'    => Auth::user()->current_company_id,
             'active'        => $act
         ]);
 
