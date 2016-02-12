@@ -54,7 +54,7 @@
                       <td>{{ $article['product_code'] }}</td>
                       <td>{{ $article['name'] }}</td>
                       <td>1</td>
-                      <td>{{ $item->serial  }}</td>
+                      <td>{{ $item  }}</td>
                    </tr>
                 @endforeach
            @endif

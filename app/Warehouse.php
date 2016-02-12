@@ -54,22 +54,16 @@ class Warehouse extends Model
         return $this->belongsTo('App\Activity');
     }
 
-    public function users()
-    {
-        return $this->belongsToMany('App\User')->withTimestamps();
-    }
     /**
-     * Devuelve un arreglo con los articulos que están en un almacén con sus cantidades,
-     * si el almacen es de sistema devuelve la lista completa de articulos
      * @return array
      */
     public function getInventoryAttribute()
     {
-
+        $temp = Array();
         $result = Array();
         if ($this->type->id != 1)
         {
-        //        Traigo todos los movimientos que han enviado articulos hacia este almacen
+            //        Traigo todos los movimientos que han enviado articulos hacia este almacen
 
             $in = DB::table('movements')
                 ->select(DB::raw('id,article_id, serial,SUM(quantity) AS totalIn'))
@@ -80,6 +74,7 @@ class Warehouse extends Model
                 ->get();
 
 //        Traigo todos los movimientos que han sacado articulos de este almacen
+
             $out = DB::table('movements')
                 ->select(DB::raw('id,article_id, serial,SUM(quantity) AS totalOut'))
                 ->whereIn('status_id', [1, 2])     // status 1: Aprobado, Status 2: por aprobar
@@ -100,7 +95,6 @@ class Warehouse extends Model
                     return $item->article_id == $movIn->article_id;
                 });
 
-                $seriales = Array();
                 if ($filtered->count() > 0)
                 {
                     $movOut = $filtered->first();
@@ -112,13 +106,14 @@ class Warehouse extends Model
 
                 if($total >0)
                 {
+                    $temp = $this->buscarSeriales($art);
                     $result[$art->id] = [
                         'id' => $art->id,
                         'name' => $art->name,
                         'fav' => $art->fav,
                         'product_code' => $art->product_code,
                         'serializable' => $art->serializable,
-                        'seriales' => $this->buscarSeriales($art),
+                        'seriales' => $temp,
                         'cantidad' => $total
                     ];
                 }
@@ -130,37 +125,28 @@ class Warehouse extends Model
         {
 //            Si es un almacen de sistema, devuevo lista de articulos activos
 //              que incluye articulos de todas las compañias si el usuario pertenece a una empresa parent
-//            if(Auth::user()->company->parent==1)
-//            {
-//                $all = DB::table('articles')
-//                    ->select('id', 'name', 'serializable', 'fav')
-//                    ->where('active', '=', 1)
-//                    ->where('company_id', '=', Auth::user()->current_company_id)
-//                    ->orderBy('name', 'asc')
-//                    ->get();
-//            } else {
-                $all = DB::table('articles')
-                    ->select('id', 'name', 'serializable', 'fav')
-                    ->where('active', '=', 1)
-                    ->orderBy('name', 'asc')
-                    ->get();
-//            }
+            $all = DB::table('articles')
+                ->select('id', 'name', 'serializable', 'fav')
+                ->where('active', '=', 1)
+//                ->where('company_id', '=', Auth::user()->current_company_id)
+                ->orderBy('name', 'asc')
+                ->get();
 
             foreach ($all as $art)
             {
                 $result[$art->id] =
                     [
-                    'id' => $art->id,
-                    'name'=>$art->name,
-                    'fav' => $art->fav,
-                    'serializable' => $art->serializable,
-                    'cantidad' => 999999
+                        'id' => $art->id,
+                        'name'=>$art->name,
+                        'fav' => $art->fav,
+                        'serializable' => $art->serializable,
+                        'cantidad' => 999999
                     ];
             }
 
             //dd($result);
         }
- /*****************/
+        /*****************/
         usort($result, function($a, $b) {
             // You can use an anonymous function like this for the usort comparison function.
             if ($a['name'] < $b['name']) return -1;
@@ -169,53 +155,60 @@ class Warehouse extends Model
             return 1; // $a['order'] must be > $b['order'] at this point
         });
 
-/******************/
+        /******************/
         return $result;
     }
 
-    /**
-     * Recibe el ID de un articulo y devuelve arreglo con los seriales de ese articulo que se encuentran
-     * en el almacén actual
-     * @param $art
-     * @return array
-     */
     private function buscarSeriales($art)
     {
         // status 1: Aprobado, Status 2: por aprobar
-
+        $s = Array();
         if ($art->serializable=='1')
         {
-            $out = Movement::select(DB::raw('DISTINCT(serial)'))->
+//            dd($art);
+//            Busco todos los seriales de entrada de ese articulo en particular
+            $in = Movement::select(DB::raw('serial, SUM(quantity) as totalIn'))->
+            whereIn('status_id', [1, 2])->     // status 1: Aprobado, Status 2: por aprobar
+            where('destination_id', '=', $this->id)->
+            where('article_id', $art->id)->
+            groupBy('serial')->
+            orderBy('article_id', 'asc')->
+            get();
+
+//            Busco todos los seriales de ese articulo que salieron
+            $out = Movement::select(DB::raw('serial, SUM(quantity) as totalOut'))->
             whereIn('status_id', [1, 2])->
             where('origin_id', '=', $this->id)->
             where('article_id', $art->id)->
-            orderBy('id', 'asc')->
-            get()->toArray();
-            foreach ($out as $movOut) {
-                $seriales[] = $movOut['serial'];
-            }
-            if (count($out) > 0) {
-                $s = DB::table('movements')->
-                select(DB::raw('DISTINCT(serial)'))->
-                whereIn('status_id', [1, 2])->
-                whereNotIn('serial', $seriales)->
-                where('destination_id', '=', $this->id)->
-                where('article_id', $art->id)->
-                orderBy('id', 'asc')->
-                get();
+            groupBy('serial')->
+            orderBy('article_id', 'asc')->
+            get();
 
-            } else {
-                $s = DB::table('movements')->
-                select(DB::raw('DISTINCT(serial)'))->
-                whereIn('status_id', [1, 2])->
-                //            whereNotIn('serial', $seriales)->
-                where('destination_id', '=', $this->id)->
-                where('article_id', $art->id)->
-                    orderBy('id', 'asc')->
-                    get();
+            $in = collect($in);
+            $out = collect($out);
+
+            foreach($in as $movIn)
+            {
+                $filtered = $out->filter(function ($item) use($movIn)
+                {
+                    return strtoupper($item->serial) == strtoupper($movIn->serial);
+                });
+                if ($filtered->count() > 0)
+                {  //  si ese serial salió del almacen
+                    $movOut = $filtered->first();
+
+                    if(($movIn->totalIn - $movOut->totalOut)>0)
+                    {
+                        $s[]=$movIn->serial;
+                    }
+                } else
+                {
+                    $s[]= $movIn->serial;
                 }
+
+            }
         } else
-        {
+        {  // Esto esta porque siempre hay que devolver un arreglo, aunque el articulo no sea serializable
             $s[]='';
         }
 

@@ -12,7 +12,7 @@ Nuevo Movimiento
     @include('errors.list')
 
     {!! Form::open(['url' => 'movimientos', 'id'=>'frm']) !!}
-    @include('movements.form', ['submitButtonText' => 'Registrar nuevo movimiento!'])
+    @include('movements.form', ['submitButtonText' => 'Registrar nuevo movimiento'])
 
     {!! Form::close() !!}
 
@@ -73,7 +73,6 @@ Nuevo Movimiento
                       $('#serialList1').hide();
                       $('#quantity1').val('')
                                  .attr('readonly', false);
-
                 var request = $.ajax({
                   url: "/api/inventory/" + origin_id,
                   method: "GET",
@@ -356,7 +355,8 @@ Nuevo Movimiento
 
                             for (j in inventario[i].seriales)
                             {
-                                serial = inventario[i].seriales[j].serial;
+                                serial = inventario[i].seriales[j];
+//                                serial = inventario[i].seriales[j].serial;
                                 $('#serialList'+panelCount).append($('<option>')
                                         .text(serial)
                                         .attr('value', serial));

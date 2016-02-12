@@ -283,6 +283,10 @@ class MovementsController extends Controller
         {
             $msg .= '<li>Debe incluir el serial del '.$m->article->name.'</li>';
         }
+        if(($m->article->active == 0))
+        {
+            $msg .= '<li>'.$m->article->name.' está marcado como inactivo. Comuníquese con el jefe de almacén.</li>';
+        }
 
         if(($m->article->serializable==1) AND ($m->serial!='') AND ($m->origin->type_id != 1))
         {

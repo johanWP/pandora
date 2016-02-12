@@ -138,7 +138,7 @@ class ReportsController extends Controller
                                     $articulo['product_code'],
                                     $articulo['name'],
                                     '1',
-                                    $item->serial
+                                    $item
                                 ];
                             }
                         }
