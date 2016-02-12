@@ -23,7 +23,8 @@ class UsersController extends Controller
     public function index()
     {
         //
-        $users = User::where('company_id', Auth::user()->current_company_id)
+        $users = User::where('company_id', Auth::user()->current_company_id)->
+                        where('securityLevel', '<=', Auth::user()->securityLevel)
                     ->orderBy('firstName', 'asc')->paginate(10);
         return view('users.index', compact('users'));
     }
