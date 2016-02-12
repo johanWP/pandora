@@ -188,7 +188,6 @@ Nuevo Movimiento
                 }
             }
 //  VALIDO QUE NO SE EXCEDA DE CANTIDAD
-/*
             for (j=1; j<= numPanels; j++)
             {
                 cantidad = $('#quantity'+j).val();
@@ -203,7 +202,6 @@ Nuevo Movimiento
                 }
             }
 
-*/
             return  valid;
         }
 
