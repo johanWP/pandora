@@ -54,7 +54,7 @@
   </div>
 
   <div class="form-group-sm">
-    {!! Form::submit('Subir archivo', ['class'=>'btn btn-primary']); !!}
+    {!! Form::submit('Subir archivo', ['class'=>'btn btn-primary', 'id' => 'btnSubmit']) !!}
   </div>
   {!! Form::close() !!}
 </div>
@@ -67,25 +67,12 @@ fileuploader:
 @endsection
 
 @section('scripts')
-{{--
-
-<link href="/css/uploadfile.css" rel="stylesheet">
-<script src="/js/jquery.uploadfile.min.js"></script>
       <script>
       $(function(){
-         $("#fileuploader").uploadFile(
-         {
-            url:"/import/articles",
-            multiple:true,
-            dragDrop:true,
-            fileName:"myfile",
-            abortStr:"Abortar",
-            cancelStr:"Cancelar",
-            doneStr:"Terminado"
-
-         });
-      });   // fin del document.ready
+          $('#btnSubmit').click(function()
+          {
+              $('#btnReject').html('<i class="fa fa-cog fa-spin"></i> Espere...')
+                      .attr('disabled', 'disabled');
+          });
       </script>
-
---}}
 @endsection

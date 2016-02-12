@@ -13,7 +13,7 @@
 
 <hr/>
 <?php
-    $ticketActual = '';
+    $ticketActual = '~~~~~~~~~';
     $i = 0;
 ?>
 <div class="row">
@@ -36,10 +36,10 @@ $i++;
                     <tr>
                       <th>Cant.</th>
                       <th>Artículo</th>
-                      <th><h3>Desde</h3></th>
+                      <th>Desde</th>
                       <th><b> &nbsp;</b></th>
-                      <th><h3>Hacia</h3></th>
-                      <th class="text-center" colspan="2"><h3>Acciones</h3></th>
+                      <th>Hacia</th>
+                      <th class="text-center" colspan="2">Acciones</th>
 
                     </tr>
                     </thead>
@@ -75,17 +75,17 @@ $i++;
 
                   @if((Auth::user()->securityLevel >= 20) AND ($movement->status_id ==2))
                     <a href="#modalApprove" class="btn btn-primary" data-toggle="modal" data-id="{{ $movement->id }}" data-name="aprobar"  data-ticket="{{$movement->ticket}}" data-note="{{ $movement->note }}">
-                      <i class="fa fa-check fa-2x"></i>
+                      <i class="fa fa-check"></i>
                     </a>
                   @endif
 
                   <a href="/movimientos/{{ $movement->id }}" id="btnVer" class="btn btn-default">
-                      <i class="fa fa-eye fa-2x"></i>
+                      <i class="fa fa-eye"></i>
                   </a>
 
                   @if(Auth::user()->securityLevel >= 20)
                     <a href="#modalApprove" class="btn btn-danger" data-toggle="modal" data-id="{{ $movement->id }}" data-name="rechazar" data-ticket="{{$movement->ticket}}" data-note="{{ $movement->note }}">
-                      <i class="fa fa-close fa-2x"></i>
+                      <i class="fa fa-close"></i>
                     </a>
                   @endif
                   </td>
