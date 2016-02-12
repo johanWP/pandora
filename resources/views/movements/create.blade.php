@@ -188,10 +188,11 @@ Nuevo Movimiento
                 }
             }
 //  VALIDO QUE NO SE EXCEDA DE CANTIDAD
+/*
             for (j=1; j<= numPanels; j++)
             {
                 cantidad = $('#quantity'+j).val();
-                max = parseInt($('#maxQ'+j).html()); alert('cant:'+cantidad+', max: '+max);
+                max = parseInt($('#maxQ'+j).html());
                 if (cantidad > max)
                 {
                     $('#divArticlePanel'+j).addClass('has-error');
@@ -202,6 +203,7 @@ Nuevo Movimiento
                 }
             }
 
+*/
             return  valid;
         }
 

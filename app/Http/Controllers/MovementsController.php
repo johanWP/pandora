@@ -100,7 +100,6 @@ class MovementsController extends Controller
      */
     public function store(CreateMovementRequest $request)
     {
-//        dd($request->all());
         $i =1;
         $arrMov = Array();
         $conErrores = '';
@@ -145,7 +144,6 @@ class MovementsController extends Controller
                 } elseif(!strstr($conErrores, $valid))
                 {
                     $conErrores .= $valid;
-//                    $conErrores .= '<li>'.$mov->article->name.'</li>';
                 }
             }
 
@@ -251,7 +249,7 @@ class MovementsController extends Controller
      */
     private function validateMov(Movement $m)
     {
-        $msg = '';
+        $msg = ''; $cantidad=0;
 
         if ($m->origin->active != 1)
         {
@@ -298,6 +296,21 @@ class MovementsController extends Controller
             }
         }
 
+        if ($m->origin->type_id != 1)
+        {
+            $inventory = collect($m->origin->inventory);
+            $filtered = $inventory->filter(function ($item) use($m)
+            {
+                return $item['id'] == $m->article_id;
+            });
+            $articulo = $filtered->first(); //dd($m->quantity);
+            $cantidad = $articulo['cantidad'];
+            if($m->quantity > $articulo['cantidad'] )
+            {
+                $msg .= '<li>No puede transferir <strong>'.$articulo['cantidad'].'</strong> '.$m->article->name.'</li>';
+            }
+        }
+
         return $msg;
     }
 
@@ -311,7 +324,7 @@ class MovementsController extends Controller
     {
 
         $mov = Movement::where('serial','=', $serial)
-            ->where('status_id', '=', 1)
+            ->whereIn('status_id', '=', 1)
             ->orderBy('id', 'desc')
             ->first();
 
