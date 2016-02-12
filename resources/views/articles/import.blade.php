@@ -68,11 +68,12 @@ fileuploader:
 
 @section('scripts')
       <script>
-      $(function(){
-          $('#btnSubmit').click(function()
-          {
+      $(function()
+      {
+          $('#btnSubmit').click(function () {
               $('#btnReject').html('<i class="fa fa-cog fa-spin"></i> Espere...')
                       .attr('disabled', 'disabled');
           });
+      }
       </script>
 @endsection
