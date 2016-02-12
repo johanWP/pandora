@@ -188,13 +188,13 @@ Nuevo Movimiento
                 }
             }
 //  VALIDO QUE NO SE EXCEDA DE CANTIDAD
-            for (i=1; i<= numPanels; i++)
+            for (j=1; j<= numPanels; j++)
             {
-                cantidad = $('#quantity'+i).val();
-                max = $('#maxQ'+i).val();
-                if (cantidad >= max)
+                cantidad = $('#quantity'+j).val();
+                max = parseInt($('#maxQ'+j).html()); alert('cant:'+cantidad+', max: '+max);
+                if (cantidad > max)
                 {
-                    $('#divArticlePanel'+i).addClass('has-error');
+                    $('#divArticlePanel'+j).addClass('has-error');
                     valid= false;
                     mensaje = mensaje + 'Revise las cantidades de los artículos. <br />';
                     $('#divMsg').html(mensaje).slideDown('slow');
