@@ -161,7 +161,7 @@ class MovementsController extends Controller
             session()->flash('flash_message_danger', 'Algunos movimientos no han sido registrados.' . $conErrores);
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
             session()->flash('flash_message_important', true);
-            return Redirect::to('movimientos/create')->withInput();
+            return Redirect::to('movimientos');
         }
 
 

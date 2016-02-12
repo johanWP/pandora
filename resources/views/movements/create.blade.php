@@ -192,7 +192,7 @@ Nuevo Movimiento
             {
                 cantidad = $('#quantity'+i).val();
                 max = $('#maxQ'+i).val();
-                if (cantidad > max)
+                if (cantidad >= max)
                 {
                     $('#divArticlePanel'+i).addClass('has-error');
                     valid= false;
