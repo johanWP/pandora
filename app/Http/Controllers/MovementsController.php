@@ -255,6 +255,7 @@ class MovementsController extends Controller
         {
             $msg .= '<li>El almacén de origen se encuentra inactivo.</li>';
         }
+
         if ($m->destination->active != 1)
         {
             $msg .= '<li>El almacén de destino se encuentra inactivo.</li>';
@@ -289,6 +290,7 @@ class MovementsController extends Controller
         if(($m->article->serializable==1) AND ($m->serial!='') AND ($m->origin->type_id != 1))
         {
             $lastMovement = $this->lastMovement($m->serial);
+
             if(($lastMovement->destination_id != $m->origin_id) && ($lastMovement->destination->type_id!=1))
             {
                 $msg .= '<li>El artículo no se encuentra en el almacén '. $m->origin->name .'.
@@ -324,7 +326,7 @@ class MovementsController extends Controller
     {
 
         $mov = Movement::where('serial','=', $serial)
-            ->whereIn('status_id', '=', 1)
+            ->where('status_id', '=', 1)
             ->orderBy('id', 'desc')
             ->first();
 
