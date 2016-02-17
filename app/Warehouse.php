@@ -158,7 +158,7 @@ class Warehouse extends Model
         return $result;
     }
 
-    private function buscarSeriales($art)
+    public function buscarSeriales($art)
     {
         // status 1: Aprobado, Status 2: por aprobar
         $s = Array();
@@ -195,7 +195,6 @@ class Warehouse extends Model
                 if ($filtered->count() > 0)
                 {  //  si ese serial salió del almacen
                     $movOut = $filtered->first();
-
                     if(($movIn->totalIn - $movOut->totalOut)>0)
                     {
                         $s[]=$movIn->serial;

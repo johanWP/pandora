@@ -287,14 +287,17 @@ class MovementsController extends Controller
             $msg .= '<li>'.$m->article->name.' está marcado como inactivo. Comuníquese con el jefe de almacén.</li>';
         }
 
-        if(($m->article->serializable==1) AND ($m->serial!='') AND ($m->origin->type_id != 1))
+//        if(($m->article->serializable==1) AND ($m->serial!='') AND ($m->origin->type_id != 1))
+        if(($m->article->serializable==1) AND ($m->serial!=''))
         {
             $lastMovement = $this->lastMovement($m->serial);
-
-            if(($lastMovement->destination_id != $m->origin_id) && ($lastMovement->destination->type_id!=1))
+            if(!is_null($lastMovement->destination))
             {
-                $msg .= '<li>El artículo no se encuentra en el almacén '. $m->origin->name .'.
+                if(($lastMovement->destination_id != $m->origin_id) && ($lastMovement->destination->type_id!=1))
+                {
+                    $msg .= '<li>El artículo no se encuentra en '. $m->origin->name .'.
                          Verifique el serial del equipo.</li>';
+                }
             }
         }
 
