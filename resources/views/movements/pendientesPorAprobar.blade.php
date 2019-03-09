@@ -12,6 +12,11 @@
 </div>
 
 <hr/>
+
+@foreach($warehouses as $warehouse)
+	
+@endforeach
+
 <?php
     $ticketActual = '~~~~~~~~~';
     $i = 0;

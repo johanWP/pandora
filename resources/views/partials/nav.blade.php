@@ -108,6 +108,14 @@
                     <li>
                         <a href="{!!URL::to('/movimientos/create')!!}"><i class='fa fa-plus'></i> Nuevo Movimiento</a>
                     </li>
+
+@if (Auth::user()->securityLevel >= 20)
+                    <li>
+                        <a href="{!!URL::to('/movimientos/createbasic')!!}"><i class='fa fa-plus'></i> Nuevos movimientos no seriados</a>
+                    </li>
+@endif
+                    
+
                     <li>
                         <a href="{!!URL::to('/movimientos/alta')!!}"><i class='fa fa-arrow-circle-up'></i> Ingreso/Recupero de Artículos</a>
                     </li>
@@ -118,10 +126,44 @@
                     </li>
 @endif
                     <li>
-                        <a href="{!!URL::to('/movimientos/')!!}"><i class='fa fa-list-ol    '></i> Ver Últimos Movimientos</a>
+                        <a href="{!!URL::to('/movimientos/')!!}"><i class='fa fa-list-ol'></i> Ver Últimos Movimientos</a>
                     </li>
                 </ul>
             </li>
+
+            <li>
+                <a href="#"><i class="fa fa-exchange fa-fw"></i> Tickets<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="{!!URL::to('/vttickets')!!}"><i class='fa fa-list-ol fa-fw'></i> Ver tickets VT</a>
+                    </li>
+                    <li>
+                        <a href="{!!URL::to('/vttickets/agenda')!!}"><i class='fa fa-calendar fa-fw'></i> Agenda del día</a>
+                    </li>
+@if (Auth::user()->securityLevel >= 20)
+                    <li>
+                        <a href="{!!URL::to('/vttickets/import')!!}"><i class='fa fa-cloud-upload fa-fw'></i> Importar tickets VT ETA</a>
+                    </li>
+@endif
+                </ul>
+            </li>
+                
+                
+            <li>
+                <a href="#"><i class="fa fa-book fa-fw"></i> Planos y manuales<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="{!!URL::to('/maps')!!}"><i class='fa fa-map-marker fa-fw'></i> Ver localidades</a>
+                    </li>
+                    <li>
+                        <a href="{!!URL::to('/levels')!!}"><i class='fa fa-map-marker fa-fw'></i> Ajustes de niveles</a>
+                    </li>
+                    <li>
+                        <a href="{!!URL::to('/selector')!!}"><i class='fa fa-map-marker fa-fw'></i> Selector de fases</a>
+                    </li>
+                </ul>
+            </li>
+
 {{--Supervisor o mayor puede hacer esto--}}
 @if (Auth::user()->securityLevel >= 20)
             <li>
@@ -153,7 +195,7 @@
                         <a href="{!!URL::to('/reportes/articulos')!!}"><i class='fa fa-th-list fa-fw'></i> Maestro de articulos</a>
                     </li>
                     <li>
-                        <a href="{!!URL::to('/reportes/articulosPorAlmacen')!!}"><i class='fa fa-list-ol fa-fw'></i> Artículos por almacén</a>
+                        <a href="{!!URL::to('/reportes/articulosPorAlmacenAlt')!!}"><i class='fa fa-list-ol fa-fw'></i> Artículos por almacén</a>
                     </li>
                     <li>
                         <a href="{!!URL::to('/reportes/movimientosPorAlmacen')!!}"><i class='fa fa-arrows fa-fw'></i> Movimientos por Almacén</a>

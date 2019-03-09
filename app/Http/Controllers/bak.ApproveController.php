@@ -15,38 +15,22 @@ class ApproveController extends Controller
 {
     public function viewAll()
     {
-
-// armo un arreglo para solo traer los warehouses de la misma empresa que el usuario
-        $warehouses = Warehouse::where('company_id', Auth::user()->current_company_id)
-            //->where('type_id', '<>', 1)
-            ->orderBy('name', 'asc')
-            ->get();
-
-        foreach ($warehouses as $warehouse)
-        {
-            $mywarehouses[] = $warehouse->id;
-        }
-
 /*        $movements  = DB::table('movements')
             ->where('status_id', '=', '2')
             ->orderBy('ticket')
             ->get();
-
-        $movements = Movement::query('select * from movements where status_id=2')
-                        ->where('status_id', '2')
-                        ->orderBy('ticket', 'asc')->paginate(20);
-
 */
-
         $movements = Movement::query('select * from movements where status_id=2')
                         ->where('status_id', '2')
-                        ->whereIn('origin_id', $mywarehouses)
-                        ->whereIn('destination_id', $mywarehouses)
                         ->orderBy('ticket', 'asc')->paginate(20);
+                        
+        
+        $warehouses = Warehouse::where('company_id', Auth::user()->current_company_id)
+            ->where('type_id', '<>', 1)
+            ->orderBy('name', 'asc')
+            ->get();
 
 //        dd($movements);
-
-           
         return view('movements.pendientesPorAprobar', compact('movements','warehouses'));
     }
 

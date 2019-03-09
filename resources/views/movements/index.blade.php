@@ -100,6 +100,13 @@
 <div class="row">
     <div class="text-center">{!! $movements->render() !!}</div>
 </div>
+
+{{--
+	@if($serial)
+		TEMP: serial {{ $serial }}
+	@endif
+--}}
+	
 @else
 	<h2>No hay movimientos cargados en el sistema.</h2>
 @endif

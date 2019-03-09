@@ -77,8 +77,19 @@ class jsonController extends Controller
 
     public function articlesAvailable($warehouse_id)
     {
+        // Para evitar timeout en validaciones
+        set_time_limit(240);
+        
         $warehouse = Warehouse::findOrFail($warehouse_id);
         return $warehouse->inventory;
+    }
+    
+    public function articlesAvailableBasic($warehouse_id)
+    {
+ 
+        
+        $warehouse = Warehouse::findOrFail($warehouse_id);
+        return $warehouse->inventorybasic;
     }
 
     /** Devuelve el detalle de un almacén especificado

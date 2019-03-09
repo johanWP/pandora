@@ -10,12 +10,11 @@
     <h1>Últimos Movimientos</h1>
   </div>
   <div class=""><br/>
-    <a class="btn btn-primary" href="#"><i class="fa fa-file-excel-o fa-fw"></i> Exportar (Pronto)</a>
+    <a class="btn btn-primary" href="/reportes/excelMovimientosPorAlmacen/{{ Input::get('rdActivity') }}/{{ Input::get('fechaDesde') }}/{{ Input::get('fechaHasta') }}/{{ $company[0] }}"><i class="fa fa-file-excel-o fa-fw"></i> Exportar</a>
   </div>
 </div>
 
     <hr/>
-
 
 <div class="row">
 @if($movements->count() > 0)

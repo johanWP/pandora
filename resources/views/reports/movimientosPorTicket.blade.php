@@ -30,13 +30,19 @@
                 $ticketActual = $movement->ticket;
                 $i++;
                 ?>
-                <h3 class="{{$ticketActual}}">
+                <div class="row"><div class="col-sm-10">
+				<h3 class="{{$ticketActual}}">
                     @if ($ticketActual =='')
                         (Sin Ticket)
                     @else
                         {{$ticketActual}}
                     @endif
                 </h3>
+				</div>
+				<div class="col-sm-2"><br/>
+					<a class="btn btn-primary" href="/reportes/excelMovimientosPorTicket/{{ $ticketActual }}"><i class="fa fa-file-excel-o fa-fw"></i> Exportar</a>
+				</div>
+				</div>
                 <table class="table table-striped {{$ticketActual}}" id="table_{{$ticketActual}}">
                     <thead>
                     <tr>

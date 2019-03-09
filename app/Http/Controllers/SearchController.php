@@ -15,7 +15,7 @@ use Illuminate\Http\Response;
 class SearchController extends Controller
 {
     /** Sirve para todos los buscadores (Articulos, Usuarios, Almacenes...)
-     * @param $table: la tabla donde se va a hacwer la busqueda
+     * @param $table: la tabla donde se va a hacer la busqueda
      * @return array un json que se imprime para consumirse con AJAX
      */
     public function autocomplete($table)
@@ -51,6 +51,21 @@ class SearchController extends Controller
                         'id' => $query->id,
                         'value' => '('.$query->product_code.') - ' . $query->name,
                         'serializable'=> $query->serializable
+                            ];
+            }
+        } elseif($table == 'vttickets')
+        {
+            $queries = DB::table($table) ->where(function ($query)
+                {
+                    $term = Input::get('term');
+                    $query->where('order_number', 'LIKE', '%' . $term . '%')
+						->orWhere('customer_id', 'LIKE', '%' . $term . '%');;
+                })->
+               take(10)->get();
+            foreach ($queries as $query) {
+                $results[] = [
+                        'id' => $query->id,
+                        'value' => $query->order_number.' (' . $query->date.' / Cliente: '.$query->customer_id.')'
                             ];
             }
         } else
