@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
@@ -29,7 +30,7 @@ class Warehouse extends Model
 
     /**
      * Retorna la compañía a la que pertenece el almacen
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function company()
     {
@@ -38,7 +39,7 @@ class Warehouse extends Model
 
     /**
      * Retorna el tipo de almacen
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function type()
     {
@@ -47,7 +48,7 @@ class Warehouse extends Model
 
     /**
      * Retorna la actividad a la que pertenece un almacen
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function activity()
     {

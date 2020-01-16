@@ -198,7 +198,7 @@
         });
         $('#' + selectId).html(soptions).prepend(foption);
 
-    };
+    }
 
   </script>
 @endsection

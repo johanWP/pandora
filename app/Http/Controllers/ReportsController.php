@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Movement;
+use Carbon\Carbon;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use App\Company;
 use App\Activity;
@@ -11,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Article;
 use App\Warehouse;
 use App\User;
+use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +45,7 @@ class ReportsController extends Controller
      * Devuelve un listado de articulos
      * Si el usuario logueado pertenece a una empresa parent, el listado devulve la lista de
      * articulos de current_company
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function articles()
     {
@@ -52,7 +55,7 @@ class ReportsController extends Controller
 
     /** Muestra el formulario del reporte de Artículos por Almacén
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function showArticulosPorAlmacen()
     {
@@ -69,7 +72,7 @@ class ReportsController extends Controller
     }
     /**
      * Devuelve el inventario de articulos en cada uno de los almacenes seleccionados
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function articulosPorAlmacen(Request $request)
     {
@@ -160,7 +163,7 @@ class ReportsController extends Controller
                         'Auditado por:', $name,
                         ));
                     $sheet->prependRow(1, array(
-                        'Fecha: ', \Carbon\Carbon::now('America/Argentina/Buenos_Aires'),
+                        'Fecha: ', Carbon::now('America/Argentina/Buenos_Aires'),
                         ));
                     $sheet->prependRow(1, array('Auditoría de '.$warehouse->name));
 
@@ -206,7 +209,7 @@ class ReportsController extends Controller
     }
     /**
      * Devuelve el inventario de articulos en cada uno de los almacenes seleccionados
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function articulosPorAlmacenAlt(Request $request)
     {
@@ -417,7 +420,7 @@ class ReportsController extends Controller
     
     /**
      * Muestra el formulario para el reporte de movimientos por almacén
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function showMovimientosPorAlmacen()
     {

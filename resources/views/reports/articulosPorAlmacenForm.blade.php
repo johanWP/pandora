@@ -116,8 +116,7 @@
       });
       $('#' + selectId).html(soptions).prepend(foption);
 
-  };
-
+  }
   function loadWarehouses()
   {
         var activity_id = $("#frm input[name='rdActivity']:checked").val();

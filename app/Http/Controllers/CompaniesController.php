@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Company;
 use Auth;
 use App\Activity;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View;
 use Redirect;
 use App\Http\Requests;
 use App\Http\Requests\CompanyRequest;
@@ -20,7 +23,7 @@ class CompaniesController extends Controller
 {
     //
     /**
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function index()
     {
@@ -43,7 +46,7 @@ class CompaniesController extends Controller
 
     /**
      * @param Requests\CreateCompanyRequest $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse|Redirector
      */
     public function store(CompanyRequest $request)
     {

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class Type extends Model
 {
@@ -17,7 +18,7 @@ class Type extends Model
     /**
      * Establece la relación "un tipo puede tener varios almacenes"
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function warehouses()
     {

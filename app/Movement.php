@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Auth;
 use App\Warehouse;
@@ -31,7 +32,7 @@ class Movement extends Model
 
     /**
      * Retorna el usuario que realizó el movimiento
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function user()
     {
@@ -40,7 +41,7 @@ class Movement extends Model
 
     /**
      * Retorna el articulo que se movió
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function article()
     {

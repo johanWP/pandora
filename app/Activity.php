@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class Activity extends Model
 {
@@ -15,7 +17,7 @@ class Activity extends Model
     protected $dates = ['deleted_at'];
     /**
      * Devuelve las empresas que realizan una actividad
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function companies()
     {
@@ -25,7 +27,7 @@ class Activity extends Model
     /**
      * Obtener los usuarios que realizan la actividad
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function users()
     {
@@ -34,7 +36,7 @@ class Activity extends Model
 
     /**
      * Establece la relación "una actividad la hacen varios almacenes"
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function warehouses()
     {

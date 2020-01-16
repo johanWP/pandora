@@ -20,7 +20,7 @@ jQuery(function($) {'use strict';
 		$('.navbar-collapse').find('.scroll a').each(function(){
 			contentTop.push( $( $(this).attr('href') ).offset().top);
 			contentBottom.push( $( $(this).attr('href') ).offset().top + $( $(this).attr('href') ).height() );
-		})
+		});
 		$.each( contentTop, function(i){
 			if ( winTop > contentTop[i] - rangeTop ){
 				$('.navbar-collapse li.scroll')
@@ -28,9 +28,8 @@ jQuery(function($) {'use strict';
 				.eq(i).addClass('active');			
 			}
 		})
-	};
-
-	$('#tohash').on('click', function(){
+    }
+    $('#tohash').on('click', function(){
 		$('html, body').animate({scrollTop: $(this.hash).offset().top - 5}, 1000);
 		return false;
 	});
@@ -98,9 +97,8 @@ jQuery(function($) {'use strict';
 	      isPause = false;
 	      //run interval every 0.01 second
 	      tick = setInterval(interval, 10);
-	    };
-	 
-	    function interval() {
+        }
+        function interval() {
 	      if(isPause === false){
 	        percentTime += 1 / time;
 	        $bar.css({

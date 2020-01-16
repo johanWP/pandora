@@ -9,6 +9,8 @@ use DB;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -106,7 +108,7 @@ class User extends Model implements AuthenticatableContract,
 
     /**
      * Retorna la compan˜a a la que pertenece el usuario
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function company()
     {
@@ -116,7 +118,7 @@ class User extends Model implements AuthenticatableContract,
 
     /**
      * Obtener las actividades que realiza un usuario
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function activities()
     {
@@ -130,7 +132,7 @@ class User extends Model implements AuthenticatableContract,
     }
     public function getCurrentCompanyAttribute()
     {
-        $company = \App\Company::findOrFail($this->current_company_id);
+        $company = Company::findOrFail($this->current_company_id);
         return $company;
     }
 }

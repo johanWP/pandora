@@ -192,7 +192,7 @@
         {
             var i;
             $(this).closest('.panel').remove();
-            i = $('.panel').length
+            i = $('.panel').length;
             $('#btnAddPanel'+i).attr('disabled', false);
             $('#btnRemovePanel'+i).attr('disabled', false);
             $('#autocomplete'+i).attr('readonly', false);
@@ -299,8 +299,7 @@
             });
             $('#' + selectId).html(soptions).prepend(foption);
 
-        };
-
+        }
         /*****************************************/
         function loadWarehouses(company, activity)
         {

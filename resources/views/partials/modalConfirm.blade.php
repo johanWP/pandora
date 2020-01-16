@@ -19,11 +19,11 @@
 
     var baseFolder = window.location.pathname + '/';
     $('#modalConfirm').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget) // Button that triggered the modal
-      var recipient = button.data('name') // Extract info from data-* attributes
-      var deleteId = button.data('deleteme') // Extract info from data-* attributes
-      var modal = $(this)
-      modal.find('.modal-body b').text(recipient)
+      var button = $(event.relatedTarget); // Button that triggered the modal
+      var recipient = button.data('name'); // Extract info from data-* attributes
+      var deleteId = button.data('deleteme'); // Extract info from data-* attributes
+      var modal = $(this);
+      modal.find('.modal-body b').text(recipient);
       $('#frmDelete').attr('action', baseFolder + deleteId);
     })}); // Fin del document.ready()
 

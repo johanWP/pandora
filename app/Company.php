@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends Model
@@ -18,7 +19,7 @@ class Company extends Model
 
     /**
      * Devuelve los usuarios de la empresa
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function users()
     {
@@ -27,7 +28,7 @@ class Company extends Model
 
     /**
      * Establece la relación "una compañía tiene varios warehouses"
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function warehouses()
     {

@@ -214,8 +214,7 @@ Nuevo Movimiento
             });
             $('#' + selectId).html(soptions).prepend(foption);
 
-        };
-
+        }
         function loadWarehouses(company, activity)
         {
                 var request = $.ajax({
@@ -309,7 +308,7 @@ Nuevo Movimiento
         {
             var i;
             $(this).closest('.panel').remove();
-            i = $('.panel').length
+            i = $('.panel').length;
             $('#btnAddPanel'+i).attr('disabled', false);
             $('#btnRemovePanel'+i).attr('disabled', false);
         }

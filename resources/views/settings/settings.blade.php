@@ -75,7 +75,7 @@
                                     .addClass('alert alert-success')
                                     .slideDown('slow')
                                     .delay(2000)
-                                    .slideUp(250);;
+                                .slideUp(250);
                         } else
                         {
                             mensaje = 'Hubo un error al procesar el cambio.  Intenta más tarde';
@@ -83,7 +83,7 @@
                                     .addClass('alert alert-danger')
                                     .slideDown('slow')
                                     .delay(2000)
-                                    .slideUp(250);;
+                                .slideUp(250);
                         }
                     });
                 } else  //  si no hay errores en el formulario
@@ -92,7 +92,7 @@
                                 .addClass('alert alert-danger')
                                 .slideDown('slow')
                                 .delay(2000)
-                                .slideUp(250);;
+                        .slideUp(250);
                 }
 
             });

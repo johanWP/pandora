@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Illuminate\Http\Response;
 use Redirect;
 use App\Vtticket;
 use App\Movement;
@@ -17,11 +18,11 @@ class VtticketsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        $vttickets = Vtticket::orderBy('date', 'dsc')->paginate(30);
+        $vttickets = Vtticket::orderBy('date', 'desc')->paginate(30);
         return view('vttickets.index', compact('vttickets'));
     }
 
@@ -30,7 +31,7 @@ class VtticketsController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -56,7 +57,7 @@ class VtticketsController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function agenda()
     {
@@ -104,7 +105,7 @@ class VtticketsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -116,9 +117,9 @@ class VtticketsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update($id, VtticketRequest $request)
     {
@@ -159,7 +160,7 @@ class VtticketsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {
