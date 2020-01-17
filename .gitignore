@@ -3,12 +3,9 @@
 Homestead.yaml
 Homestead.json
 .env
-/config
 .idea
 *.xml
 /storage
 *.png
 *.sql
 .TODO
-
-config/mail.php
