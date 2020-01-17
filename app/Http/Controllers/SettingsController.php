@@ -16,7 +16,7 @@ class SettingsController extends Controller
     //
     public function showSettings()
     {
-        $companies = Company::all()->lists('name','id');
+        $companies = Company::all()->lists('name', 'id');
         $current_company = Company::find(Auth::user()->current_company);
 //        dd($current_company);
         return view('settings.settings', compact('companies', 'current_company'));
@@ -24,17 +24,15 @@ class SettingsController extends Controller
 
     public function cambiarEmpresa(Request $request)
     {
-        $response='';
+        $response = '';
         $user = User::findOrFail(Auth::user()->id);
 
         $result = $user->update(['current_company_id' => $request->newCompany]);
 //        dd($result);
-        if ($result)
-        {
+        if ($result) {
             $response = 1;
-        } else
-        {
-            $response =0;
+        } else {
+            $response = 0;
         }
         return $response;
     }
@@ -46,21 +44,20 @@ class SettingsController extends Controller
 
     public function findInactiveArticles(Request $request)
     {
-        $desde= date_format(date_create($request->fechaDesde),"Y/m/d H:i:s");
-        $hasta= date_format(date_create($request->fechaHasta),"Y/m/d 23:59:99");
-        $inactivos=0;
+        $desde = date_format(date_create($request->fechaDesde), "Y/m/d H:i:s");
+        $hasta = date_format(date_create($request->fechaHasta), "Y/m/d 23:59:99");
+        $inactivos = 0;
         $active = Movement::select('article_id')->
-                distinct()->
-                where('created_at', '>', $desde)->
-                where('created_at', '<', $hasta)->
-                get();
+        distinct()->
+        where('created_at', '>', $desde)->
+        where('created_at', '<', $hasta)->
+        get();
         $activos = $active->count();
         $articles = Article::whereNotIn('id', $active)->get();
 //        dd($articles);
-        foreach($articles as $article)
-        {
+        foreach ($articles as $article) {
             $inactivos++;
-            $article->update(['active'=>0]);
+            $article->update(['active' => 0]);
 //            dd($article);
         }
         return view('settings.findInactiveArticles', compact('activos', 'inactivos'));

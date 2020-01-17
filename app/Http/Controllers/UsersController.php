@@ -25,8 +25,8 @@ class UsersController extends Controller
     {
         //
         $users = User::where('company_id', Auth::user()->current_company_id)->
-                        where('securityLevel', '<=', Auth::user()->securityLevel)
-                    ->orderBy('firstName', 'asc')->paginate(10);
+        where('securityLevel', '<=', Auth::user()->securityLevel)
+            ->orderBy('firstName', 'asc')->paginate(10);
         return view('users.index', compact('users'));
     }
 
@@ -38,22 +38,20 @@ class UsersController extends Controller
     public function create()
     {
         $activities = Activity::lists('name', 'id');
-        if (Auth::user()->currentCompany->parent==1)
-        {
+        if (Auth::user()->currentCompany->parent == 1) {
             $warehouses = Warehouse::lists('name', 'id');
-        } else
-        {
+        } else {
             $warehouses = Warehouse::where('company_id', Auth::user()->current_company_id)->
             get()->
             lists('name', 'id');
         }
         $securityLevel = [
-                        '10' => 'Técnico',
-                        '20' => 'Supervisor',
-                        '30' => 'Jefe',
-                        '40' => 'Gerente',
-                        '50' => 'Director',
-                        ];
+            '10' => 'Técnico',
+            '20' => 'Supervisor',
+            '30' => 'Jefe',
+            '40' => 'Gerente',
+            '50' => 'Director',
+        ];
         return view('users.create', compact('activities', 'warehouses', 'securityLevel'));
     }
 
@@ -65,32 +63,30 @@ class UsersController extends Controller
      */
     public function store(CustomUserRequest $request)
     {
-        if ($request['securityLevel']>Auth::user()->securityLevel)
-        {
+        if ($request['securityLevel'] > Auth::user()->securityLevel) {
             session()->flash('flash_message_danger', 'Usted no puede crear usuarios de este nivel.');
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
             session()->flash('flash_message_important', true);
             return Redirect::to('usuarios/create')->withInput();
 
         }
-        if (is_null($request['active']))
-        {
+        if (is_null($request['active'])) {
             $act = 0;
         } else {
             $act = $request['active'];
         }
 
         $user = User::create([
-                'username'      => $request['username'],
-                'firstName'     => $request['firstName'],
-                'lastName'      => $request['lastName'],
-                'email'         => $request['email'],
-                'securityLevel' => $request['securityLevel'],
-                'company_id'    => Auth::user()->current_company_id,
-                'current_company_id'    => Auth::user()->current_company_id,
-                'password'      => bcrypt('unStringAlAzar'),
-                'active'        => $act
-            ]);
+            'username' => $request['username'],
+            'firstName' => $request['firstName'],
+            'lastName' => $request['lastName'],
+            'email' => $request['email'],
+            'securityLevel' => $request['securityLevel'],
+            'company_id' => Auth::user()->current_company_id,
+            'current_company_id' => Auth::user()->current_company_id,
+            'password' => bcrypt('unStringAlAzar'),
+            'active' => $act
+        ]);
 
 //        Asociar las actividades en la tabla pivot activities_users
         $user->activities()->attach($request->input('activityList'));
@@ -108,7 +104,7 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function show($id)
@@ -120,7 +116,7 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function edit($id)
@@ -128,17 +124,15 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
 
         $activities = Activity::lists('name', 'id');
-/*        $warehouses = Warehouse::where('company_id', Auth::user()->current_company_id)->
-                        get()->
-                        lists('name', 'id');*/
+        /*        $warehouses = Warehouse::where('company_id', Auth::user()->current_company_id)->
+                                get()->
+                                lists('name', 'id');*/
 //        $warehouses = Warehouse::where('company_id', Auth::user()->current_company_id)->
 //        get()->
 //        lists('name', 'id');
-        if (Auth::user()->currentCompany->parent==1)
-        {
+        if (Auth::user()->currentCompany->parent == 1) {
             $warehouses = Warehouse::lists('name', 'id');
-        } else
-        {
+        } else {
             $warehouses = Warehouse::where('company_id', Auth::user()->current_company_id)->
             get()->
             lists('name', 'id');
@@ -157,43 +151,38 @@ class UsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function update(CustomUpdateUserRequest $request, $id)
     {
         $user = User::findOrFail($id);
-        if (is_null($request['active']))
-        {
+        if (is_null($request['active'])) {
             $act = 0;
         } else {
             $act = $request['active'];
         }
 
         $user->update([
-            'firstName'     => $request['firstName'],
-            'lastName'      => $request['lastName'],
-            'email'         => $request['email'],
+            'firstName' => $request['firstName'],
+            'lastName' => $request['lastName'],
+            'email' => $request['email'],
             'securityLevel' => $request['securityLevel'],
 //            'company_id'    => Auth::user()->current_company_id,
 //            'current_company_id'    => Auth::user()->current_company_id,
-            'active'        => $act
+            'active' => $act
         ]);
 
 //        Asociar las actividades en la tabla pivot activities_users
-        if ($request->input('activityList') != null)
-        {
+        if ($request->input('activityList') != null) {
             $user->activities()->sync($request->input('activityList'));
-        } else
-        {
+        } else {
             $user->activities()->detach();
         }
 
-        if ($request->input('warehouseList') != null)
-        {
+        if ($request->input('warehouseList') != null) {
             $user->warehouses()->sync($request->input('warehouseList'));
-        } else
-        {
+        } else {
             $user->warehouses()->detach();
         }
 
@@ -208,7 +197,7 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function destroy($id)

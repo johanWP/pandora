@@ -37,7 +37,7 @@ class CustomAuthController extends Controller
     /**
      * Verifica las credenciales de login y redirige apropiadamente
      *
-     * @param  \Illuminate\Http\Requests\CustomAuthRequest  $request
+     * @param \Illuminate\Http\Requests\CustomAuthRequest $request
      * @return Response
      */
     public function store(CustomAuthRequest $request)
@@ -45,11 +45,9 @@ class CustomAuthController extends Controller
 //        dd($request->rememberMe);
         $remember = $request->rememberMe;
 //        if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'active' => 1]))
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password], $remember))
-        {
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password], $remember)) {
 //  Si el usuario existe pero esta inactivo, la sesión se crea igual.  1) la destruyo 2) muestro mensaje
-            if (Auth::user()->active == 0)
-            {
+            if (Auth::user()->active == 0) {
                 Auth::logout();
                 return view('pages.inactive');
             }
@@ -69,10 +67,11 @@ class CustomAuthController extends Controller
         Auth::logout();
         return Redirect::to('/');
     }
+
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function show($id)
@@ -83,7 +82,7 @@ class CustomAuthController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function edit($id)
@@ -95,7 +94,7 @@ class CustomAuthController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function update(Request $request, $id)
@@ -106,7 +105,7 @@ class CustomAuthController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function destroy($id)

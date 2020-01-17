@@ -41,14 +41,13 @@ class MailController extends Controller
      */
     public function store(Request $request)
     {
-        $result = Mail::send('emails.contact',$request->all(), function($message) use ($request) {
+        $result = Mail::send('emails.contact', $request->all(), function ($message) use ($request) {
 
             $message->from(env('MAIL_USERNAME'));
             $message->to('jmarchan@gmail.com')
                 ->subject($request->subject)
                 ->replyTo($request->email);
         });
-
 
 
         session()->flash('flash_message', 'Mensaje enviado.');
@@ -61,7 +60,7 @@ class MailController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function show($id)
@@ -72,7 +71,7 @@ class MailController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function edit($id)
@@ -84,7 +83,7 @@ class MailController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function update(Request $request, $id)
@@ -95,7 +94,7 @@ class MailController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function destroy($id)

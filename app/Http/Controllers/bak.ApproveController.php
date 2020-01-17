@@ -15,35 +15,34 @@ class ApproveController extends Controller
 {
     public function viewAll()
     {
-/*        $movements  = DB::table('movements')
-            ->where('status_id', '=', '2')
-            ->orderBy('ticket')
-            ->get();
-*/
+        /*        $movements  = DB::table('movements')
+                    ->where('status_id', '=', '2')
+                    ->orderBy('ticket')
+                    ->get();
+        */
         $movements = Movement::query('select * from movements where status_id=2')
-                        ->where('status_id', '2')
-                        ->orderBy('ticket', 'asc')->paginate(20);
-                        
-        
+            ->where('status_id', '2')
+            ->orderBy('ticket', 'asc')->paginate(20);
+
+
         $warehouses = Warehouse::where('company_id', Auth::user()->current_company_id)
             ->where('type_id', '<>', 1)
             ->orderBy('name', 'asc')
             ->get();
 
 //        dd($movements);
-        return view('movements.pendientesPorAprobar', compact('movements','warehouses'));
+        return view('movements.pendientesPorAprobar', compact('movements', 'warehouses'));
     }
 
     public function approveMovement(Request $request)
     {
 //        dd($request->id);
-        if(Auth::user()->securityLevel >= 20)
-        {
+        if (Auth::user()->securityLevel >= 20) {
             $m = Movement::findOrFail($request->id);
             $result = $m->update([
                 'status_id' => '1',
                 'approved_by' => Auth::user()->id,
-                'note'  => $request->note
+                'note' => $request->note
             ]);
         }
         return $request->id;
@@ -52,26 +51,25 @@ class ApproveController extends Controller
 
     public function rejectMovement(Request $request)
     {
-        if(Auth::user()->securityLevel >= 20)
-        {
+        if (Auth::user()->securityLevel >= 20) {
             $m = Movement::findOrFail($request->id);
             $m->update([
                 'status_id' => '4',
                 'approved_by' => Auth::user()->id,
-                'note'  => $request->note
+                'note' => $request->note
             ]);
 
             $arrayM = [
-                        'article' => $m->article->name,
-                        'origen'  => $m->origin->name,
-                        'destino' => $m->destination->name,
-                        'created_at'=> $m->created_at,
-                        'ticket'  => $m->ticket,
-                        'cantidad'=> $m->quantity,
-                        'nota'    => $m->note
-                    ];
+                'article' => $m->article->name,
+                'origen' => $m->origin->name,
+                'destino' => $m->destination->name,
+                'created_at' => $m->created_at,
+                'ticket' => $m->ticket,
+                'cantidad' => $m->quantity,
+                'nota' => $m->note
+            ];
 
-            $result = Mail::send('emails.movementRejected',$arrayM, function($message) use ($m) {
+            $result = Mail::send('emails.movementRejected', $arrayM, function ($message) use ($m) {
 //                $message->from($request->email);
                 $message->to($m->user->email)
                     ->subject('Tu movimiento ha sido rechazado')

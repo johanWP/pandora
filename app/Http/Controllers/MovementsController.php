@@ -27,8 +27,7 @@ class MovementsController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->securityLevel > 20)
-        {
+        if (Auth::user()->securityLevel > 20) {
 //      1) Busco todos los almacenes de la empresa que tiene seleccionada el usuario
             $arrayW = DB::table('warehouses')
                 ->select('id')
@@ -37,16 +36,15 @@ class MovementsController extends Controller
             $arrayW = collect($arrayW);
 //      2) Busco los movimientos de esos almacenes
             $movements = Movement::whereIn('status_id', ['1', '2'])->
-                whereIn('origin_id', $arrayW->lists('id')->toArray())->
-                orderBy('id', 'desc')->
-                paginate(10);
-        } else
-        {
+            whereIn('origin_id', $arrayW->lists('id')->toArray())->
+            orderBy('id', 'desc')->
+            paginate(10);
+        } else {
 //      Si es un técnico, Busco los movimientos solo de ese usuario
             $movements = Movement::whereIn('status_id', ['1', '2'])->
-                where('user_id', Auth::user()->id)->
-                orderBy('id', 'desc')->
-                paginate(10);
+            where('user_id', Auth::user()->id)->
+            orderBy('id', 'desc')->
+            paginate(10);
         }
 
         $title = 'Últimos Movimientos';
@@ -62,27 +60,27 @@ class MovementsController extends Controller
     {
         // Para evitar timeout en validaciones
         set_time_limit(240);
-/*
-        if (Auth::user()->company->parent == 0)
-        {
-            $companies = [
-                        'id' => Auth::user()->company->id,
-                        'name' => Auth::user()->company->name
-                        ];
-        } else
-        {
-            $companies = Company::lists('name', 'id');
-        }
+        /*
+                if (Auth::user()->company->parent == 0)
+                {
+                    $companies = [
+                                'id' => Auth::user()->company->id,
+                                'name' => Auth::user()->company->name
+                                ];
+                } else
+                {
+                    $companies = Company::lists('name', 'id');
+                }
 
-        $activities = DB::table('activities')
-            ->select('id', 'name')
-            ->orderBy('name')
-            ->get();
-*/
+                $activities = DB::table('activities')
+                    ->select('id', 'name')
+                    ->orderBy('name')
+                    ->get();
+        */
         $activities = Auth::user()->activities;
         return view('movements.create', compact('activities'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -93,7 +91,7 @@ class MovementsController extends Controller
         $activities = Auth::user()->activities;
         return view('movements.createbasic', compact('activities'));
     }
-    
+
     public function createserial()
     {
         $activities = Auth::user()->activities;
@@ -121,21 +119,17 @@ class MovementsController extends Controller
      */
     public function store(CreateMovementRequest $request)
     {
-        $i =1;
+        $i = 1;
         $arrMov = Array();
         $conErrores = '';
-        if(Auth::user()->securityLevel>=20)
-        {
+        if (Auth::user()->securityLevel >= 20) {
             $status_id = 1;     // Aprobado
-        } else
-        {
+        } else {
             $status_id = 2;     // Por Aprobar
         }
-        for ($i=1; $i <= $request['numArticles']; $i++)
-        {
+        for ($i = 1; $i <= $request['numArticles']; $i++) {
 
-            if ($request['article_id' . $i] !='')
-            {
+            if ($request['article_id' . $i] != '') {
                 if ($request['serialList' . $i] != '') {
                     $serial = $request['serialList' . $i];
                 } else {
@@ -157,26 +151,22 @@ class MovementsController extends Controller
                     ]
                 );
                 $valid = $this->validateMov($mov);
-                if ($valid == '')
-                {
+                if ($valid == '') {
                     //            Guarda el objeto en la base de datos
                     Movement::create($mov->toArray());
 
-                } elseif(!strstr($conErrores, $valid))
-                {
+                } elseif (!strstr($conErrores, $valid)) {
                     $conErrores .= $valid;
                 }
             }
 
         }
 
-        if ($conErrores == '')
-        {
+        if ($conErrores == '') {
             session()->flash('flash_message', 'Todos los movimientos se registraron correctamente.');
             return Redirect::to('movimientos');
-        } else
-        {
-            $conErrores = '<ul>'.$conErrores.'</ul>';
+        } else {
+            $conErrores = '<ul>' . $conErrores . '</ul>';
             session()->flash('flash_message_danger', 'Algunos movimientos no han sido registrados.' . $conErrores);
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
             session()->flash('flash_message_important', true);
@@ -185,7 +175,7 @@ class MovementsController extends Controller
 
 
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -194,21 +184,17 @@ class MovementsController extends Controller
      */
     public function storebasic(CreateMovementRequest $request)
     {
-        $i =1;
+        $i = 1;
         $arrMov = Array();
         $conErrores = '';
-        if(Auth::user()->securityLevel>=20)
-        {
+        if (Auth::user()->securityLevel >= 20) {
             $status_id = 1;     // Aprobado
-        } else
-        {
+        } else {
             $status_id = 2;     // Por Aprobar
         }
-        for ($i=1; $i <= $request['numArticles']; $i++)
-        {
+        for ($i = 1; $i <= $request['numArticles']; $i++) {
 
-            if ($request['article_id' . $i] !='')
-            {
+            if ($request['article_id' . $i] != '') {
                 if ($request['serialList' . $i] != '') {
                     $serial = $request['serialList' . $i];
                 } else {
@@ -230,26 +216,22 @@ class MovementsController extends Controller
                     ]
                 );
                 $valid = $this->validateBasicMov($mov);
-                if ($valid == '')
-                {
+                if ($valid == '') {
                     //            Guarda el objeto en la base de datos
                     Movement::create($mov->toArray());
 
-                } elseif(!strstr($conErrores, $valid))
-                {
+                } elseif (!strstr($conErrores, $valid)) {
                     $conErrores .= $valid;
                 }
             }
 
         }
 
-        if ($conErrores == '')
-        {
+        if ($conErrores == '') {
             session()->flash('flash_message', 'Todos los movimientos se registraron correctamente.');
             return Redirect::to('movimientos');
-        } else
-        {
-            $conErrores = '<ul>'.$conErrores.'</ul>';
+        } else {
+            $conErrores = '<ul>' . $conErrores . '</ul>';
             session()->flash('flash_message_danger', 'Algunos movimientos no han sido registrados.' . $conErrores);
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
             session()->flash('flash_message_important', true);
@@ -258,25 +240,21 @@ class MovementsController extends Controller
 
 
     }
-    
-    
+
+
     public function storeserial(CreateMovementRequest $request)
     {
-        $i =1;
+        $i = 1;
         $arrMov = Array();
         $conErrores = '';
-        if(Auth::user()->securityLevel>=20)
-        {
+        if (Auth::user()->securityLevel >= 20) {
             $status_id = 1;     // Aprobado
-        } else
-        {
+        } else {
             $status_id = 2;     // Por Aprobar
         }
-        for ($i=1; $i <= $request['numArticles']; $i++)
-        {
+        for ($i = 1; $i <= $request['numArticles']; $i++) {
 
-            if ($request['article_id' . $i] !='')
-            {
+            if ($request['article_id' . $i] != '') {
                 if ($request['serialList' . $i] != '') {
                     $serial = $request['serialList' . $i];
                 } else {
@@ -298,26 +276,22 @@ class MovementsController extends Controller
                     ]
                 );
                 $valid = $this->validateSerialMov($mov);
-                if ($valid == '')
-                {
+                if ($valid == '') {
                     //            Guarda el objeto en la base de datos
                     Movement::create($mov->toArray());
 
-                } elseif(!strstr($conErrores, $valid))
-                {
+                } elseif (!strstr($conErrores, $valid)) {
                     $conErrores .= $valid;
                 }
             }
 
         }
 
-        if ($conErrores == '')
-        {
+        if ($conErrores == '') {
             session()->flash('flash_message', 'Todos los movimientos se registraron correctamente.');
             return Redirect::to('movimientos');
-        } else
-        {
-            $conErrores = '<ul>'.$conErrores.'</ul>';
+        } else {
+            $conErrores = '<ul>' . $conErrores . '</ul>';
             session()->flash('flash_message_danger', 'Algunos movimientos no han sido registrados.' . $conErrores);
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
             session()->flash('flash_message_important', true);
@@ -330,18 +304,16 @@ class MovementsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function show($id)
     {
         $movement = Movement::findOrFail($id);
-        if($movement->approved_by !=null)
-        {
+        if ($movement->approved_by != null) {
             $approved = User::find($movement->approved_by);
         }
-        if($movement->deleted_by !=null)
-        {
+        if ($movement->deleted_by != null) {
             $deleted = User::find($movement->deleted_by);
         }
         return view('movements.ver', compact('movement', 'approved', 'deleted'));
@@ -350,7 +322,7 @@ class MovementsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function edit($id)
@@ -362,16 +334,16 @@ class MovementsController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function update(Request $request, $id)
     {
-        if(Auth::user()->securityLevel >= 20) {
+        if (Auth::user()->securityLevel >= 20) {
             $mov = Movement::findOrFail($id);
             $mov->update([
-                'approved_by'       => Auth::user()->id,
-                'status_id'     => 1,
+                'approved_by' => Auth::user()->id,
+                'status_id' => 1,
             ]);
 
             session()->flash('flash_message', 'Movimiento actualizado correctamente.');
@@ -385,16 +357,16 @@ class MovementsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function destroy($id)
     {
-        if(Auth::user()->securityLevel >= 20) {
+        if (Auth::user()->securityLevel >= 20) {
             $mov = Movement::findOrFail($id);
             $mov->update([
-                'deleted_by'       => Auth::user()->id,
-                'status_id'     => 3,
+                'deleted_by' => Auth::user()->id,
+                'status_id' => 3,
             ]);
             $mov->delete();
         }
@@ -413,71 +385,58 @@ class MovementsController extends Controller
     {
         // Para evitar timeout en validaciones
         set_time_limit(240);
-        
-        $msg = ''; $cantidad=0;
 
-        if ($m->origin->active != 1)
-        {
+        $msg = '';
+        $cantidad = 0;
+
+        if ($m->origin->active != 1) {
             $msg .= '<li>El almacén de origen se encuentra inactivo.</li>';
         }
 
-        if ($m->destination->active != 1)
-        {
+        if ($m->destination->active != 1) {
             $msg .= '<li>El almacén de destino se encuentra inactivo.</li>';
         }
-        if (($m->origin->type_id == 2) AND ($m->destination->type_id == 2))
-        {
+        if (($m->origin->type_id == 2) AND ($m->destination->type_id == 2)) {
             $msg .= '<li>Los movimientos entre almacenes móviles no están permitidos.</li>';
         }
 
-        if (($m->origin->type_id == 1) AND ($m->destination->type_id == 1))
-        {
+        if (($m->origin->type_id == 1) AND ($m->destination->type_id == 1)) {
             $msg .= '<li>Los movimientos entre almacenes de sistema no están permitidos.</li>';
         }
-        if($m->origin == $m->destination)
-        {
+        if ($m->origin == $m->destination) {
             $msg .= '<li>Los almacenes de origen y destinos son iguales</li>';
         }
 
-        if ($m->origin->activity_id != $m->destination->activity_id)
-        {
+        if ($m->origin->activity_id != $m->destination->activity_id) {
             $msg .= '<li>Los almacenes de origen y destino son de actividades diferentes</li>';
         }
-        if(($m->article->serializable == 1) && ($m->serial == ''))
-        {
-            $msg .= '<li>Debe incluir el serial del '.$m->article->name.'</li>';
+        if (($m->article->serializable == 1) && ($m->serial == '')) {
+            $msg .= '<li>Debe incluir el serial del ' . $m->article->name . '</li>';
         }
-        if(($m->article->active == 0))
-        {
-            $msg .= '<li>'.$m->article->name.' está marcado como inactivo. Comuníquese con el jefe de almacén.</li>';
+        if (($m->article->active == 0)) {
+            $msg .= '<li>' . $m->article->name . ' está marcado como inactivo. Comuníquese con el jefe de almacén.</li>';
         }
 
 //        if(($m->article->serializable==1) AND ($m->serial!='') AND ($m->origin->type_id != 1))
-        if(($m->article->serializable==1) AND ($m->serial!=''))
-        {
+        if (($m->article->serializable == 1) AND ($m->serial != '')) {
             $lastMovement = $this->lastMovement($m->serial);
-            if(!is_null($lastMovement->destination))
-            {
-                if(($lastMovement->destination_id != $m->origin_id) && ($lastMovement->destination->type_id!=1))
-                {
-                    $msg .= '<li>El artículo no se encuentra en '. $m->origin->name .'.
+            if (!is_null($lastMovement->destination)) {
+                if (($lastMovement->destination_id != $m->origin_id) && ($lastMovement->destination->type_id != 1)) {
+                    $msg .= '<li>El artículo no se encuentra en ' . $m->origin->name . '.
                          Verifique el serial del equipo.</li>';
                 }
             }
         }
 
-        if ($m->origin->type_id != 1)
-        {
+        if ($m->origin->type_id != 1) {
             $inventory = collect($m->origin->inventory);
-            $filtered = $inventory->filter(function ($item) use($m)
-            {
+            $filtered = $inventory->filter(function ($item) use ($m) {
                 return $item['id'] == $m->article_id;
             });
             $articulo = $filtered->first(); //dd($m->quantity);
             $cantidad = $articulo['cantidad'];
-            if($m->quantity > $articulo['cantidad'] )
-            {
-                $msg .= '<li>No puede transferir <strong>'.$articulo['cantidad'].'</strong> '.$m->article->name.'</li>';
+            if ($m->quantity > $articulo['cantidad']) {
+                $msg .= '<li>No puede transferir <strong>' . $articulo['cantidad'] . '</strong> ' . $m->article->name . '</li>';
             }
         }
 
@@ -492,72 +451,59 @@ class MovementsController extends Controller
      */
     private function validateBasicMov(Movement $m)
     {
-        
-        $msg = ''; $cantidad=0;
 
-        if ($m->origin->active != 1)
-        {
+        $msg = '';
+        $cantidad = 0;
+
+        if ($m->origin->active != 1) {
             $msg .= '<li>El almacén de origen se encuentra inactivo.</li>';
         }
 
-        if ($m->destination->active != 1)
-        {
+        if ($m->destination->active != 1) {
             $msg .= '<li>El almacén de destino se encuentra inactivo.</li>';
         }
-        if (($m->origin->type_id == 2) AND ($m->destination->type_id == 2))
-        {
+        if (($m->origin->type_id == 2) AND ($m->destination->type_id == 2)) {
             $msg .= '<li>Los movimientos entre almacenes móviles no están permitidos.</li>';
         }
 
-        if (($m->origin->type_id == 1) AND ($m->destination->type_id == 1))
-        {
+        if (($m->origin->type_id == 1) AND ($m->destination->type_id == 1)) {
             $msg .= '<li>Los movimientos entre almacenes de sistema no están permitidos.</li>';
         }
-        if($m->origin == $m->destination)
-        {
+        if ($m->origin == $m->destination) {
             $msg .= '<li>Los almacenes de origen y destinos son iguales</li>';
         }
 
-        if ($m->origin->activity_id != $m->destination->activity_id)
-        {
+        if ($m->origin->activity_id != $m->destination->activity_id) {
             $msg .= '<li>Los almacenes de origen y destino son de actividades diferentes</li>';
         }
-        if(($m->article->serializable == 1) && ($m->serial == ''))
-        {
-            $msg .= '<li>Debe incluir el serial del '.$m->article->name.'</li>';
+        if (($m->article->serializable == 1) && ($m->serial == '')) {
+            $msg .= '<li>Debe incluir el serial del ' . $m->article->name . '</li>';
         }
-        if(($m->article->active == 0))
-        {
-            $msg .= '<li>'.$m->article->name.' está marcado como inactivo. Comuníquese con el jefe de almacén.</li>';
+        if (($m->article->active == 0)) {
+            $msg .= '<li>' . $m->article->name . ' está marcado como inactivo. Comuníquese con el jefe de almacén.</li>';
         }
 
 //        if(($m->article->serializable==1) AND ($m->serial!='') AND ($m->origin->type_id != 1))
-        if(($m->article->serializable==1) AND ($m->serial!=''))
-        {
+        if (($m->article->serializable == 1) AND ($m->serial != '')) {
             $lastMovement = $this->lastMovement($m->serial);
-            if(!is_null($lastMovement->destination))
-            {
-                if(($lastMovement->destination_id != $m->origin_id) && ($lastMovement->destination->type_id!=1))
-                {
-                    $msg .= '<li>El artículo no se encuentra en '. $m->origin->name .'.
+            if (!is_null($lastMovement->destination)) {
+                if (($lastMovement->destination_id != $m->origin_id) && ($lastMovement->destination->type_id != 1)) {
+                    $msg .= '<li>El artículo no se encuentra en ' . $m->origin->name . '.
                          Verifique el serial del equipo.</li>';
                 }
             }
         }
 
-        if ($m->origin->type_id != 1)
-        {
+        if ($m->origin->type_id != 1) {
             // REVISAR!!! Reemplazar con inventorybasic si no es serializable
             $inventory = collect($m->origin->inventorybasic);
-            $filtered = $inventory->filter(function ($item) use($m)
-            {
+            $filtered = $inventory->filter(function ($item) use ($m) {
                 return $item['id'] == $m->article_id;
             });
             $articulo = $filtered->first(); //dd($m->quantity);
             $cantidad = $articulo['cantidad'];
-            if($m->quantity > $articulo['cantidad'] )
-            {
-                $msg .= '<li>No puede transferir <strong>'.$articulo['cantidad'].'</strong> '.$m->article->name.'</li>';
+            if ($m->quantity > $articulo['cantidad']) {
+                $msg .= '<li>No puede transferir <strong>' . $articulo['cantidad'] . '</strong> ' . $m->article->name . '</li>';
             }
         }
 
@@ -573,77 +519,64 @@ class MovementsController extends Controller
     {
         // Para evitar timeout en validaciones
         set_time_limit(240);
-        
-        $msg = ''; $cantidad=0;
 
-        if ($m->origin->active != 1)
-        {
+        $msg = '';
+        $cantidad = 0;
+
+        if ($m->origin->active != 1) {
             $msg .= '<li>El almacén de origen se encuentra inactivo.</li>';
         }
 
-        if ($m->destination->active != 1)
-        {
+        if ($m->destination->active != 1) {
             $msg .= '<li>El almacén de destino se encuentra inactivo.</li>';
         }
-        if (($m->origin->type_id == 2) AND ($m->destination->type_id == 2))
-        {
+        if (($m->origin->type_id == 2) AND ($m->destination->type_id == 2)) {
             $msg .= '<li>Los movimientos entre almacenes móviles no están permitidos.</li>';
         }
 
-        if (($m->origin->type_id == 1) AND ($m->destination->type_id == 1))
-        {
+        if (($m->origin->type_id == 1) AND ($m->destination->type_id == 1)) {
             $msg .= '<li>Los movimientos entre almacenes de sistema no están permitidos.</li>';
         }
-        if($m->origin == $m->destination)
-        {
+        if ($m->origin == $m->destination) {
             $msg .= '<li>Los almacenes de origen y destinos son iguales</li>';
         }
 
-        if ($m->origin->activity_id != $m->destination->activity_id)
-        {
+        if ($m->origin->activity_id != $m->destination->activity_id) {
             $msg .= '<li>Los almacenes de origen y destino son de actividades diferentes</li>';
         }
-        if(($m->article->serializable == 1) && ($m->serial == ''))
-        {
-            $msg .= '<li>Debe incluir el serial del '.$m->article->name.'</li>';
+        if (($m->article->serializable == 1) && ($m->serial == '')) {
+            $msg .= '<li>Debe incluir el serial del ' . $m->article->name . '</li>';
         }
-        if(($m->article->active == 0))
-        {
-            $msg .= '<li>'.$m->article->name.' está marcado como inactivo. Comuníquese con el jefe de almacén.</li>';
+        if (($m->article->active == 0)) {
+            $msg .= '<li>' . $m->article->name . ' está marcado como inactivo. Comuníquese con el jefe de almacén.</li>';
         }
 
 //        if(($m->article->serializable==1) AND ($m->serial!='') AND ($m->origin->type_id != 1))
-        if(($m->article->serializable==1) AND ($m->serial!=''))
-        {
+        if (($m->article->serializable == 1) AND ($m->serial != '')) {
             $lastMovement = $this->lastMovement($m->serial);
-            if(!is_null($lastMovement->destination))
-            {
-                if(($lastMovement->destination_id != $m->origin_id) && ($lastMovement->destination->type_id!=1))
-                {
-                    $msg .= '<li>El artículo no se encuentra en '. $m->origin->name .'.
+            if (!is_null($lastMovement->destination)) {
+                if (($lastMovement->destination_id != $m->origin_id) && ($lastMovement->destination->type_id != 1)) {
+                    $msg .= '<li>El artículo no se encuentra en ' . $m->origin->name . '.
                          Verifique el serial del equipo.</li>';
                 }
             }
         }
 
-        if ($m->origin->type_id != 1)
-        {
+        if ($m->origin->type_id != 1) {
             $inventory = collect($m->origin->inventoryserial);
-            $filtered = $inventory->filter(function ($item) use($m)
-            {
+            $filtered = $inventory->filter(function ($item) use ($m) {
                 return $item['id'] == $m->article_id;
             });
             $articulo = $filtered->first(); //dd($m->quantity);
             $cantidad = $articulo['cantidad'];
-            if($m->quantity > $articulo['cantidad'] )
-            {
-                $msg .= '<li>No puede transferir <strong>'.$articulo['cantidad'].'</strong> '.$m->article->name.'</li>';
+            if ($m->quantity > $articulo['cantidad']) {
+                $msg .= '<li>No puede transferir <strong>' . $articulo['cantidad'] . '</strong> ' . $m->article->name . '</li>';
             }
         }
 
         return $msg;
     }
-    
+
     /**
      * Devuelve el ultimo movimiento APROBADO del articulo con el serial indicado
      * retorna un movimiento vacío si no se encuentran movimientos del artículo
@@ -653,13 +586,12 @@ class MovementsController extends Controller
     private function lastMovement($serial)
     {
 
-        $mov = Movement::where('serial','=', $serial)
+        $mov = Movement::where('serial', '=', $serial)
             ->where('status_id', '=', 1)
             ->orderBy('id', 'desc')
             ->first();
 
-        if(is_null($mov))
-        {
+        if (is_null($mov)) {
             $mov = new Movement;
         }
         return $mov;
@@ -667,48 +599,45 @@ class MovementsController extends Controller
 
     public function porseriales(Request $request)
     {
-        if (Auth::user()->securityLevel > 20)
-        {
+        if (Auth::user()->securityLevel > 20) {
 
-        $seriales = $request->serial;
-        $origin_id = $request->id;
-        $destination_id = $request->destination_id;
-        $origin_id = $request->origin_id;
-        $article_id = $request->article_id;
-        $ticket = $request->ticket;
-        $note = $request->note;
-        $remito = $request->remito;
-        $user_id = Auth::user()->id;
+            $seriales = $request->serial;
+            $origin_id = $request->id;
+            $destination_id = $request->destination_id;
+            $origin_id = $request->origin_id;
+            $article_id = $request->article_id;
+            $ticket = $request->ticket;
+            $note = $request->note;
+            $remito = $request->remito;
+            $user_id = Auth::user()->id;
 
-        $i=0;
-        foreach ($seriales as $serial)
-        {
-            //$i++;
-            //$temp = $serial;
-            
-            $mov = new Movement(
-               [
-                   'remito' => $remito,
-                   'article_id' => $article_id,
-                   'quantity' => 1,
-                   'note' => $note,
-                   'origin_id' => $origin_id,
-                   'destination_id' => $destination_id,
-                   'ticket' => $ticket,
-                   'serial' => $serial,
-                   'status_id' => 1,
-                   'user_id' => Auth::user()->id
-               ]
-           );
-            
-            Movement::create($mov->toArray());
-            
+            $i = 0;
+            foreach ($seriales as $serial) {
+                //$i++;
+                //$temp = $serial;
+
+                $mov = new Movement(
+                    [
+                        'remito' => $remito,
+                        'article_id' => $article_id,
+                        'quantity' => 1,
+                        'note' => $note,
+                        'origin_id' => $origin_id,
+                        'destination_id' => $destination_id,
+                        'ticket' => $ticket,
+                        'serial' => $serial,
+                        'status_id' => 1,
+                        'user_id' => Auth::user()->id
+                    ]
+                );
+
+                Movement::create($mov->toArray());
+
+            }
+
+
         }
-        
-        
-        
-        }
-        
+
         return view('movements.porseriales', compact('seriales', 'origin_id', 'destination_id', 'article_id', 'ticket', 'note', 'remito', 'user_id', 'i', 'temp'));
     }
 

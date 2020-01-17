@@ -15,7 +15,7 @@ use Illuminate\Http\Response;
 class SearchController extends Controller
 {
     /** Sirve para todos los buscadores (Articulos, Usuarios, Almacenes...)
-     * @param $table: la tabla donde se va a hacer la busqueda
+     * @param table : la tabla donde se va a hacer la busqueda
      * @return array un json que se imprime para consumirse con AJAX
      */
     public function autocomplete($table)
@@ -37,44 +37,38 @@ class SearchController extends Controller
             foreach ($queries as $query) {
                 $results[] = ['id' => $query->id, 'value' => $query->firstName . ' ' . $query->lastName];
             }
-        } elseif($table == 'articles')
-        {
-            $queries = DB::table($table) ->where(function ($query)
-                {
-                    $term = Input::get('term');
-                    $query->where('product_code', 'LIKE', '%' . $term . '%')
-                        ->orWhere('name', 'LIKE', '%' . $term . '%');
-                })->
-               take(10)->get();
+        } elseif ($table == 'articles') {
+            $queries = DB::table($table)->where(function ($query) {
+                $term = Input::get('term');
+                $query->where('product_code', 'LIKE', '%' . $term . '%')
+                    ->orWhere('name', 'LIKE', '%' . $term . '%');
+            })->
+            take(10)->get();
             foreach ($queries as $query) {
                 $results[] = [
-                        'id' => $query->id,
-                        'value' => '('.$query->product_code.') - ' . $query->name,
-                        'serializable'=> $query->serializable
-                            ];
+                    'id' => $query->id,
+                    'value' => '(' . $query->product_code . ') - ' . $query->name,
+                    'serializable' => $query->serializable
+                ];
             }
-        } elseif($table == 'vttickets')
-        {
-            $queries = DB::table($table) ->where(function ($query)
-                {
-                    $term = Input::get('term');
-                    $query->where('order_number', 'LIKE', '%' . $term . '%')
-						->orWhere('customer_id', 'LIKE', '%' . $term . '%');;
-                })->
-               take(10)->get();
+        } elseif ($table == 'vttickets') {
+            $queries = DB::table($table)->where(function ($query) {
+                $term = Input::get('term');
+                $query->where('order_number', 'LIKE', '%' . $term . '%')
+                    ->orWhere('customer_id', 'LIKE', '%' . $term . '%');;
+            })->
+            take(10)->get();
             foreach ($queries as $query) {
                 $results[] = [
-                        'id' => $query->id,
-                        'value' => $query->order_number.' (' . $query->date.' / Cliente: '.$query->customer_id.')'
-                            ];
+                    'id' => $query->id,
+                    'value' => $query->order_number . ' (' . $query->date . ' / Cliente: ' . $query->customer_id . ')'
+                ];
             }
-        } else
-        {
+        } else {
             $queries = DB::table($table)->where('name', 'LIKE', '%' . $term . '%')->
-                take(10)->get();
-            foreach ($queries as $query)
-            {
-                $results[] = [ 'id' => $query->id, 'value' => $query->name];
+            take(10)->get();
+            foreach ($queries as $query) {
+                $results[] = ['id' => $query->id, 'value' => $query->name];
             }
         }
 
@@ -89,8 +83,7 @@ class SearchController extends Controller
         $query = DB::table($table)->select('id')
             ->where('name', '=', $name)
             ->first();
-        if(empty($query))
-        {
+        if (empty($query)) {
             dd($query);
         }
         $id = $query->id;
@@ -107,9 +100,8 @@ class SearchController extends Controller
         $results = array();
         $queries = Movement::where('serial', 'LIKE', '%' . $term . '%')
             ->take(10)->get();
-        foreach ($queries as $query)
-        {
-            $results[] = [ 'id' => $query->id, 'value' => $query->serial];
+        foreach ($queries as $query) {
+            $results[] = ['id' => $query->id, 'value' => $query->serial];
         }
         return ($results);
     }

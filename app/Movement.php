@@ -13,7 +13,7 @@ class Movement extends Model
 {
     use SoftDeletes;
     //
-    protected $fillable=[
+    protected $fillable = [
         'remito',
         'article_id',
         'origin_id',
@@ -67,6 +67,7 @@ class Movement extends Model
         $destination = Warehouse::find($this->destination_id);
         return $destination;
     }
+
     public function getStatusAttribute()
     {
         $status = DB::table('statuses')
@@ -82,7 +83,7 @@ class Movement extends Model
     public function setTicketAttribute($value)
     {
         //preg_replace("/[^A-Za-z0-9 ]/", '', $string);
-            $this->attributes['ticket'] = strtoupper($value);
+        $this->attributes['ticket'] = strtoupper($value);
     }
 
     /**Poner el Serial en mayuscula antes de insertarlo
@@ -91,7 +92,7 @@ class Movement extends Model
     public function setSerialAttribute($value)
     {
         //preg_replace("/[^A-Za-z0-9 ]/", '', $string);
-            $this->attributes['serial'] = strtoupper($value);
+        $this->attributes['serial'] = strtoupper($value);
     }
 
     /**

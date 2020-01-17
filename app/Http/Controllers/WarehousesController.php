@@ -23,12 +23,10 @@ class WarehousesController extends Controller
     public function index()
     {
 
-        if (Auth::user()->company->parent=1) {
-            if(Auth::user()->securityLevel >=40)
-            {
+        if (Auth::user()->company->parent = 1) {
+            if (Auth::user()->securityLevel >= 40) {
                 $warehouses = Warehouse::orderBy('name', 'asc')->paginate(20);
-            } else
-            {
+            } else {
                 $warehouses = Warehouse::where('type_id', '<>', 1)->
                 orderBy('name', 'asc')->paginate(10);
             }
@@ -74,7 +72,7 @@ class WarehousesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function show($id)
@@ -83,13 +81,13 @@ class WarehousesController extends Controller
         $company = $warehouse->company;
         $activity = $warehouse->activity;
         $type = $warehouse->type;
-        return view('warehouses.ver', compact('warehouse', 'company', 'activity','type'));
+        return view('warehouses.ver', compact('warehouse', 'company', 'activity', 'type'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function edit($id)
@@ -104,27 +102,25 @@ class WarehousesController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function update(CreateWarehouseRequest $request, $id)
     {
         $warehouse = Warehouse::findOrFail($id);
-        if($request->active==1)
-        {
-            $active=1;
-        } else
-        {
-            $active=0;
+        if ($request->active == 1) {
+            $active = 1;
+        } else {
+            $active = 0;
         }
         $warehouse->update(
-                [
-                    'name'  => $request->name,
-                    'description'  => $request->description,
-                    'activity_id'  => $request->activity_id,
-                    'type_id'  => $request->type_id,
-                    'active'  => $active
-                ]);
+            [
+                'name' => $request->name,
+                'description' => $request->description,
+                'activity_id' => $request->activity_id,
+                'type_id' => $request->type_id,
+                'active' => $active
+            ]);
 
         session()->flash('flash_message', 'Almacén Actualizado correctamente.');
 //        Si flash_message_important esta presente, el mensaje no desaparece hasta que el usuario lo cierre
@@ -135,7 +131,7 @@ class WarehousesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function destroy($id)

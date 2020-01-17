@@ -14,36 +14,36 @@ class MapsController extends Controller
 
     public function showMaps($location)
     {
-        $directory = '/var/www/pandora/storage/planos/'.$location; 
+        $directory = '/var/www/pandora/storage/planos/' . $location;
         $files = File::Files($directory);
-        
-        return view('maps.dir', compact('location','files','directory'));
+
+        return view('maps.dir', compact('location', 'files', 'directory'));
 
     }
 
-    
-   public function showLocations()
+
+    public function showLocations()
     {
-        $directory = '/var/www/pandora/storage/planos/'; 
+        $directory = '/var/www/pandora/storage/planos/';
         $locations = File::directories($directory);
-        
+
         return view('maps.locations', compact('locations'));
 
     }
 
 
-    public function showFile($location,$filename)
+    public function showFile($location, $filename)
     {
         $path = '/var/www/pandora/storage/planos/' . $location . '/' . $filename;
-    
+
         //if(!File::exists($path)) abort(404);
-    
+
         $file = File::get($path);
         $type = File::mimeType($path);
-    
+
         $response = Response::make($file, 200);
         $response->header("Content-Type", $type);
-    
+
         return $response;
     }
 }

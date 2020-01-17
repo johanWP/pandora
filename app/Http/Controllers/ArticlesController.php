@@ -56,7 +56,7 @@ class ArticlesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function show($id)
@@ -68,7 +68,7 @@ class ArticlesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function edit($id)
@@ -82,38 +82,35 @@ class ArticlesController extends Controller
      * Update the specified resource in storage.
      *
      * @param ArticleRequest $request
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function update($id, ArticleRequest $request)
     {
 //        dd($request->all());
-        if ($request->active==1)
-        {
+        if ($request->active == 1) {
             $act = 1;
         } else {
             $act = 0;
         }
-        if ($request->fav==1)
-        {
+        if ($request->fav == 1) {
             $fav = 1;
         } else {
             $fav = 0;
         }
-        if ($request->serializable==1)
-        {
+        if ($request->serializable == 1) {
             $serializable = 1;
         } else {
             $serializable = 0;
         }
         $article = Article::findOrFail($id);
         $article->update([
-                'name'  => $request->name,
-                'barcode'  => $request->barcode,
-                'product_code'  => $request->product_code,
-                'serializable'  => $serializable,
-                'active'  => $act,
-                'fav'  => $fav
+            'name' => $request->name,
+            'barcode' => $request->barcode,
+            'product_code' => $request->product_code,
+            'serializable' => $serializable,
+            'active' => $act,
+            'fav' => $fav
         ]);
 
         session()->flash('flash_message', 'El artículo se actualizó.');
@@ -123,7 +120,7 @@ class ArticlesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
     public function destroy($id)
